@@ -342,7 +342,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
         Padding(
           padding: const EdgeInsets.all(16.0),
           child: Text(
-            '',
+            ' ',
             // 'Price per Kg',
             textAlign: TextAlign.left,
             style: TextStyle(
