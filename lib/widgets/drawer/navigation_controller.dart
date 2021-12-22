@@ -1,13 +1,16 @@
+import 'package:air_camel/models/bottom_navigation/bottom_bar_model.dart';
 import 'package:air_camel/models/drawer/drawer_list.dart';
+import 'package:air_camel/widgets/bottom_navigation/bottom_bar.dart';
 import 'package:air_camel/widgets/drawer/home_drawer.dart';
 import 'package:air_camel/resources/app_theme.dart';
 import 'package:flutter/material.dart';
 
-class DrawerUserController extends StatefulWidget {
-  const DrawerUserController({
+class NavigationController extends StatefulWidget {
+  const NavigationController({
     Key? key,
     this.drawerWidth = 250,
     this.onDrawerCall,
+    this.onBottomBarCall,
     this.screenView,
     this.animatedIconData = AnimatedIcons.arrow_menu,
     this.menuView,
@@ -17,6 +20,7 @@ class DrawerUserController extends StatefulWidget {
 
   final double drawerWidth;
   final Function(DrawerIndex)? onDrawerCall;
+  final Function(int)? onBottomBarCall;
   final Widget? screenView;
   final Function(bool)? drawerIsOpen;
   final AnimatedIconData? animatedIconData;
@@ -24,14 +28,16 @@ class DrawerUserController extends StatefulWidget {
   final DrawerIndex? screenIndex;
 
   @override
-  _DrawerUserControllerState createState() => _DrawerUserControllerState();
+  _NavigationControllerState createState() => _NavigationControllerState();
 }
 
-class _DrawerUserControllerState extends State<DrawerUserController>
+class _NavigationControllerState extends State<NavigationController>
     with TickerProviderStateMixin {
   ScrollController? scrollController;
   AnimationController? iconAnimationController;
   AnimationController? animationController;
+
+  List<TabIconData> tabIconsList = TabIconData.tabIconsList;
 
   double scrolloffset = 0.0;
   // List<TabIconData> tabIconsList = TabIconData.tabIconsList;
@@ -148,7 +154,7 @@ class _DrawerUserControllerState extends State<DrawerUserController>
                     children: <Widget>[
                       //this IgnorePointer we use as touch(user Interface) widget.screen View, for example scrolloffset == 1 means drawer is close we just allow touching all widget.screen View
                       IgnorePointer(
-                        ignoring: scrolloffset == 1 || false,
+                        // ignoring: scrolloffset == 1 || false,
                         child: widget.screenView,
                       ),
                       //alternative touch(user Interface) for widget.screen, for example, drawer is close we need to tap on a few home screen area and close the drawer
@@ -181,7 +187,7 @@ class _DrawerUserControllerState extends State<DrawerUserController>
                                         progress: iconAnimationController!),
                               ),
                               onTap: () {
-                                print("xxx");
+                                print(scrolloffset);
                                 FocusScope.of(context)
                                     .requestFocus(FocusNode());
                                 onDrawerClick();
@@ -190,7 +196,9 @@ class _DrawerUserControllerState extends State<DrawerUserController>
                           ),
                         ),
                       ),
-                      // bottomBar(),
+                      scrolloffset == 0
+                          ? BottomBar(widget.onBottomBarCall)
+                          : Container(),
                     ],
                   ),
                 ),
