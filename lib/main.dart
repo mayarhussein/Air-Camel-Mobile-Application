@@ -2,10 +2,15 @@ import 'dart:io';
 import 'package:air_camel/pages/home/filters_screen.dart';
 import 'package:air_camel/pages/home/new_shipment_menu_screen.dart';
 import 'package:air_camel/pages/home/navigation_screen.dart';
+import 'package:air_camel/pages/welcome_screen.dart';
 import 'package:air_camel/resources/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+
+import 'pages/account/login_screen.dart';
+import 'pages/account/signup_screen.dart';
+import 'pages/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,19 +32,33 @@ class MyApp extends StatelessWidget {
       systemNavigationBarIconBrightness: Brightness.dark,
     ));
     return MaterialApp(
-      title: 'GoCaamel',
+      title: 'AirCamel',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: Colors.amber.shade600,
-        textTheme: AppTheme.textTheme,
+        primarySwatch: Colors.amber,
+
+        //textTheme: AppTheme.textTheme,
+        textTheme: ThemeData.light().textTheme.copyWith(
+              bodyText1: TextStyle(color: Color.fromRGBO(20, 51, 51, 1)),
+              bodyText2: TextStyle(color: Color.fromRGBO(20, 51, 51, 1)),
+              subtitle1: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontFamily: 'WorkSans-Regular',
+                  fontWeight: FontWeight.bold)),
         // platform: TargetPlatform.iOS,
       ),
-      // home: NavigationHomeScreen(),
-      home: NavigationHomeScreen(),
+      
+      //home: NavigationHomeScreen(),
+      //home:SplashScreen(3,WelcomeScreen.routeName),
+      home: WelcomeScreen(),
       routes: {
         FiltersScreen.routeName: (ctx) => FiltersScreen(),
         NavigationHomeScreen.routeName: (ctx) => NavigationHomeScreen(),
         NewShipmentMenu.routeName: (ctx) => NewShipmentMenu(),
+        LoginScreen.routeName: (ctx) => LoginScreen(),
+        SignupScreen.routeName: (ctx) => SignupScreen()
       },
     );
   }
