@@ -1,5 +1,8 @@
+import 'package:air_camel/models/accounts_provider.dart';
+import 'package:air_camel/models/account_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 //import 'package:provider/provider.dart';
 //import '../providers/users.dart';
 //import '../providers/user.dart';
@@ -17,38 +20,60 @@ class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
+   var newAccount = AccountProvider(
+       id:'',
+      firstName: '', 
+      lastName: '',
+      email:'',
+      password: '', 
+      phoneNumber: '',
+      role:'');
+
+  var _isInit = true;
+  var _isLoading = false;
+
   @override
   void dispose() {
     _passwordFocusNode.dispose();
     super.dispose();
   }
 
-  void _saveForm() {
+
+  
+
+ void _saveForm() {
     final isValid = _form.currentState!.validate();
-    if (!isValid) return;
+    if (!isValid) {
+      return;
+    }
+  }
+
 
     // LISTENER
     //var theUser = Provider.of<Users>(context, listen: false).checkLogin(
-             // _emailController.toString(), 
-             // _passwordController.toString());
+    // _emailController.toString(),
+    // _passwordController.toString());
 
     //if (theUser != null) {
-      //Navigator.of(context).pushReplacementNamed(ProfileScreen.routeName);
+    //Navigator.of(context).pushReplacementNamed(ProfileScreen.routeName);
     //} else {
-     // return;
+    // return;
     //}
-  }
+  
 
   @override
   Widget build(BuildContext context) {
+    final role = ModalRoute.of(context)!.settings.arguments ;
+    print(role);
+
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
           title: Text('Login',
-               style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 30,
-                      fontFamily: 'WorkSans-Regular')),
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 30,
+                  fontFamily: 'WorkSans-Regular')),
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.close),
@@ -101,17 +126,19 @@ class _LoginScreenState extends State<LoginScreen> {
                               onPressed: () {},
                             ),
                             ElevatedButton(
-                      child: Text('LOGIN',
-                      style: TextStyle(
-                      color: Colors.white )),
-                      onPressed: () => _saveForm(),
-                      style: ElevatedButton.styleFrom(   
-                          side: const BorderSide(width: 3, color: Colors.amber),
-                          elevation: 3,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-                          padding:
-                              EdgeInsets.all(20) //content padding inside button
-                          )),
+                                child: Text('LOGIN',
+                                    style: TextStyle(color: Colors.white)),
+                                onPressed: () => _saveForm(),
+                                style: ElevatedButton.styleFrom(
+                                    side: const BorderSide(
+                                        width: 3, color: Colors.amber),
+                                    elevation: 3,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(30)),
+                                    padding: EdgeInsets.all(
+                                        20) //content padding inside button
+                                    )),
                           ])))),
         ));
   }

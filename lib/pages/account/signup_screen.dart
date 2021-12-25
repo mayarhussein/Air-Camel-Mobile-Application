@@ -1,5 +1,8 @@
+import 'package:air_camel/models/account_provider.dart';
+import 'package:air_camel/models/accounts_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SignupScreen extends StatefulWidget {
   static const routeName = '/signup';
@@ -16,29 +19,86 @@ class _SignupScreenState extends State<SignupScreen> {
   final _phoneNumberFocusNode = FocusNode();
   final _form = GlobalKey<FormState>();
 
+  var newAccount = AccountProvider(
+      id: '',
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      phoneNumber: '',
+      role: '');
+
+  var _isInit = true;
+  var _isLoading = false;
+
   @override
   void dispose() {
+    _firstNameFocusNode.dispose();
+    _lastNameFocusNode.dispose();
+    _emailFocusNode.dispose();
     _passwordFocusNode.dispose();
+    _phoneNumberFocusNode.dispose();
+
     super.dispose();
   }
 
-  void _saveForm() {
-    final isValid = _form.currentState!.validate();
-    if (!isValid) {
-      return;
+  Future<void> _saveForm() async {
+    final isVAlid = _form.currentState!.validate();
+    if (!isVAlid) return;
+    _form.currentState!.save();
+
+    //because I want to reflect these changes on user interface
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      // LISTENER : set to false bec i'm not interested in any changes in Product Provider
+      await Provider.of<AccountsProvider>(context, listen: false)
+          .addAccount(newAccount);
+    } catch (error) {
+      print(error);
+      await showDialog(
+          context: context,
+          builder: (ctx) => AlertDialog(
+                  title: const Text('An error occured!'),
+                  content: const Text('Something went wrong'),
+                  actions: <Widget>[
+                    ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).pop(); // To close the dialoge
+                        },
+                        child: const Text('Okay'))
+                  ]));
     }
+
+    // happens when one of 2 awaits is executed
+    setState(() {
+      _isLoading = false;
+    });
+    Navigator.of(context).pop(); // go back to prev page
   }
+
+  // void _saveForm() {
+  //   final isValid = _form.currentState!.validate();
+  //   if (!isValid) {
+  //     return;
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
+    final role = ModalRoute.of(context)!.settings.arguments;
+    print(role);
+
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
           title: Text('Register',
-             style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 30,
-                      fontFamily: 'WorkSans-Regular')),
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 30,
+                  fontFamily: 'WorkSans-Regular')),
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.close),
@@ -62,6 +122,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           size: 60,
                         ),
                         TextFormField(
+                          style: TextStyle(color: Colors.black),
                           decoration: InputDecoration(labelText: 'First Name'),
                           textInputAction: TextInputAction.next,
                           onFieldSubmitted: (_) {
@@ -74,6 +135,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           },
                         ),
                         TextFormField(
+                          style: TextStyle(color: Colors.black),
                           decoration: InputDecoration(labelText: 'Last Name'),
                           textInputAction: TextInputAction.next,
                           focusNode: _lastNameFocusNode,
@@ -87,6 +149,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           },
                         ),
                         TextFormField(
+                          style: TextStyle(color: Colors.black),
                           decoration: InputDecoration(labelText: 'Email'),
                           textInputAction: TextInputAction.next,
                           focusNode: _emailFocusNode,
@@ -100,6 +163,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           },
                         ),
                         TextFormField(
+                            style: TextStyle(color: Colors.black),
                             obscureText: true,
                             decoration: InputDecoration(labelText: 'Password'),
                             textInputAction: TextInputAction.next,
@@ -109,31 +173,34 @@ class _SignupScreenState extends State<SignupScreen> {
                                   .requestFocus(_phoneNumberFocusNode);
                             }),
                         TextFormField(
+                          style: TextStyle(color: Colors.black),
                           obscureText: true,
                           decoration:
                               InputDecoration(labelText: 'Phone Number'),
                           textInputAction: TextInputAction.done,
+                          keyboardType: TextInputType.number,
                           focusNode: _phoneNumberFocusNode,
                           onFieldSubmitted: (_) {
                             _saveForm();
                           },
                         ),
-                         Container(
-                           padding:EdgeInsets.all(10) ,
-                           child: ElevatedButton(
-                      child: Text('SIGNUP',style: TextStyle(
-                      color: Colors.white )),
-                      onPressed: () => _saveForm(),
-                      style: ElevatedButton.styleFrom(   
-                            side: const BorderSide(width: 3, color: Colors.amber),
-                            elevation: 3,
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-                            padding:EdgeInsets.all(20) //content padding inside button
-                            )),
-                         )
-                      ])
-                      
-                      ))),
+                        Container(
+                          padding: EdgeInsets.all(10),
+                          child: ElevatedButton(
+                              child: Text('SIGNUP',
+                                  style: TextStyle(color: Colors.white)),
+                              onPressed: () => _saveForm(),
+                              style: ElevatedButton.styleFrom(
+                                  side: const BorderSide(
+                                      width: 3, color: Colors.amber),
+                                  elevation: 3,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30)),
+                                  padding: EdgeInsets.all(
+                                      20) //content padding inside button
+                                  )),
+                        )
+                      ])))),
         ));
   }
 }

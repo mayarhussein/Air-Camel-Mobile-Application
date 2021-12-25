@@ -6,9 +6,16 @@ import 'package:air_camel/widgets/my_button.dart';
 import 'package:flutter/material.dart';
 
 import 'account/login_screen.dart';
-
-class WelcomeScreen extends StatelessWidget {
+enum Role { client, company }
+class WelcomeScreen extends StatefulWidget {
    static const routeName = '/welcomepage';
+
+  @override
+  State<WelcomeScreen> createState() => _WelcomeScreenState();
+}
+
+class _WelcomeScreenState extends State<WelcomeScreen> {
+   Role? _role = Role.client;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,12 +65,40 @@ class WelcomeScreen extends StatelessWidget {
                       fontFamily: 'WorkSans-SemiBold',
                       )),
                //6
-                MyButton('LOGIN', LoginScreen.routeName),
+                MyButton('LOGIN', LoginScreen.routeName,_role),
                 //7 
-                 MyButton('SIGNUP', SignupScreen.routeName),
-                 MyButton('guest', NavigationHomeScreen.routeName),
-
-
+                 MyButton('SIGNUP', SignupScreen.routeName,_role),
+                 //MyButton('guest', NavigationHomeScreen.routeName),
+                 //8
+                 Column(
+      
+      children: <Widget>[
+        ListTile(
+          title: const Text('Client'),
+          leading: Radio<Role>(
+            value: Role.client,
+            groupValue: _role,
+            onChanged: (Role? value) {
+              setState(() {
+                _role = value;
+              });
+            },
+          ),
+        ),
+        ListTile(
+          title: const Text('Companyt'),
+          leading: Radio<Role>(
+            value: Role.company,
+            groupValue: _role,
+            onChanged: (Role? value) {
+              setState(() {
+                _role = value;
+              });
+            },
+          ),
+        ),
+      ],
+    )
                     
                    
                  
