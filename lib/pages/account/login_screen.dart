@@ -1,12 +1,9 @@
 import 'package:air_camel/models/accounts_provider.dart';
 import 'package:air_camel/models/account_provider.dart';
+import 'package:air_camel/pages/home/navigation_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-//import 'package:provider/provider.dart';
-//import '../providers/users.dart';
-//import '../providers/user.dart';
-//import '../screens/profile_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   static const routeName = '/login';
@@ -20,17 +17,11 @@ class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
-   var newAccount = AccountProvider(
-       id:'',
-      firstName: '', 
-      lastName: '',
-      email:'',
-      password: '', 
-      phoneNumber: '',
-      role:'');
-
   var _isInit = true;
   var _isLoading = false;
+
+  late var _email;
+  late var _password;
 
   @override
   void dispose() {
@@ -38,32 +29,79 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
+  Future<void> _saveForm() async {
+    final isVAlid = _form.currentState!.validate();
+    if (!isVAlid) return;
+    _form.currentState!.save();
 
-  
+    //because I want to reflect these changes on user interface
+    setState(() {
+      _isLoading = true;
+    });
 
- void _saveForm() {
-    final isValid = _form.currentState!.validate();
-    if (!isValid) {
-      return;
-    }
+    print(_email);
+    print(_password);
+
+    Navigator.of(context).pushNamed(NavigationHomeScreen.routeName);
+    
+    // try {
+    //   // LISTENER : set to false bec i'm not interested in any changes in Account Provider
+    //   AccountProvider theAccount =
+    //       Provider.of<AccountsProvider>(context, listen: false)
+    //           .checkLogin(_email, _password);
+
+    //   print(theAccount);
+
+    //   if (theAccount != null) {
+    //     setState(() {
+    //       _isLoading = false;
+    //     });
+    //     //Navigator.of(context).pop(); // go back to prev page
+    //     Navigator.of(context).pushNamed(NavigationHomeScreen.routeName,
+    //         arguments: theAccount.id);
+    //   }
+    // } catch (error) {
+    //   print(error);
+    //   await showDialog(
+    //       context: context,
+    //       builder: (ctx) => AlertDialog(
+    //               title: const Text('An error occured!'),
+    //               content: const Text('Something went wrong'),
+    //               actions: <Widget>[
+    //                 ElevatedButton(
+    //                     child: const Text('Okay'),
+    //                     onPressed: () {
+    //                       Navigator.of(context).pop(); // To close the dialoge
+    //                       setState(() {
+    //                         _isLoading = false;
+    //                       });
+    //                     })
+    //               ]));
+    // }
   }
 
+//  void _saveForm() {
+//     final isValid = _form.currentState!.validate();
+//     if (!isValid) {
+//       return;
+//     }
+//     Navigator.of(context).pushNamed(NavigationHomeScreen.routeName);
+//   }
 
-    // LISTENER
-    //var theUser = Provider.of<Users>(context, listen: false).checkLogin(
-    // _emailController.toString(),
-    // _passwordController.toString());
+  // LISTENER
+  //var theUser = Provider.of<Users>(context, listen: false).checkLogin(
+  // _emailController.toString(),
+  // _passwordController.toString());
 
-    //if (theUser != null) {
-    //Navigator.of(context).pushReplacementNamed(ProfileScreen.routeName);
-    //} else {
-    // return;
-    //}
-  
+  //if (theUser != null) {
+  //Navigator.of(context).pushReplacementNamed(ProfileScreen.routeName);
+  //} else {
+  // return;
+  //}
 
   @override
   Widget build(BuildContext context) {
-    final role = ModalRoute.of(context)!.settings.arguments ;
+    final role = ModalRoute.of(context)!.settings.arguments;
     print(role);
 
     return Scaffold(
@@ -98,6 +136,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               size: 60,
                             ),
                             TextFormField(
+                              style: const TextStyle(color: Colors.black),
                               decoration: InputDecoration(labelText: 'Email'),
                               textInputAction: TextInputAction.next,
                               controller: _emailController,
@@ -109,14 +148,17 @@ class _LoginScreenState extends State<LoginScreen> {
                                 if (value.toString().isEmpty)
                                   return 'Please enter email';
                               },
+                              onSaved: (value) => _email = value.toString(),
                             ),
                             TextFormField(
+                              style: const TextStyle(color: Colors.black),
                               obscureText: true,
                               decoration:
                                   InputDecoration(labelText: 'Password'),
                               textInputAction: TextInputAction.done,
                               focusNode: _passwordFocusNode,
                               controller: _passwordController,
+                              onSaved: (value) => _password = value.toString(),
                               onFieldSubmitted: (_) {
                                 _saveForm();
                               },

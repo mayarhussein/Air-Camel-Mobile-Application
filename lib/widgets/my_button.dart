@@ -25,8 +25,7 @@ class MyButton extends StatelessWidget {
                   child: ElevatedButton(
                       child: Text(title, style: TextStyle(color: Colors.white)),
                       onPressed: () => {
-                            Navigator.of(context)
-                                .pushNamed(screenRoute, arguments: role)
+                            Navigator.of(context).pushNamed(screenRoute, arguments: role)
                           },
                       style: ElevatedButton.styleFrom(
                           primary: Colors.amber.withOpacity(0.7),

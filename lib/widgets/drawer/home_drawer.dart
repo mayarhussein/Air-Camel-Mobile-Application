@@ -1,6 +1,9 @@
+import 'package:air_camel/models/account_provider.dart';
 import 'package:air_camel/models/drawer/drawer_list.dart';
 import 'package:air_camel/resources/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:air_camel/models/accounts_provider.dart';
 
 class HomeDrawer extends StatefulWidget {
   const HomeDrawer(
@@ -63,6 +66,16 @@ class _HomeDrawerState extends State<HomeDrawer> {
 
   @override
   Widget build(BuildContext context) {
+    
+    // Receiving the arguments
+    final accountID = ModalRoute.of(context)!.settings.arguments as String;
+    print(accountID);
+
+    // LISTENER
+    //AccountProvider account = Provider.of<AccountsProvider>(context, listen: false).findById(accountID);
+
+    //print(account);
+
     return Scaffold(
       backgroundColor: AppTheme.notWhite.withOpacity(0.5),
       body: Column(

@@ -86,7 +86,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           ),
         ),
         ListTile(
-          title: const Text('Companyt'),
+          title: const Text('Company'),
           leading: Radio<Role>(
             value: Role.company,
             groupValue: _role,

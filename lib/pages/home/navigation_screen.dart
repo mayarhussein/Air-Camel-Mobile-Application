@@ -1,3 +1,4 @@
+import 'package:air_camel/models/accounts_provider.dart';
 import 'package:air_camel/models/drawer/drawer_list.dart';
 import 'package:air_camel/pages/account/account_screen.dart';
 import 'package:air_camel/pages/home/home_screen.dart';
@@ -7,6 +8,7 @@ import 'package:air_camel/widgets/bottom_navigation/bottom_bar.dart';
 import 'package:air_camel/widgets/drawer/navigation_controller.dart';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class NavigationHomeScreen extends StatefulWidget {
   @override
@@ -28,6 +30,9 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+       // LISTENER : Listening to any change in Accounts Provider
+    final accountsData = Provider.of<AccountsProvider>(context);
+
     return Container(
       color: AppTheme.nearlyWhite,
       child: SafeArea(

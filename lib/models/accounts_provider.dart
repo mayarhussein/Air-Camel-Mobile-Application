@@ -23,7 +23,13 @@ class AccountsProvider with ChangeNotifier {
     return _items.firstWhere((account) => account.id == id);
   }
 
-  // Fetch Accounts
+   AccountProvider checkLogin (String email, String password){
+  return  _items.firstWhere((account) => (account.email == email) && (account.password == password)
+   );
+
+ }
+
+  // FETCH Accounts
   Future<void> fetchAndSetAccounts() async {
     const url = 'https://air-camel-default-rtdb.firebaseio.com/accounts.json';
     try {
@@ -53,6 +59,7 @@ class AccountsProvider with ChangeNotifier {
     }
   }
 
+   // ADD ACCOUNT
   // async automatically returns a future
   Future<void> addAccount(AccountProvider account) async {
     // creates a database collection called products
@@ -95,6 +102,7 @@ class AccountsProvider with ChangeNotifier {
 
   }
 
+// UPDATE
   Future<void> updateProduct(String id, AccountProvider newAccount) async {
     final accIndex = _items.indexWhere((account) => account.id == id);
 
@@ -119,6 +127,7 @@ class AccountsProvider with ChangeNotifier {
     }
   }
 
+// DELETE 
   Future<void> deleteProduct(String id) async {
     final url = 'https://air-camel-default-rtdb.firebaseio.com/accounts/$id.json';
     final existingAccountIndex = _items.indexWhere((account) => account.id == id);
