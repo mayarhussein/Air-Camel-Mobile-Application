@@ -19,7 +19,7 @@ class _SignupScreenState extends State<SignupScreen> {
   final _phoneNumberFocusNode = FocusNode();
   final _form = GlobalKey<FormState>();
 
-  var newAccount = AccountProvider(
+   var _newAccount = AccountProvider(
       id: '',
       firstName: '',
       lastName: '',
@@ -27,6 +27,7 @@ class _SignupScreenState extends State<SignupScreen> {
       password: '',
       phoneNumber: '',
       role: '');
+
 
   var _isInit = true;
   var _isLoading = false;
@@ -55,7 +56,7 @@ class _SignupScreenState extends State<SignupScreen> {
     try {
       // LISTENER : set to false bec i'm not interested in any changes in Product Provider
       await Provider.of<AccountsProvider>(context, listen: false)
-          .addAccount(newAccount);
+          .addAccount(_newAccount);
     } catch (error) {
       print(error);
       await showDialog(
@@ -122,18 +123,28 @@ class _SignupScreenState extends State<SignupScreen> {
                           size: 60,
                         ),
                         TextFormField(
-                          style: TextStyle(color: Colors.black),
-                          decoration: InputDecoration(labelText: 'First Name'),
-                          textInputAction: TextInputAction.next,
-                          onFieldSubmitted: (_) {
-                            FocusScope.of(context)
-                                .requestFocus(_lastNameFocusNode);
-                          },
-                          validator: (value) {
-                            if (value.toString().isEmpty)
-                              return 'This field is REQUIRED';
-                          },
-                        ),
+                            style: TextStyle(color: Colors.black),
+                            decoration:
+                                InputDecoration(labelText: 'First Name'),
+                            textInputAction: TextInputAction.next,
+                            onFieldSubmitted: (_) {
+                              FocusScope.of(context)
+                                  .requestFocus(_lastNameFocusNode);
+                            },
+                            validator: (value) {
+                              if (value.toString().isEmpty)
+                                return 'This field is REQUIRED';
+                            },
+                            onSaved: (value) {
+                            _newAccount = AccountProvider(
+                                id: _newAccount.id,
+                                firstName: value.toString(),
+                                lastName: _newAccount.lastName,
+                                email: _newAccount.email,
+                                password: _newAccount.password,
+                                phoneNumber: _newAccount.phoneNumber,
+                                role: role.toString().substring(5));
+                          }),
                         TextFormField(
                           style: TextStyle(color: Colors.black),
                           decoration: InputDecoration(labelText: 'Last Name'),
@@ -147,21 +158,41 @@ class _SignupScreenState extends State<SignupScreen> {
                             if (value.toString().isEmpty)
                               return 'This field is REQUIRED';
                           },
+                          onSaved: (value) {
+                            _newAccount = AccountProvider(
+                                id: _newAccount.id,
+                                firstName: _newAccount.firstName,
+                                lastName: value.toString(),
+                                email: _newAccount.email,
+                                password: _newAccount.password,
+                                phoneNumber: _newAccount.phoneNumber,
+                                role: role.toString().substring(5));
+                          }
+                         
                         ),
                         TextFormField(
-                          style: TextStyle(color: Colors.black),
-                          decoration: InputDecoration(labelText: 'Email'),
-                          textInputAction: TextInputAction.next,
-                          focusNode: _emailFocusNode,
-                          onFieldSubmitted: (_) {
-                            FocusScope.of(context)
-                                .requestFocus(_passwordFocusNode);
-                          },
-                          validator: (value) {
-                            if (value.toString().isEmpty)
-                              return 'This field is REQUIRED';
-                          },
-                        ),
+                            style: TextStyle(color: Colors.black),
+                            decoration: InputDecoration(labelText: 'Email'),
+                            textInputAction: TextInputAction.next,
+                            focusNode: _emailFocusNode,
+                            onFieldSubmitted: (_) {
+                              FocusScope.of(context)
+                                  .requestFocus(_passwordFocusNode);
+                            },
+                            validator: (value) {
+                              if (value.toString().isEmpty)
+                                return 'This field is REQUIRED';
+                            },
+                             onSaved: (value) {
+                            _newAccount = AccountProvider(
+                                id: _newAccount.id,
+                                firstName: _newAccount.firstName,
+                                lastName: _newAccount.lastName,
+                                email: value.toString(),
+                                password: _newAccount.password,
+                                phoneNumber: _newAccount.phoneNumber,
+                                role: role.toString().substring(5));
+                          }),
                         TextFormField(
                             style: TextStyle(color: Colors.black),
                             obscureText: true,
@@ -171,7 +202,17 @@ class _SignupScreenState extends State<SignupScreen> {
                             onFieldSubmitted: (_) {
                               FocusScope.of(context)
                                   .requestFocus(_phoneNumberFocusNode);
-                            }),
+                            },
+                             onSaved: (value) {
+                            _newAccount = AccountProvider(
+                                id: _newAccount.id,
+                                firstName: _newAccount.firstName,
+                                lastName: _newAccount.lastName,
+                                email: _newAccount.email,
+                                password: value.toString(),
+                                phoneNumber: _newAccount.phoneNumber,
+                                role: role.toString().substring(5));
+                          }),
                         TextFormField(
                           style: TextStyle(color: Colors.black),
                           obscureText: true,
@@ -182,6 +223,16 @@ class _SignupScreenState extends State<SignupScreen> {
                           focusNode: _phoneNumberFocusNode,
                           onFieldSubmitted: (_) {
                             _saveForm();
+                          },
+                          onSaved: (value) {
+                            _newAccount = AccountProvider(
+                                id: _newAccount.id,
+                                firstName: _newAccount.firstName,
+                                lastName: _newAccount.lastName,
+                                email: _newAccount.email,
+                                password: _newAccount.password,
+                                phoneNumber: value.toString(),
+                                role: role.toString().substring(5));
                           },
                         ),
                         Container(
