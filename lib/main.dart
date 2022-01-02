@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:air_camel/pages/home/filters_screen.dart';
 import 'package:air_camel/pages/home/new_shipment_menu_screen.dart';
 import 'package:air_camel/pages/home/navigation_screen.dart';
+import 'package:air_camel/pages/home/trip_detail_screen.dart';
 import 'package:air_camel/pages/welcome_screen.dart';
 import 'package:air_camel/resources/app_theme.dart';
 import 'package:flutter/material.dart';
@@ -59,15 +60,16 @@ class MyApp extends StatelessWidget {
         // platform: TargetPlatform.iOS,
       ),
 
-      //home: NavigationHomeScreen(),
+      home: NavigationHomeScreen(),
       //home:SplashScreen(3,WelcomeScreen.routeName),
-      home: WelcomeScreen(),
+      //home: WelcomeScreen(),
       routes: {
         FiltersScreen.routeName: (ctx) => FiltersScreen(),
         NavigationHomeScreen.routeName: (ctx) => NavigationHomeScreen(),
         NewShipmentMenu.routeName: (ctx) => NewShipmentMenu(),
         LoginScreen.routeName: (ctx) => LoginScreen(),
-        SignupScreen.routeName: (ctx) => SignupScreen()
+        SignupScreen.routeName: (ctx) => SignupScreen(),
+        TripDetailsScreen.routeName: (ctx) => TripDetailsScreen()
       },
     ));
   }

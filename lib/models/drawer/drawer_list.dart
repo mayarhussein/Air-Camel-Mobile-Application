@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 enum DrawerIndex {
   HOME,
+  MyTrips,
   FeedBack,
   Help,
   Share,

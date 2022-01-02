@@ -36,6 +36,11 @@ class _HomeDrawerState extends State<HomeDrawer> {
         labelName: 'Home',
         icon: Icon(Icons.home),
       ),
+       DrawerList(
+        index: DrawerIndex.MyTrips,
+        labelName: 'My Trips',
+        icon: Icon(Icons.access_time_rounded)
+      ),
       DrawerList(
         index: DrawerIndex.Help,
         labelName: 'Help',

@@ -2,6 +2,10 @@ import 'package:air_camel/resources/app_theme.dart';
 import 'package:flutter/material.dart';
 
 class HomeSearchBar extends StatelessWidget {
+String hint;
+
+HomeSearchBar(this.hint);
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -35,7 +39,7 @@ class HomeSearchBar extends StatelessWidget {
                     cursorColor: Colors.amber.shade300,
                     decoration: InputDecoration(
                       border: InputBorder.none,
-                      hintText: 'Type destination here',
+                      hintText: hint,
                     ),
                   ),
                 ),

@@ -43,7 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
     print(_password);
 
     Navigator.of(context).pushNamed(NavigationHomeScreen.routeName);
-    
+
     // try {
     //   // LISTENER : set to false bec i'm not interested in any changes in Account Provider
     //   AccountProvider theAccount =
@@ -88,17 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
 //     Navigator.of(context).pushNamed(NavigationHomeScreen.routeName);
 //   }
 
-  // LISTENER
-  //var theUser = Provider.of<Users>(context, listen: false).checkLogin(
-  // _emailController.toString(),
-  // _passwordController.toString());
-
-  //if (theUser != null) {
-  //Navigator.of(context).pushReplacementNamed(ProfileScreen.routeName);
-  //} else {
-  // return;
-  //}
-
+ 
   @override
   Widget build(BuildContext context) {
     final role = ModalRoute.of(context)!.settings.arguments;

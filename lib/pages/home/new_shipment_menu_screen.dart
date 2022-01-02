@@ -63,7 +63,8 @@ class _NewShipmentMenuState extends State<NewShipmentMenu>
                                   (BuildContext context, int index) {
                                 return Column(
                                   children: <Widget>[
-                                    HomeSearchBar(),
+                                    HomeSearchBar('Type pickup location here'),
+                                    HomeSearchBar('Type destination here'),
                                     HomeTimeDate(),
                                   ],
                                 );
