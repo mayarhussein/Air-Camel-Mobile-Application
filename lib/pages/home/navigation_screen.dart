@@ -10,6 +10,9 @@ import 'package:air_camel/widgets/drawer/navigation_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../help_screen.dart';
+import '../my_trips_screen.dart';
+
 class NavigationHomeScreen extends StatefulWidget {
   @override
   _NavigationHomeScreenState createState() => _NavigationHomeScreenState();
@@ -69,9 +72,15 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
         });
         break;
       case 1:
+        setState(() {
+          screenView = MyTripsScreen();
+        });
         print("Blahblah");
         break;
       case 2:
+      setState(() {
+          screenView = HelpScreen();
+        });
         print("Settings");
         break;
       case 3:
