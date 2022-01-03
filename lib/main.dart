@@ -1,21 +1,19 @@
 // @dart=2.9
 import 'dart:io';
+import 'package:air_camel/pages/company/company_navigation_home_screen.dart';
 import 'package:air_camel/pages/home/filters_screen.dart';
 import 'package:air_camel/pages/home/new_shipment_menu_screen.dart';
-import 'package:air_camel/pages/home/navigation_screen.dart';
+import 'package:air_camel/pages/home/client_navigation_screen.dart';
 import 'package:air_camel/pages/home/trip_detail_screen.dart';
 import 'package:air_camel/pages/welcome_screen.dart';
-import 'package:air_camel/resources/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:provider/provider.dart';
 import 'package:air_camel/providers/accounts_provider.dart';
-import 'package:air_camel/providers/account_provider.dart';
 
 import 'pages/account/login_screen.dart';
 import 'pages/account/signup_screen.dart';
-import 'pages/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -59,16 +57,18 @@ class MyApp extends StatelessWidget {
             // platform: TargetPlatform.iOS,
           ),
 
-          // home: NavigationHomeScreen(),
+          // home: ClientNavigationScreen(),
           //home:SplashScreen(3,WelcomeScreen.routeName),
           home: WelcomeScreen(),
           routes: {
             FiltersScreen.routeName: (ctx) => FiltersScreen(),
-            NavigationHomeScreen.routeName: (ctx) => NavigationHomeScreen(),
+            ClientNavigationScreen.routeName: (ctx) => ClientNavigationScreen(),
             NewShipmentMenu.routeName: (ctx) => NewShipmentMenu(),
             LoginScreen.routeName: (ctx) => LoginScreen(),
             SignupScreen.routeName: (ctx) => SignupScreen(),
-            TripDetailsScreen.routeName: (ctx) => TripDetailsScreen()
+            TripDetailsScreen.routeName: (ctx) => TripDetailsScreen(),
+            CompanyNavigationScreen.routeName: (ctx) =>
+                CompanyNavigationScreen(),
           },
         ));
   }

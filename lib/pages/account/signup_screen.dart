@@ -1,6 +1,6 @@
 import 'package:air_camel/providers/account_provider.dart';
 import 'package:air_camel/providers/accounts_provider.dart';
-import 'package:air_camel/pages/home/navigation_screen.dart';
+import 'package:air_camel/pages/home/client_navigation_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -62,8 +62,8 @@ class _SignupScreenState extends State<SignupScreen> {
         _isLoading = false;
       });
       //Navigator.of(context).pop(); // go back to prev page
-      Navigator.of(context)
-          .pushNamed(NavigationHomeScreen.routeName, arguments: _newAccount.id);
+      Navigator.of(context).pushNamed(ClientNavigationScreen.routeName,
+          arguments: _newAccount.id);
     } catch (error) {
       print(error);
       await showDialog(

@@ -13,14 +13,14 @@ import 'package:provider/provider.dart';
 import '../help_screen.dart';
 import '../my_trips_screen.dart';
 
-class NavigationHomeScreen extends StatefulWidget {
+class ClientNavigationScreen extends StatefulWidget {
   @override
-  _NavigationHomeScreenState createState() => _NavigationHomeScreenState();
+  _ClientNavigationScreenState createState() => _ClientNavigationScreenState();
 
   static const routeName = "/navigation-home";
 }
 
-class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
+class _ClientNavigationScreenState extends State<ClientNavigationScreen> {
   Widget? screenView;
   DrawerIndex? drawerIndex;
 

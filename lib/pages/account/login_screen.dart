@@ -1,9 +1,6 @@
-import 'package:air_camel/providers/accounts_provider.dart';
-import 'package:air_camel/providers/account_provider.dart';
-import 'package:air_camel/pages/home/navigation_screen.dart';
+import 'package:air_camel/pages/home/client_navigation_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   static const routeName = '/login';
@@ -42,7 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
     print(_email);
     print(_password);
 
-    Navigator.of(context).pushNamed(NavigationHomeScreen.routeName);
+    Navigator.of(context).pushNamed(ClientNavigationScreen.routeName);
 
     // try {
     //   // LISTENER : set to false bec i'm not interested in any changes in Account Provider
@@ -57,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
     //       _isLoading = false;
     //     });
     //     //Navigator.of(context).pop(); // go back to prev page
-    //     Navigator.of(context).pushNamed(NavigationHomeScreen.routeName,
+    //     Navigator.of(context).pushNamed(ClientNavigationScreen.routeName,
     //         arguments: theAccount.id);
     //   }
     // } catch (error) {
@@ -85,7 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
 //     if (!isValid) {
 //       return;
 //     }
-//     Navigator.of(context).pushNamed(NavigationHomeScreen.routeName);
+//     Navigator.of(context).pushNamed(ClientNavigationScreen.routeName);
 //   }
 
   @override
