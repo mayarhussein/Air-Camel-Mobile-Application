@@ -1,5 +1,5 @@
-import 'package:air_camel/models/account_provider.dart';
-import 'package:air_camel/models/accounts_provider.dart';
+import 'package:air_camel/providers/account_provider.dart';
+import 'package:air_camel/providers/accounts_provider.dart';
 import 'package:air_camel/pages/home/navigation_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -58,13 +58,12 @@ class _SignupScreenState extends State<SignupScreen> {
       await Provider.of<AccountsProvider>(context, listen: false)
           .addAccount(_newAccount);
 
-    setState(() {
-      _isLoading = false;
-    });
-       //Navigator.of(context).pop(); // go back to prev page
-    Navigator.of(context)
-        .pushNamed(NavigationHomeScreen.routeName, arguments: _newAccount.id);
-      
+      setState(() {
+        _isLoading = false;
+      });
+      //Navigator.of(context).pop(); // go back to prev page
+      Navigator.of(context)
+          .pushNamed(NavigationHomeScreen.routeName, arguments: _newAccount.id);
     } catch (error) {
       print(error);
       await showDialog(
@@ -77,13 +76,12 @@ class _SignupScreenState extends State<SignupScreen> {
                         child: const Text('Okay'),
                         onPressed: () {
                           Navigator.of(context).pop(); // To close the dialoge
-                           setState(() {
-                             _isLoading = false;
-                                       });
-                  })])
-              );      
-                  
-        }  
+                          setState(() {
+                            _isLoading = false;
+                          });
+                        })
+                  ]));
+    }
   }
 
   @override

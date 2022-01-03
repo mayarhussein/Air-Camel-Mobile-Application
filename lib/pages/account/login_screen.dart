@@ -1,5 +1,5 @@
-import 'package:air_camel/models/accounts_provider.dart';
-import 'package:air_camel/models/account_provider.dart';
+import 'package:air_camel/providers/accounts_provider.dart';
+import 'package:air_camel/providers/account_provider.dart';
 import 'package:air_camel/pages/home/navigation_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -88,7 +88,6 @@ class _LoginScreenState extends State<LoginScreen> {
 //     Navigator.of(context).pushNamed(NavigationHomeScreen.routeName);
 //   }
 
- 
   @override
   Widget build(BuildContext context) {
     final role = ModalRoute.of(context)!.settings.arguments;

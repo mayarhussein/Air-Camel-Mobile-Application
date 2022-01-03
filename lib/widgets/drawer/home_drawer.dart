@@ -1,9 +1,9 @@
-import 'package:air_camel/models/account_provider.dart';
+import 'package:air_camel/providers/account_provider.dart';
 import 'package:air_camel/models/drawer/drawer_list.dart';
 import 'package:air_camel/resources/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:air_camel/models/accounts_provider.dart';
+import 'package:air_camel/providers/accounts_provider.dart';
 
 class HomeDrawer extends StatefulWidget {
   const HomeDrawer(
@@ -36,11 +36,10 @@ class _HomeDrawerState extends State<HomeDrawer> {
         labelName: 'Home',
         icon: Icon(Icons.home),
       ),
-       DrawerList(
-        index: DrawerIndex.MyTrips,
-        labelName: 'My Trips',
-        icon: Icon(Icons.access_time_rounded)
-      ),
+      DrawerList(
+          index: DrawerIndex.MyTrips,
+          labelName: 'My Trips',
+          icon: Icon(Icons.access_time_rounded)),
       DrawerList(
         index: DrawerIndex.Help,
         labelName: 'Help',
@@ -71,7 +70,6 @@ class _HomeDrawerState extends State<HomeDrawer> {
 
   @override
   Widget build(BuildContext context) {
-    
     // Receiving the arguments
     final accountID = ModalRoute.of(context)!.settings.arguments as String;
     print(accountID);

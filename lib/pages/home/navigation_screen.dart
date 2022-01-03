@@ -1,4 +1,4 @@
-import 'package:air_camel/models/accounts_provider.dart';
+import 'package:air_camel/providers/accounts_provider.dart';
 import 'package:air_camel/models/drawer/drawer_list.dart';
 import 'package:air_camel/pages/account/account_screen.dart';
 import 'package:air_camel/pages/home/home_screen.dart';
@@ -33,7 +33,7 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-       // LISTENER : Listening to any change in Accounts Provider
+    // LISTENER : Listening to any change in Accounts Provider
     final accountsData = Provider.of<AccountsProvider>(context);
 
     return Container(
@@ -78,7 +78,7 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
         print("Blahblah");
         break;
       case 2:
-      setState(() {
+        setState(() {
           screenView = HelpScreen();
         });
         print("Settings");

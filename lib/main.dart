@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'dart:io';
 import 'package:air_camel/pages/home/filters_screen.dart';
 import 'package:air_camel/pages/home/new_shipment_menu_screen.dart';
@@ -9,10 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:provider/provider.dart';
-import 'package:air_camel/models/accounts_provider.dart';
-import 'package:air_camel/models/account_provider.dart';
-
-
+import 'package:air_camel/providers/accounts_provider.dart';
+import 'package:air_camel/providers/account_provider.dart';
 
 import 'pages/account/login_screen.dart';
 import 'pages/account/signup_screen.dart';
@@ -38,40 +37,40 @@ class MyApp extends StatelessWidget {
       systemNavigationBarIconBrightness: Brightness.dark,
     ));
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (ctx) => AccountsProvider()),
-      ],
-       child:MaterialApp(
-      title: 'AirCamel',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primaryColor: Colors.amber.shade600,
-        primarySwatch: Colors.amber,
+        providers: [
+          ChangeNotifierProvider(create: (ctx) => AccountsProvider()),
+        ],
+        child: MaterialApp(
+          title: 'AirCamel',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            primaryColor: Colors.amber.shade600,
+            primarySwatch: Colors.amber,
 
-        //textTheme: AppTheme.textTheme,
-        textTheme: ThemeData.light().textTheme.copyWith(
-            bodyText1: TextStyle(color: Color.fromRGBO(20, 51, 51, 1)),
-            bodyText2: TextStyle(color: Color.fromRGBO(20, 51, 51, 1)),
-            subtitle1: TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-                fontFamily: 'WorkSans-Regular',
-                fontWeight: FontWeight.bold)),
-        // platform: TargetPlatform.iOS,
-      ),
+            //textTheme: AppTheme.textTheme,
+            textTheme: ThemeData.light().textTheme.copyWith(
+                bodyText1: TextStyle(color: Color.fromRGBO(20, 51, 51, 1)),
+                bodyText2: TextStyle(color: Color.fromRGBO(20, 51, 51, 1)),
+                subtitle1: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontFamily: 'WorkSans-Regular',
+                    fontWeight: FontWeight.bold)),
+            // platform: TargetPlatform.iOS,
+          ),
 
-      home: NavigationHomeScreen(),
-      //home:SplashScreen(3,WelcomeScreen.routeName),
-      //home: WelcomeScreen(),
-      routes: {
-        FiltersScreen.routeName: (ctx) => FiltersScreen(),
-        NavigationHomeScreen.routeName: (ctx) => NavigationHomeScreen(),
-        NewShipmentMenu.routeName: (ctx) => NewShipmentMenu(),
-        LoginScreen.routeName: (ctx) => LoginScreen(),
-        SignupScreen.routeName: (ctx) => SignupScreen(),
-        TripDetailsScreen.routeName: (ctx) => TripDetailsScreen()
-      },
-    ));
+          // home: NavigationHomeScreen(),
+          //home:SplashScreen(3,WelcomeScreen.routeName),
+          home: WelcomeScreen(),
+          routes: {
+            FiltersScreen.routeName: (ctx) => FiltersScreen(),
+            NavigationHomeScreen.routeName: (ctx) => NavigationHomeScreen(),
+            NewShipmentMenu.routeName: (ctx) => NewShipmentMenu(),
+            LoginScreen.routeName: (ctx) => LoginScreen(),
+            SignupScreen.routeName: (ctx) => SignupScreen(),
+            TripDetailsScreen.routeName: (ctx) => TripDetailsScreen()
+          },
+        ));
   }
 }
 
