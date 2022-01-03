@@ -10,7 +10,6 @@ import 'package:air_camel/widgets/drawer/navigation_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../help_screen.dart';
 import '../my_trips_screen.dart';
 
 class ClientNavigationScreen extends StatefulWidget {
@@ -79,7 +78,7 @@ class _ClientNavigationScreenState extends State<ClientNavigationScreen> {
         break;
       case 2:
         setState(() {
-          screenView = HelpScreen();
+          // screenView = HelpScreen();
         });
         print("Settings");
         break;

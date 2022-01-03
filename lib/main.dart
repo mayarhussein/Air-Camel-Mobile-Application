@@ -5,7 +5,12 @@ import 'package:air_camel/pages/client/bottom_bar_screens/new_shipment/filters_s
 import 'package:air_camel/pages/client/bottom_bar_screens/new_shipment/new_shipment_menu_screen.dart';
 import 'package:air_camel/pages/client/client_navigation_screen.dart';
 import 'package:air_camel/pages/client/bottom_bar_screens/new_shipment/trip_detail_screen.dart';
-import 'package:air_camel/pages/welcome_screen.dart';
+import 'package:air_camel/pages/side_drawer_screens/about_us_screen.dart';
+import 'package:air_camel/pages/side_drawer_screens/credit_screen.dart';
+import 'package:air_camel/pages/side_drawer_screens/help_screen.dart';
+import 'package:air_camel/pages/side_drawer_screens/invite_screen.dart';
+import 'package:air_camel/pages/side_drawer_screens/notifications_screen.dart';
+import 'package:air_camel/pages/side_drawer_screens/offers_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
@@ -69,6 +74,12 @@ class MyApp extends StatelessWidget {
             TripDetailsScreen.routeName: (ctx) => TripDetailsScreen(),
             CompanyNavigationScreen.routeName: (ctx) =>
                 CompanyNavigationScreen(),
+            HelpScreen.routeName: (ctx) => HelpScreen(),
+            AboutUsScreen.routeName: (ctx) => AboutUsScreen(),
+            NotificationsScreen.routeName: (ctx) => NotificationsScreen(),
+            CreditScreen.routeName: (ctx) => CreditScreen(),
+            OffersScreen.routeName: (ctx) => OffersScreen(),
+            InviteScreen.routeName: (ctx) => InviteScreen(),
           },
         ));
   }

@@ -48,7 +48,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
       DrawerList(
         index: DrawerIndex.Offers,
         labelName: 'Offers',
-        icon: Icon(Icons.sentiment_satisfied_outlined),
+        icon: Icon(Icons.wallet_giftcard),
       ),
       DrawerList(
         index: DrawerIndex.Invite,
