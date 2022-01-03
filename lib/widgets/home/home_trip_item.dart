@@ -1,4 +1,4 @@
-import 'package:air_camel/pages/home/trip_detail_screen.dart';
+import 'package:air_camel/pages/client/bottom_bar_screens/new_shipment/trip_detail_screen.dart';
 import 'package:air_camel/resources/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -13,10 +13,9 @@ class HomeTripItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-       onTap: () => Navigator.of(context).pushNamed(TripDetailsScreen.routeName),
-       splashColor: Colors.red,
-              highlightColor: Colors.white.withOpacity(0.2),
-
+      onTap: () => Navigator.of(context).pushNamed(TripDetailsScreen.routeName),
+      splashColor: Colors.red,
+      highlightColor: Colors.white.withOpacity(0.2),
       child: Container(
         color: AppTheme.buildLightTheme().backgroundColor,
         child: Row(
@@ -76,15 +75,18 @@ class HomeTripItem extends StatelessWidget {
                               ratingWidget: RatingWidget(
                                 full: Icon(
                                   Icons.star_rate_rounded,
-                                  color: AppTheme.buildLightTheme().primaryColor,
+                                  color:
+                                      AppTheme.buildLightTheme().primaryColor,
                                 ),
                                 half: Icon(
                                   Icons.star_half_rounded,
-                                  color: AppTheme.buildLightTheme().primaryColor,
+                                  color:
+                                      AppTheme.buildLightTheme().primaryColor,
                                 ),
                                 empty: Icon(
                                   Icons.star_border_rounded,
-                                  color: AppTheme.buildLightTheme().primaryColor,
+                                  color:
+                                      AppTheme.buildLightTheme().primaryColor,
                                 ),
                               ),
                               itemPadding: EdgeInsets.zero,

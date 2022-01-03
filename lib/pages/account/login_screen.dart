@@ -1,4 +1,4 @@
-import 'package:air_camel/pages/home/client_navigation_screen.dart';
+import 'package:air_camel/pages/client/client_navigation_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

@@ -1,8 +1,8 @@
 import 'package:air_camel/providers/accounts_provider.dart';
 import 'package:air_camel/models/drawer/drawer_list.dart';
 import 'package:air_camel/pages/account/account_screen.dart';
-import 'package:air_camel/pages/home/home_screen.dart';
-import 'package:air_camel/pages/home/new_shipment_menu_screen.dart';
+import 'package:air_camel/pages/client/bottom_bar_screens/home_screen.dart';
+import 'package:air_camel/pages/client/bottom_bar_screens/new_shipment/new_shipment_menu_screen.dart';
 import 'package:air_camel/resources/app_theme.dart';
 import 'package:air_camel/widgets/bottom_navigation/bottom_bar.dart';
 import 'package:air_camel/widgets/drawer/navigation_controller.dart';
@@ -103,7 +103,7 @@ class _ClientNavigationScreenState extends State<ClientNavigationScreen> {
         setState(() {
           screenView = AccountScreen();
         });
-      } else if (drawerIndex == DrawerIndex.FeedBack) {
+      } else if (drawerIndex == DrawerIndex.Notifications) {
         setState(() {
           // screenView = FeedbackScreen();
         });

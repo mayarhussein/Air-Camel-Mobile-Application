@@ -1,10 +1,10 @@
 // @dart=2.9
 import 'dart:io';
 import 'package:air_camel/pages/company/company_navigation_home_screen.dart';
-import 'package:air_camel/pages/home/filters_screen.dart';
-import 'package:air_camel/pages/home/new_shipment_menu_screen.dart';
-import 'package:air_camel/pages/home/client_navigation_screen.dart';
-import 'package:air_camel/pages/home/trip_detail_screen.dart';
+import 'package:air_camel/pages/client/bottom_bar_screens/new_shipment/filters_screen.dart';
+import 'package:air_camel/pages/client/bottom_bar_screens/new_shipment/new_shipment_menu_screen.dart';
+import 'package:air_camel/pages/client/client_navigation_screen.dart';
+import 'package:air_camel/pages/client/bottom_bar_screens/new_shipment/trip_detail_screen.dart';
 import 'package:air_camel/pages/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -57,9 +57,9 @@ class MyApp extends StatelessWidget {
             // platform: TargetPlatform.iOS,
           ),
 
-          // home: ClientNavigationScreen(),
+          home: ClientNavigationScreen(),
           //home:SplashScreen(3,WelcomeScreen.routeName),
-          home: WelcomeScreen(),
+          // home: WelcomeScreen(),
           routes: {
             FiltersScreen.routeName: (ctx) => FiltersScreen(),
             ClientNavigationScreen.routeName: (ctx) => ClientNavigationScreen(),

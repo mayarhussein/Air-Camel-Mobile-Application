@@ -1,5 +1,5 @@
 import 'package:air_camel/models/bottom_navigation/bottom_bar_model.dart';
-import 'package:air_camel/pages/home/new_shipment_menu_screen.dart';
+import 'package:air_camel/pages/client/bottom_bar_screens/new_shipment/new_shipment_menu_screen.dart';
 import 'package:air_camel/widgets/bottom_navigation/bottom_bar_view.dart';
 import 'package:flutter/material.dart';
 

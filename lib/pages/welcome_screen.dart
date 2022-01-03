@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:air_camel/pages/account/signup_screen.dart';
 import 'package:air_camel/pages/company/company_navigation_home_screen.dart';
-import 'package:air_camel/pages/home/client_navigation_screen.dart';
+import 'package:air_camel/pages/client/client_navigation_screen.dart';
 import 'package:air_camel/widgets/my_button.dart';
 import 'package:flutter/material.dart';
 

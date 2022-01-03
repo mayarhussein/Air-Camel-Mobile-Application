@@ -37,18 +37,18 @@ class _HomeDrawerState extends State<HomeDrawer> {
         icon: Icon(Icons.home),
       ),
       DrawerList(
-          index: DrawerIndex.MyTrips,
-          labelName: 'My Trips',
-          icon: Icon(Icons.access_time_rounded)),
+          index: DrawerIndex.Notifications,
+          labelName: 'Notifications ',
+          icon: Icon(Icons.notifications_active)),
       DrawerList(
-        index: DrawerIndex.Help,
-        labelName: 'Help',
-        icon: Icon(Icons.help_center_outlined),
+        index: DrawerIndex.Credit,
+        labelName: 'Credit',
+        icon: Icon(Icons.credit_card_rounded),
       ),
       DrawerList(
-        index: DrawerIndex.FeedBack,
-        labelName: 'FeedBack',
-        icon: Icon(Icons.help),
+        index: DrawerIndex.Offers,
+        labelName: 'Offers',
+        icon: Icon(Icons.sentiment_satisfied_outlined),
       ),
       DrawerList(
         index: DrawerIndex.Invite,
@@ -56,9 +56,9 @@ class _HomeDrawerState extends State<HomeDrawer> {
         icon: Icon(Icons.group),
       ),
       DrawerList(
-        index: DrawerIndex.Share,
-        labelName: 'Rate the app',
-        icon: Icon(Icons.share),
+        index: DrawerIndex.Help,
+        labelName: 'Help',
+        icon: Icon(Icons.help),
       ),
       DrawerList(
         index: DrawerIndex.About,
@@ -173,32 +173,32 @@ class _HomeDrawerState extends State<HomeDrawer> {
             height: 1,
             color: AppTheme.grey.withOpacity(0.6),
           ),
-          // Column(
-          //   children: <Widget>[
-          //     ListTile(
-          //       title: Text(
-          //         'Sign Out',
-          //         style: TextStyle(
-          //           fontFamily: AppTheme.fontName,
-          //           fontWeight: FontWeight.w600,
-          //           fontSize: 16,
-          //           color: AppTheme.darkText,
-          //         ),
-          //         textAlign: TextAlign.left,
-          //       ),
-          //       trailing: Icon(
-          //         Icons.power_settings_new,
-          //         color: Colors.red,
-          //       ),
-          //       onTap: () {
-          //         onTapped();
-          //       },
-          //     ),
-          //     SizedBox(
-          //       height: MediaQuery.of(context).padding.bottom,
-          //     )
-          //   ],
-          // ),
+          Column(
+            children: <Widget>[
+              ListTile(
+                title: Text(
+                  'Sign Out',
+                  style: TextStyle(
+                    fontFamily: AppTheme.fontName,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16,
+                    color: AppTheme.darkText,
+                  ),
+                  textAlign: TextAlign.left,
+                ),
+                trailing: Icon(
+                  Icons.power_settings_new,
+                  color: Colors.red,
+                ),
+                onTap: () {
+                  onTapped();
+                },
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).padding.bottom,
+              )
+            ],
+          ),
         ],
       ),
     );
@@ -227,9 +227,9 @@ class _HomeDrawerState extends State<HomeDrawer> {
                     width: 6.0,
                     height: 46.0,
                     decoration: BoxDecoration(
-                      color: widget.screenIndex == listData.index
-                          ? Colors.blue
-                          : Colors.transparent,
+                      color:
+                          // widget.screenIndex == listData.index ? Colors.blue :
+                          Colors.transparent,
                       borderRadius: new BorderRadius.only(
                         topLeft: Radius.circular(0),
                         topRight: Radius.circular(16),
@@ -251,20 +251,20 @@ class _HomeDrawerState extends State<HomeDrawer> {
                                   : AppTheme.nearlyBlack),
                         )
                       : Icon(listData.icon?.icon,
-                          color: widget.screenIndex == listData.index
-                              ? Colors.blue
-                              : AppTheme.nearlyBlack),
+                          color:
+                              //  widget.screenIndex == listData.index  ? Colors.blue :
+                              AppTheme.nearlyBlack),
                   const Padding(
                     padding: EdgeInsets.all(4.0),
                   ),
                   Text(
                     listData.labelName,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 16,
-                      color: widget.screenIndex == listData.index
-                          ? Colors.blue
-                          : AppTheme.nearlyBlack,
+                      color:
+                          // widget.screenIndex == listData.index ? Colors.blue :
+                          AppTheme.nearlyBlack,
                     ),
                     textAlign: TextAlign.left,
                   ),
@@ -283,23 +283,23 @@ class _HomeDrawerState extends State<HomeDrawer> {
                                     1.0),
                             0.0,
                             0.0),
-                        child: Padding(
-                          padding: EdgeInsets.only(top: 8, bottom: 8),
-                          child: Container(
-                            width:
-                                MediaQuery.of(context).size.width * 0.75 - 64,
-                            height: 46,
-                            decoration: BoxDecoration(
-                              color: Colors.amber.withOpacity(0.2),
-                              borderRadius: new BorderRadius.only(
-                                topLeft: Radius.circular(0),
-                                topRight: Radius.circular(28),
-                                bottomLeft: Radius.circular(0),
-                                bottomRight: Radius.circular(28),
-                              ),
-                            ),
-                          ),
-                        ),
+                        // child: Padding(
+                        //   padding: EdgeInsets.only(top: 8, bottom: 8),
+                        //   child: Container(
+                        //     width:
+                        //         MediaQuery.of(context).size.width * 0.75 - 64,
+                        //     height: 46,
+                        //     decoration: BoxDecoration(
+                        //       color: Colors.amber.withOpacity(0.2),
+                        //       borderRadius: new BorderRadius.only(
+                        //         topLeft: Radius.circular(0),
+                        //         topRight: Radius.circular(28),
+                        //         bottomLeft: Radius.circular(0),
+                        //         bottomRight: Radius.circular(28),
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
                       );
                     },
                   )

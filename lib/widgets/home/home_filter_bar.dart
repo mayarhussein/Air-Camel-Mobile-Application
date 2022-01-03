@@ -1,4 +1,4 @@
-import 'package:air_camel/pages/home/filters_screen.dart';
+import 'package:air_camel/pages/client/bottom_bar_screens/new_shipment/filters_screen.dart';
 import 'package:air_camel/resources/app_theme.dart';
 import 'package:flutter/material.dart';
 
