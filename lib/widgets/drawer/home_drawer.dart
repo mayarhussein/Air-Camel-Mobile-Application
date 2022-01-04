@@ -32,11 +32,6 @@ class _HomeDrawerState extends State<HomeDrawer> {
   void setDrawerListArray() {
     drawerList = <DrawerList>[
       DrawerList(
-        index: DrawerIndex.HOME,
-        labelName: 'Home',
-        icon: Icon(Icons.home),
-      ),
-      DrawerList(
           index: DrawerIndex.Notifications,
           labelName: 'Notifications ',
           icon: Icon(Icons.notifications_active)),

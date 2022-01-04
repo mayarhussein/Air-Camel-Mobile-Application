@@ -1,3 +1,4 @@
+import 'package:air_camel/pages/side_drawer_screens/help_screen.dart';
 import 'package:air_camel/providers/accounts_provider.dart';
 import 'package:air_camel/models/drawer/drawer_list.dart';
 import 'package:air_camel/pages/account/account_screen.dart';
@@ -94,13 +95,9 @@ class _ClientNavigationScreenState extends State<ClientNavigationScreen> {
   void changeIndexDrawer(DrawerIndex drawerIndexdata) {
     if (drawerIndex != drawerIndexdata) {
       drawerIndex = drawerIndexdata;
-      if (drawerIndex == DrawerIndex.HOME) {
+      if (drawerIndex == DrawerIndex.Help) {
         setState(() {
-          screenView = HomeScreen();
-        });
-      } else if (drawerIndex == DrawerIndex.Help) {
-        setState(() {
-          screenView = AccountScreen();
+          Navigator.of(context).pushNamed(HelpScreen.routeName);
         });
       } else if (drawerIndex == DrawerIndex.Notifications) {
         setState(() {

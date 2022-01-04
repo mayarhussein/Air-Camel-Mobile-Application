@@ -5,6 +5,12 @@ class InviteScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        shadowColor: Colors.white,
+      ),
+    );
   }
 }
