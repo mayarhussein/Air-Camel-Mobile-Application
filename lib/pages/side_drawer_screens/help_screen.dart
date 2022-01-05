@@ -22,17 +22,28 @@ class _HelpScreenState extends State<HelpScreen> {
         top: false,
         child: Scaffold(
           backgroundColor: AppTheme.nearlyWhite,
+          appBar: AppBar(
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back_ios_new),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            backgroundColor: Colors.white,
+            elevation: 0,
+            shadowColor: Colors.transparent,
+          ),
           body: Column(
             children: <Widget>[
               Container(
                 padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).padding.top,
+                    top: MediaQuery.of(context).padding.top * 0.2,
                     left: 16,
                     right: 16),
                 child: Image.asset('assets/images/helpImage.png'),
               ),
               Container(
-                padding: const EdgeInsets.only(top: 8),
+                padding: const EdgeInsets.only(top: 3),
                 child: Text(
                   'How can we help you?',
                   style: TextStyle(

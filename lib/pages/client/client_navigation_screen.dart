@@ -1,4 +1,9 @@
+import 'package:air_camel/pages/side_drawer_screens/about_us_screen.dart';
+import 'package:air_camel/pages/side_drawer_screens/credit_screen.dart';
 import 'package:air_camel/pages/side_drawer_screens/help_screen.dart';
+import 'package:air_camel/pages/side_drawer_screens/invite_screen.dart';
+import 'package:air_camel/pages/side_drawer_screens/notifications_screen.dart';
+import 'package:air_camel/pages/side_drawer_screens/offers_screen.dart';
 import 'package:air_camel/providers/accounts_provider.dart';
 import 'package:air_camel/models/drawer/drawer_list.dart';
 import 'package:air_camel/pages/account/account_screen.dart';
@@ -101,11 +106,23 @@ class _ClientNavigationScreenState extends State<ClientNavigationScreen> {
         });
       } else if (drawerIndex == DrawerIndex.Notifications) {
         setState(() {
-          // screenView = FeedbackScreen();
+          Navigator.of(context).pushNamed(NotificationsScreen.routeName);
+        });
+      } else if (drawerIndex == DrawerIndex.Credit) {
+        setState(() {
+          Navigator.of(context).pushNamed(CreditScreen.routeName);
+        });
+      } else if (drawerIndex == DrawerIndex.Offers) {
+        setState(() {
+          Navigator.of(context).pushNamed(OffersScreen.routeName);
         });
       } else if (drawerIndex == DrawerIndex.Invite) {
         setState(() {
-          // screenView = InviteFriend();
+          Navigator.of(context).pushNamed(InviteScreen.routeName);
+        });
+      } else if (drawerIndex == DrawerIndex.About) {
+        setState(() {
+          Navigator.of(context).pushNamed(AboutUsScreen.routeName);
         });
       } else {
         //do in your way......

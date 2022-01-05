@@ -37,7 +37,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
           icon: Icon(Icons.notifications_active)),
       DrawerList(
         index: DrawerIndex.Credit,
-        labelName: 'Credit',
+        labelName: 'Credit & Payments',
         icon: Icon(Icons.credit_card_rounded),
       ),
       DrawerList(
