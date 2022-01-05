@@ -60,9 +60,7 @@ class _ClientNavigationScreenState extends State<ClientNavigationScreen> {
                 changeIndexBottomBar(index);
               },
               screenView: screenView,
-              //we replace screen view as we need on navigate starting screens like MyHomePage, HelpScreen, FeedbackScreen, etc...
             ),
-            // BottomBar(),
           ]),
         ),
       ),

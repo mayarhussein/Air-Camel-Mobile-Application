@@ -1,4 +1,6 @@
+import 'package:air_camel/models/drawer/payments.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class CreditScreen extends StatelessWidget {
   static const routeName = '/credit';
@@ -45,7 +47,30 @@ class CreditScreen extends StatelessWidget {
                 ),
               ),
             ),
-            // ListView.builder(itemBuilder: itemBuilder)
+            Container(
+                margin: EdgeInsets.all(4), child: Text("Payments history")),
+            Expanded(
+              child: Container(
+                margin: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+                height: 200,
+                child: ListView.builder(
+                  itemBuilder: (context, index) {
+                    return Card(
+                      elevation: 0,
+                      color: Colors.white12,
+                      child: Container(
+                        child: Text("Amount: " +
+                            Payment.paymentList[index].amount.toString() +
+                            "Date: " +
+                            DateFormat.yMMMd()
+                                .format(Payment.paymentList[index].dateTime)),
+                      ),
+                    );
+                  },
+                  itemCount: Payment.paymentList.length,
+                ),
+              ),
+            )
           ],
         ),
       ),

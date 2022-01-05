@@ -24,7 +24,7 @@ class _BottomBarViewState extends State<BottomBarView>
   void initState() {
     animationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1000),
+      duration: const Duration(milliseconds: 1),
     );
     animationController?.forward();
     super.initState();
@@ -38,80 +38,76 @@ class _BottomBarViewState extends State<BottomBarView>
         AnimatedBuilder(
           animation: animationController!,
           builder: (BuildContext context, Widget? child) {
-            return Transform(
-              transform: Matrix4.translationValues(0.0, 0.0, 0.0),
-              child: PhysicalShape(
-                color: AppTheme.white,
-                elevation: 16.0,
-                clipper: TabClipper(
-                    radius: Tween<double>(begin: 0.0, end: 1.0)
-                            .animate(CurvedAnimation(
-                                parent: animationController!,
-                                curve: Curves.fastOutSlowIn))
-                            .value *
-                        38.0),
-                child: Column(
-                  children: <Widget>[
-                    SizedBox(
-                      height: 62,
-                      child: Padding(
-                        padding:
-                            const EdgeInsets.only(left: 8, right: 8, top: 4),
-                        child: Row(
-                          children: <Widget>[
-                            Expanded(
-                              child: TabIcons(
-                                  tabIconData: widget.tabIconsList?[0],
-                                  removeAllSelect: () {
-                                    setRemoveAllSelection(
-                                        widget.tabIconsList?[0]);
-                                    widget.changeIndex!(0);
-                                  }),
-                            ),
-                            Expanded(
-                              child: TabIcons(
-                                  tabIconData: widget.tabIconsList?[1],
-                                  removeAllSelect: () {
-                                    setRemoveAllSelection(
-                                        widget.tabIconsList?[1]);
-                                    widget.changeIndex!(1);
-                                  }),
-                            ),
-                            SizedBox(
-                              width: Tween<double>(begin: 0.0, end: 1.0)
-                                      .animate(CurvedAnimation(
-                                          parent: animationController!,
-                                          curve: Curves.fastOutSlowIn))
-                                      .value *
-                                  64.0,
-                            ),
-                            Expanded(
-                              child: TabIcons(
-                                  tabIconData: widget.tabIconsList?[2],
-                                  removeAllSelect: () {
-                                    setRemoveAllSelection(
-                                        widget.tabIconsList?[2]);
-                                    widget.changeIndex!(2);
-                                  }),
-                            ),
-                            Expanded(
-                              child: TabIcons(
-                                  tabIconData: widget.tabIconsList?[3],
-                                  removeAllSelect: () {
-                                    setRemoveAllSelection(
-                                        widget.tabIconsList?[3]);
-                                    widget.changeIndex!(3);
-                                  }),
-                            ),
-                          ],
-                        ),
+            return PhysicalShape(
+              color: AppTheme.white,
+              elevation: 16.0,
+              clipper: TabClipper(
+                  radius: Tween<double>(begin: 0.0, end: 1.0)
+                          .animate(CurvedAnimation(
+                              parent: animationController!,
+                              curve: Curves.fastOutSlowIn))
+                          .value *
+                      38.0),
+              child: Column(
+                children: <Widget>[
+                  SizedBox(
+                    height: 62,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 8, right: 8, top: 4),
+                      child: Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: TabIcons(
+                                tabIconData: widget.tabIconsList?[0],
+                                removeAllSelect: () {
+                                  setRemoveAllSelection(
+                                      widget.tabIconsList?[0]);
+                                  widget.changeIndex!(0);
+                                }),
+                          ),
+                          Expanded(
+                            child: TabIcons(
+                                tabIconData: widget.tabIconsList?[1],
+                                removeAllSelect: () {
+                                  setRemoveAllSelection(
+                                      widget.tabIconsList?[1]);
+                                  widget.changeIndex!(1);
+                                }),
+                          ),
+                          SizedBox(
+                            width: Tween<double>(begin: 0.0, end: 1.0)
+                                    .animate(CurvedAnimation(
+                                        parent: animationController!,
+                                        curve: Curves.fastOutSlowIn))
+                                    .value *
+                                64.0,
+                          ),
+                          Expanded(
+                            child: TabIcons(
+                                tabIconData: widget.tabIconsList?[2],
+                                removeAllSelect: () {
+                                  setRemoveAllSelection(
+                                      widget.tabIconsList?[2]);
+                                  widget.changeIndex!(2);
+                                }),
+                          ),
+                          Expanded(
+                            child: TabIcons(
+                                tabIconData: widget.tabIconsList?[3],
+                                removeAllSelect: () {
+                                  setRemoveAllSelection(
+                                      widget.tabIconsList?[3]);
+                                  widget.changeIndex!(3);
+                                }),
+                          ),
+                        ],
                       ),
                     ),
-                    SizedBox(
-                      height: MediaQuery.of(context).padding.bottom,
-                    )
-                  ],
-                ),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).padding.bottom,
+                  )
+                ],
               ),
             );
           },
@@ -130,43 +126,33 @@ class _BottomBarViewState extends State<BottomBarView>
                 height: 38 * 2.0,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: ScaleTransition(
-                    alignment: Alignment.center,
-                    scale: Tween<double>(begin: 0.0, end: 1.0).animate(
-                        CurvedAnimation(
-                            parent: animationController!,
-                            curve: Curves.fastOutSlowIn)),
-                    child: Container(
-                      // alignment: Alignment.center,s
-                      decoration: BoxDecoration(
-                        color: Colors.amber,
-                        gradient: LinearGradient(
-                            colors: [
-                              Colors.amber.withOpacity(0.1),
-                              Colors.amber,
-                            ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight),
-                        shape: BoxShape.circle,
-                        boxShadow: <BoxShadow>[
-                          BoxShadow(
-                              color: Colors.amber.withOpacity(0.4),
-                              offset: const Offset(8.0, 16.0),
-                              blurRadius: 16.0),
-                        ],
-                      ),
-                      child: Material(
-                        color: Colors.transparent,
-                        child: InkWell(
-                          splashColor: Colors.white.withOpacity(0.1),
-                          highlightColor: Colors.transparent,
-                          focusColor: Colors.transparent,
-                          onTap: widget.addClick,
-                          child: Icon(
-                            Icons.add,
-                            color: AppTheme.white,
-                            size: 32,
-                          ),
+                  child: Container(
+                    // alignment: Alignment.center,s
+                    decoration: BoxDecoration(
+                      color: Colors.amber,
+                      gradient: LinearGradient(colors: [
+                        Colors.amber.withOpacity(0.1),
+                        Colors.amber,
+                      ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+                      shape: BoxShape.circle,
+                      boxShadow: <BoxShadow>[
+                        BoxShadow(
+                            color: Colors.amber.withOpacity(0.4),
+                            offset: const Offset(8.0, 16.0),
+                            blurRadius: 16.0),
+                      ],
+                    ),
+                    child: Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        splashColor: Colors.white.withOpacity(0.1),
+                        highlightColor: Colors.transparent,
+                        focusColor: Colors.transparent,
+                        onTap: widget.addClick,
+                        child: Icon(
+                          Icons.add,
+                          color: AppTheme.white,
+                          size: 32,
                         ),
                       ),
                     ),
