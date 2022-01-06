@@ -219,7 +219,7 @@ class HomeScreen extends StatelessWidget {
                                 colors: [Colors.white10, Colors.green.shade300],
                                 begin: Alignment.topLeft)),
                         padding: EdgeInsets.all(15),
-                        width: 200,
+                        width: 250,
                         child: Text(
                           FeaturedOffer.featuredOffersList[index].offerMsg,
                           style: GoogleFonts.lobster(fontSize: 25),
