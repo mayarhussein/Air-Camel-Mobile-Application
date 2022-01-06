@@ -75,89 +75,79 @@ class CreditScreen extends StatelessWidget {
                             fontSize: 26, fontWeight: FontWeight.bold),
                       ),
                     ),
-                    Card(
-                      color: Colors.transparent,
-                      shadowColor: Colors.white70,
-                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      elevation: 5,
-                      child: Container(
-                        margin:
-                            EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-                        height: 400,
-                        child: ListView.builder(
-                          itemBuilder: (context, index) {
-                            return Card(
-                              clipBehavior: Clip.antiAliasWithSaveLayer,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10)),
-                              elevation: 2,
-                              color: Colors.white,
-                              child: Container(
-                                width: double.maxFinite * 0.9,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            "Company Name",
-                                            style: TextStyle(fontSize: 16),
-                                          ),
-                                          Text(
-                                            "Amount: " +
-                                                Payment
-                                                    .paymentList[index].amount
-                                                    .toString(),
-                                            style: TextStyle(fontSize: 16),
-                                          ),
-                                        ],
-                                      ),
+                    Container(
+                      margin:
+                          EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                      height: 400,
+                      child: ListView.builder(
+                        itemBuilder: (context, index) {
+                          return Card(
+                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            elevation: 2,
+                            color: Colors.amber.shade100.withOpacity(0.9),
+                            child: Container(
+                              width: double.maxFinite * 0.9,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          "Company Name",
+                                          style: TextStyle(fontSize: 16),
+                                        ),
+                                        Text(
+                                          "Amount: " +
+                                              Payment.paymentList[index].amount
+                                                  .toString(),
+                                          style: TextStyle(fontSize: 16),
+                                        ),
+                                      ],
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text("Date: " +
-                                              DateFormat.yMMMd().format(Payment
-                                                  .paymentList[index]
-                                                  .dateTime)),
-                                          Row(
-                                            children: [
-                                              TextButton(
-                                                  onPressed: () {},
-                                                  child: Text(
-                                                    "View",
-                                                    style: TextStyle(
-                                                        color: Colors.blue),
-                                                  )),
-                                              IconButton(
-                                                  onPressed: () {},
-                                                  icon: Icon(
-                                                    Icons.report_problem,
-                                                    color: Colors.red,
-                                                  )),
-                                            ],
-                                          )
-                                        ],
-                                      ),
-                                    )
-                                  ],
-                                ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text("Date: " +
+                                            DateFormat.yMMMd().format(Payment
+                                                .paymentList[index].dateTime)),
+                                        Row(
+                                          children: [
+                                            TextButton(
+                                                onPressed: () {},
+                                                child: Text(
+                                                  "View",
+                                                  style: TextStyle(
+                                                      color: Colors.blue),
+                                                )),
+                                            IconButton(
+                                                onPressed: () {},
+                                                icon: Icon(
+                                                  Icons.report_problem,
+                                                  color: Colors.red,
+                                                )),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  )
+                                ],
                               ),
-                            );
-                          },
-                          itemCount: Payment.paymentList.length,
-                        ),
+                            ),
+                          );
+                        },
+                        itemCount: Payment.paymentList.length,
                       ),
                     )
                   ],

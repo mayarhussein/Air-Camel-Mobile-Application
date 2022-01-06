@@ -188,12 +188,10 @@ class _NavigationControllerState extends State<NavigationController>
                         ),
                       ),
                       IgnorePointer(
-                        ignoring: scrolloffset == 1 || false,
+                        ignoring: scrolloffset == 1,
                         child: widget.screenView,
                       ),
-                      scrolloffset == 0
-                          ? BottomBar(widget.onBottomBarCall)
-                          : Container(),
+                      BottomBar(widget.onBottomBarCall),
                     ],
                   ),
                 ),
