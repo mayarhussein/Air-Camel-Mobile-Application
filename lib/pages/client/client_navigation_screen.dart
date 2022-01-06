@@ -10,7 +10,7 @@ import 'package:air_camel/pages/account/account_screen.dart';
 import 'package:air_camel/pages/client/bottom_bar_screens/home_screen.dart';
 import 'package:air_camel/pages/client/bottom_bar_screens/new_shipment/new_shipment_menu_screen.dart';
 import 'package:air_camel/resources/app_theme.dart';
-import 'package:air_camel/widgets/bottom_navigation/bottom_bar.dart';
+import 'package:air_camel/widgets/bottom_bar/bottom_bar.dart';
 import 'package:air_camel/widgets/drawer/navigation_controller.dart';
 
 import 'package:flutter/material.dart';
@@ -42,12 +42,12 @@ class _ClientNavigationScreenState extends State<ClientNavigationScreen> {
     final accountsData = Provider.of<AccountsProvider>(context);
 
     return Container(
-      color: AppTheme.nearlyWhite,
+      color: Colors.white,
       child: SafeArea(
         top: false,
         bottom: false,
         child: Scaffold(
-          backgroundColor: AppTheme.nearlyWhite,
+          backgroundColor: Colors.white,
           body: Stack(children: [
             NavigationController(
               screenIndex: drawerIndex,

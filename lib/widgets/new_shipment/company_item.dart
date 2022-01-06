@@ -3,7 +3,7 @@ import 'package:air_camel/resources/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:air_camel/models/company_data_list.dart';
-import 'package:air_camel/widgets/home/home_list_view.dart';
+import 'package:air_camel/widgets/new_shipment/list_view.dart';
 
 class HomeTripItem extends StatelessWidget {
   final CompanyDataList? companyData;

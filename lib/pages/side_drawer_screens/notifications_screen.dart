@@ -17,6 +17,7 @@ class NotificationsScreen extends StatelessWidget {
         elevation: 0,
         shadowColor: Colors.transparent,
       ),
+      body: Container(),
     );
   }
 }

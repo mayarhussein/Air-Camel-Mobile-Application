@@ -1,6 +1,6 @@
 import 'package:air_camel/models/company_data_list.dart';
 import 'package:air_camel/resources/app_theme.dart';
-import 'package:air_camel/widgets/home/home_trip_item.dart';
+import 'package:air_camel/widgets/new_shipment/company_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
@@ -58,7 +58,7 @@ class HomeListView extends StatelessWidget {
                               //   fit: BoxFit.cover,
                               // ),
                             ),
-                           HomeTripItem(companyData),
+                            HomeTripItem(companyData),
                           ],
                         ),
                         Positioned(

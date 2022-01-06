@@ -1,6 +1,6 @@
 import 'package:air_camel/models/company_data_list.dart';
 import 'package:air_camel/resources/app_theme.dart';
-import 'package:air_camel/widgets/home/home_list_view.dart';
+import 'package:air_camel/widgets/new_shipment/list_view.dart';
 import 'package:flutter/material.dart';
 
 class HomeList extends StatefulWidget {

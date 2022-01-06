@@ -1,6 +1,6 @@
 import 'package:air_camel/models/bottom_navigation/bottom_bar_model.dart';
 import 'package:air_camel/models/drawer/drawer_list.dart';
-import 'package:air_camel/widgets/bottom_navigation/bottom_bar.dart';
+import 'package:air_camel/widgets/bottom_bar/bottom_bar.dart';
 import 'package:air_camel/widgets/drawer/home_drawer.dart';
 import 'package:air_camel/resources/app_theme.dart';
 import 'package:flutter/material.dart';
@@ -117,22 +117,17 @@ class _NavigationControllerState extends State<NavigationController>
                 child: AnimatedBuilder(
                   animation: iconAnimationController!,
                   builder: (BuildContext context, Widget? child) {
-                    return Transform(
-                      //transform we use for the stable drawer  we, not need to move with scroll view
-                      transform: Matrix4.translationValues(
-                          scrollController!.offset, 0.0, 0.0),
-                      child: HomeDrawer(
-                        screenIndex: widget.screenIndex == null
-                            ? DrawerIndex.HOME
-                            : widget.screenIndex,
-                        iconAnimationController: iconAnimationController,
-                        callBackIndex: (DrawerIndex indexType) {
-                          onDrawerClick();
-                          try {
-                            widget.onDrawerCall!(indexType);
-                          } catch (e) {}
-                        },
-                      ),
+                    return HomeDrawer(
+                      screenIndex: widget.screenIndex == null
+                          ? DrawerIndex.HOME
+                          : widget.screenIndex,
+                      iconAnimationController: iconAnimationController,
+                      callBackIndex: (DrawerIndex indexType) {
+                        onDrawerClick();
+                        try {
+                          widget.onDrawerCall!(indexType);
+                        } catch (e) {}
+                      },
                     );
                   },
                 ),
@@ -153,10 +148,6 @@ class _NavigationControllerState extends State<NavigationController>
                   child: Stack(
                     children: <Widget>[
                       //this IgnorePointer we use as touch(user Interface) widget.screen View, for example scrolloffset == 1 means drawer is close we just allow touching all widget.screen View
-                      IgnorePointer(
-                        // ignoring: scrolloffset == 1 || false,
-                        child: widget.screenView,
-                      ),
                       //alternative touch(user Interface) for widget.screen, for example, drawer is close we need to tap on a few home screen area and close the drawer
                       if (scrolloffset == 1.0)
                         InkWell(
@@ -195,6 +186,10 @@ class _NavigationControllerState extends State<NavigationController>
                             ),
                           ),
                         ),
+                      ),
+                      IgnorePointer(
+                        ignoring: scrolloffset == 1 || false,
+                        child: widget.screenView,
                       ),
                       scrolloffset == 0
                           ? BottomBar(widget.onBottomBarCall)
