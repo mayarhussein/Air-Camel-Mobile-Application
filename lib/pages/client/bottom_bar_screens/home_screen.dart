@@ -84,7 +84,7 @@ class HomeScreen extends StatelessWidget {
                                 gradient: LinearGradient(
                                     colors: [
                                   Colors.amber.shade100,
-                                  Colors.lightBlue.shade800,
+                                  Colors.lightGreen.shade800,
                                 ],
                                     begin: Alignment.bottomLeft,
                                     end: Alignment.topRight)),
@@ -132,7 +132,7 @@ class HomeScreen extends StatelessWidget {
                                 gradient: LinearGradient(
                                     colors: [
                                   Colors.amber.shade100,
-                                  Colors.lightBlue.shade800,
+                                  Colors.red.shade400,
                                 ],
                                     begin: Alignment.topRight,
                                     end: Alignment.bottomLeft)),
@@ -172,7 +172,7 @@ class HomeScreen extends StatelessWidget {
                                 gradient: LinearGradient(
                                     colors: [
                                   Colors.amber.shade100,
-                                  Colors.lightBlue.shade800,
+                                  Colors.purple.shade400,
                                 ],
                                     begin: Alignment.topLeft,
                                     end: Alignment.bottomRight)),
@@ -215,9 +215,11 @@ class HomeScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10)),
                       child: Container(
                         decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                                colors: [Colors.white10, Colors.green.shade300],
-                                begin: Alignment.topLeft)),
+                            gradient: LinearGradient(colors: [
+                          Colors.white10,
+                          Colors.teal,
+                          Colors.blueGrey,
+                        ], begin: Alignment.topLeft)),
                         padding: EdgeInsets.all(15),
                         width: 250,
                         child: Text(
