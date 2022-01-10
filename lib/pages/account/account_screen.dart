@@ -37,7 +37,7 @@ class _AccountScreenState extends State<AccountScreen> {
                     style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.w700,
-                      color: Color.fromRGBO(64, 105, 225, 1),
+                      color: Colors.amber,
                     ),
                   ))),
           InkWell(

@@ -63,10 +63,15 @@ class _EditImagePageState extends State<EditImagePage> {
                     width: 330,
                     height: 50,
                     child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                            primary: Colors.amber,
+                             shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30)),
+                              ),
                       onPressed: () {},
                       child: const Text(
                         'Update',
-                        style: TextStyle(fontSize: 15),
+                        style: TextStyle(fontSize: 15, color: Colors.white),
                       ),
                     ),
                   )))

@@ -80,10 +80,14 @@ class EditEmailFormPageState extends State<EditEmailFormPage> {
                                 updateUserValue(emailController.text);
                                 Navigator.pop(context);
                               }
-                            },
+                            },style: ElevatedButton.styleFrom(
+                            primary: Colors.amber,
+                             shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30)),
+                              ),
                             child: const Text(
                               'Update',
-                              style: TextStyle(fontSize: 15),
+                              style: TextStyle(fontSize: 15, color: Colors.white),
                             ),
                           ),
                         )))
