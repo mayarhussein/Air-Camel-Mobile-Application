@@ -100,6 +100,7 @@ class EditNameFormPageState extends State<EditNameFormPage> {
                         width: 330,
                         height: 50,
                         child: ElevatedButton(
+                        
                           onPressed: () {
                             // Validate returns true if the form is valid, or false otherwise.
                             if (_formKey.currentState!.validate() &&
@@ -110,10 +111,14 @@ class EditNameFormPageState extends State<EditNameFormPage> {
                                   secondNameController.text);
                               Navigator.pop(context);
                             }
-                          },
+                          },style: ElevatedButton.styleFrom(
+                            primary: Colors.amber,
+                             shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30)),
+                              ),
                           child: const Text(
                             'Update',
-                            style: TextStyle(fontSize: 15),
+                            style: TextStyle(fontSize: 15, color: Colors.white),
                           ),
                         ),
                       )))
