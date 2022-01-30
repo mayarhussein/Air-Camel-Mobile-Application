@@ -5,6 +5,9 @@ import 'package:air_camel/pages/client/bottom_bar_screens/new_shipment/filters_s
 import 'package:air_camel/pages/client/bottom_bar_screens/new_shipment/new_shipment_menu_screen.dart';
 import 'package:air_camel/pages/client/client_navigation_screen.dart';
 import 'package:air_camel/pages/client/bottom_bar_screens/new_shipment/trip_detail_screen.dart';
+import 'package:air_camel/pages/company/complaints_screen.dart';
+import 'package:air_camel/pages/company/edit_categories.dart';
+import 'package:air_camel/pages/company/payment_history.dart';
 import 'package:air_camel/pages/side_drawer_screens/about_us_screen.dart';
 import 'package:air_camel/pages/side_drawer_screens/credit_screen.dart';
 import 'package:air_camel/pages/side_drawer_screens/help_screen.dart';
@@ -63,10 +66,10 @@ class MyApp extends StatelessWidget {
             // platform: TargetPlatform.iOS,
           ),
 
-          // home: ClientNavigationScreen(),
+           home: ClientNavigationScreen(),
           //home:SplashScreen(3,WelcomeScreen.routeName),
           // home: WelcomeScreen(),
-          home: CompanyNavigationScreen(),
+          //home: CompanyNavigationScreen(),
           routes: {
             FiltersScreen.routeName: (ctx) => FiltersScreen(),
             ClientNavigationScreen.routeName: (ctx) => ClientNavigationScreen(),
@@ -82,6 +85,10 @@ class MyApp extends StatelessWidget {
             CreditScreen.routeName: (ctx) => CreditScreen(),
             OffersScreen.routeName: (ctx) => OffersScreen(),
             InviteScreen.routeName: (ctx) => InviteScreen(),
+            EditCategories.routeName : (ctx) => EditCategories(),
+            ComplaintsScreen.routeName: (ctx) => ComplaintsScreen(),
+            PayementsHistory.routeName: (ctx) => PayementsHistory()
+
           },
         ));
   }

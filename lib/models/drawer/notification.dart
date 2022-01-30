@@ -33,7 +33,7 @@ class NotificationModel {
         idTo: 1,
         dateTime: DateTime.now().subtract(Duration(days: 5))),
     NotificationModel(
-        message: "You package has is returning",
+        message: "Your package is returning",
         subject: "",
         idFrom: 0,
         idTo: 1,
