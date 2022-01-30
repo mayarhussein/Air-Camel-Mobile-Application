@@ -7,11 +7,8 @@ import 'package:air_camel/pages/side_drawer_screens/offers_screen.dart';
 import 'package:air_camel/providers/accounts_provider.dart';
 import 'package:air_camel/models/drawer/drawer_list.dart';
 import 'package:air_camel/pages/account/account_screen.dart';
-import 'package:air_camel/pages/client/bottom_bar_screens/home_screen.dart';
-import 'package:air_camel/pages/client/bottom_bar_screens/new_shipment/new_shipment_menu_screen.dart';
-import 'package:air_camel/resources/app_theme.dart';
-import 'package:air_camel/widgets/bottom_bar/bottom_bar.dart';
-import 'package:air_camel/widgets/drawer/navigation_controller.dart';
+import 'package:air_camel/pages/client/bottom_bar_screens/client_home_screen.dart';
+import 'package:air_camel/widgets/drawer/client_navigation_controller.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -32,7 +29,7 @@ class _ClientNavigationScreenState extends State<ClientNavigationScreen> {
   @override
   void initState() {
     drawerIndex = DrawerIndex.HOME;
-    screenView = HomeScreen();
+    screenView = ClientHomeScreen();
     super.initState();
   }
 
@@ -49,7 +46,7 @@ class _ClientNavigationScreenState extends State<ClientNavigationScreen> {
         child: Scaffold(
           backgroundColor: Colors.white,
           body: Stack(children: [
-            NavigationController(
+            ClientNavigationController(
               screenIndex: drawerIndex,
               drawerWidth: MediaQuery.of(context).size.width * 0.75,
               onDrawerCall: (DrawerIndex drawerIndexdata) {
@@ -71,7 +68,7 @@ class _ClientNavigationScreenState extends State<ClientNavigationScreen> {
     switch (index) {
       case 0:
         setState(() {
-          screenView = HomeScreen();
+          screenView = ClientHomeScreen();
         });
         break;
       case 1:

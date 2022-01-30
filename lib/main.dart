@@ -11,6 +11,7 @@ import 'package:air_camel/pages/side_drawer_screens/help_screen.dart';
 import 'package:air_camel/pages/side_drawer_screens/invite_screen.dart';
 import 'package:air_camel/pages/side_drawer_screens/notifications_screen.dart';
 import 'package:air_camel/pages/side_drawer_screens/offers_screen.dart';
+import 'package:air_camel/pages/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
@@ -62,9 +63,10 @@ class MyApp extends StatelessWidget {
             // platform: TargetPlatform.iOS,
           ),
 
-          home: ClientNavigationScreen(),
+          // home: ClientNavigationScreen(),
           //home:SplashScreen(3,WelcomeScreen.routeName),
           // home: WelcomeScreen(),
+          home: CompanyNavigationScreen(),
           routes: {
             FiltersScreen.routeName: (ctx) => FiltersScreen(),
             ClientNavigationScreen.routeName: (ctx) => ClientNavigationScreen(),

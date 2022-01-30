@@ -1,16 +1,14 @@
 import 'package:air_camel/models/bottom_navigation/bottom_bar_model.dart';
 import 'package:air_camel/models/drawer/drawer_list.dart';
-import 'package:air_camel/widgets/bottom_bar/bottom_bar.dart';
 import 'package:air_camel/widgets/drawer/home_drawer.dart';
 import 'package:air_camel/resources/app_theme.dart';
 import 'package:flutter/material.dart';
 
-class NavigationController extends StatefulWidget {
-  const NavigationController({
+class CompanyNavigationController extends StatefulWidget {
+  const CompanyNavigationController({
     Key? key,
     this.drawerWidth = 250,
     this.onDrawerCall,
-    this.onBottomBarCall,
     this.screenView,
     this.animatedIconData = AnimatedIcons.arrow_menu,
     this.menuView,
@@ -20,7 +18,6 @@ class NavigationController extends StatefulWidget {
 
   final double drawerWidth;
   final Function(DrawerIndex)? onDrawerCall;
-  final Function(int)? onBottomBarCall;
   final Widget? screenView;
   final Function(bool)? drawerIsOpen;
   final AnimatedIconData? animatedIconData;
@@ -28,11 +25,12 @@ class NavigationController extends StatefulWidget {
   final DrawerIndex? screenIndex;
 
   @override
-  _NavigationControllerState createState() => _NavigationControllerState();
+  _CompanyNavigationControllerState createState() =>
+      _CompanyNavigationControllerState();
 }
 
-class _NavigationControllerState extends State<NavigationController>
-    with TickerProviderStateMixin {
+class _CompanyNavigationControllerState
+    extends State<CompanyNavigationController> with TickerProviderStateMixin {
   ScrollController? scrollController;
   AnimationController? iconAnimationController;
   AnimationController? animationController;
@@ -191,7 +189,6 @@ class _NavigationControllerState extends State<NavigationController>
                         ignoring: scrolloffset == 1,
                         child: widget.screenView,
                       ),
-                      BottomBar(widget.onBottomBarCall),
                     ],
                   ),
                 ),

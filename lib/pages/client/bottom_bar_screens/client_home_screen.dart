@@ -2,7 +2,7 @@ import 'package:air_camel/models/drawer/featured_offer.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class HomeScreen extends StatelessWidget {
+class ClientHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
