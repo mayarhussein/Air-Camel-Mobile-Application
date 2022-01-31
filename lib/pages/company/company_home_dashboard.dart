@@ -1,7 +1,7 @@
 import 'package:air_camel/models/orders.dart';
 import 'package:air_camel/pages/company/edit_categories.dart';
 import 'package:air_camel/pages/company/payment_history.dart';
-import 'package:air_camel/widgets/company/home_item.dart';
+import 'package:air_camel/widgets/company/company_home_btn.dart';
 import 'package:air_camel/widgets/company/shipments_list.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -35,31 +35,59 @@ class CompanyHomeDashboard extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                CompanyItem("Edit Categories", EditCategories.routeName),
-                CompanyItem("Shipment History", PayementsHistory.routeName)
+                CompanyHomeBtn(
+                    "Edit Categories",
+                    EditCategories.routeName,
+                    Colors.cyan.shade100,
+                    Colors.cyan.shade900,
+                    Icons.mode_edit_outlined),
+                CompanyHomeBtn(
+                    "Shipment History",
+                    PayementsHistory.routeName,
+                    Colors.blue.shade100,
+                    Colors.blue.shade900,
+                    Icons.history_edu_rounded)
               ],
             ),
           ),
-          CompanyItem(
-            "Show Complanits", ComplaintsScreen.routeName
-          ),
           Container(
             padding: EdgeInsets.all(10),
-            height: 500,
-            child: Column(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                  child: Text("Pending Requestes:",
-                      textAlign: TextAlign.start,
-                      style: GoogleFonts.fredokaOne(fontSize: 20)),
-                ),
-                Container(
-                  height: 400,
-                  child: ShipmentsList(),
-                ),
+                CompanyHomeBtn(
+                    "Show Complanits",
+                    ComplaintsScreen.routeName,
+                    Colors.red.shade100,
+                    Colors.red.shade900,
+                    Icons.error_outline_outlined),
+                CompanyHomeBtn("New Offer", PayementsHistory.routeName,
+                    Colors.pink.shade100, Colors.pink.shade900, Icons.add)
               ],
+            ),
+          ),
+          // CompanyHomeBtn("Show Complanits", ComplaintsScreen.routeName),
+          Card(
+            margin: EdgeInsets.all(10),
+            elevation: 9,
+            child: Container(
+              padding: EdgeInsets.all(10),
+              height: 500,
+              child: Column(
+                children: [
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                    child: Text("Pending Requests:",
+                        textAlign: TextAlign.start,
+                        style: GoogleFonts.fredokaOne(fontSize: 20)),
+                  ),
+                  Container(
+                    height: 420,
+                    child: ShipmentsList(),
+                  ),
+                ],
+              ),
             ),
           ),
           Container(

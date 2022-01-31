@@ -66,10 +66,10 @@ class MyApp extends StatelessWidget {
             // platform: TargetPlatform.iOS,
           ),
 
-          //  home: ClientNavigationScreen(),
+          home: ClientNavigationScreen(),
           //home:SplashScreen(3,WelcomeScreen.routeName),
           // home: WelcomeScreen(),
-          home: CompanyNavigationScreen(),
+          //home: CompanyNavigationScreen(),
           routes: {
             FiltersScreen.routeName: (ctx) => FiltersScreen(),
             ClientNavigationScreen.routeName: (ctx) => ClientNavigationScreen(),

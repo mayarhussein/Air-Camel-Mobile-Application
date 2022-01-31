@@ -3,104 +3,100 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
-
 class ComplaintsScreen extends StatelessWidget {
-    static const routeName = '/complaints';
-
+  static const routeName = '/complaints';
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold( 
-      appBar: AppBar(
-        title: Text(
-          "Complaints Screen",
+    return Scaffold(
+        appBar: AppBar(
+            title: Text(
+          "Complaints",
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
-        )
-    ),
-    body:  Container(
-                  child: ListView.builder(
-                    itemCount: ComplaintsModel.dummy_complaints.length,
-                    itemBuilder: (context, index) {
-                      return Column(
-                        children: [
-                          Container(
-                            width: double.infinity,
-                            child: InkWell(
-                              onTap: () {},
-                              child: Card(
-                                shadowColor: Colors.white,
-                                color: Colors.amber.shade100,
-                                elevation: 5,
-                                clipBehavior: Clip.antiAliasWithSaveLayer,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10)),
-                                child: Container(
-                                  child: Row(
+        )),
+        body: Container(
+          child: ListView.builder(
+            itemCount: ComplaintsModel.dummy_complaints.length,
+            itemBuilder: (context, index) {
+              return Column(
+                children: [
+                  Container(
+                    width: double.infinity,
+                    child: InkWell(
+                      onTap: () {},
+                      child: Card(
+                        shadowColor: Colors.white,
+                        color: Colors.amber.shade100,
+                        elevation: 5,
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Container(
+                          child: Row(
+                            children: [
+                              Flexible(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
                                     children: [
-                                      Flexible(
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                            children: [
-                                              Row(
-                                                children: [
-                                                  Icon(Icons.person),
-                                                  Text(
-                                                ComplaintsModel.dummy_complaints[index]
-                                                    .clientName,
-                                                style: GoogleFonts.fredokaOne(
-                                                    fontSize: 15),
-                                              ) ],)
-                                              ,
-                                              Text(
-                                                DateFormat.yMd().format(
-                                                    ComplaintsModel
-                                                        .dummy_complaints[index]
-                                                        .date),
-                                                style: GoogleFonts.righteous(
-                                                    fontSize: 14),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                        flex: 2,
+                                      Row(
+                                        children: [
+                                          Icon(Icons.person),
+                                          Text(
+                                            ComplaintsModel
+                                                .dummy_complaints[index]
+                                                .clientName,
+                                            style: GoogleFonts.fredokaOne(
+                                                fontSize: 15),
+                                          )
+                                        ],
                                       ),
-                                      Flexible(
-                                        child: Container(),
-                                        flex: 1,
-                                      ),
-                                      Flexible(
-                                          flex: 3,
-                                          child: Column(
-                                            children: [
-                                              Text(
-                                                ComplaintsModel.dummy_complaints[index]
-                                                    .body,
-                                                style: GoogleFonts.fredokaOne(
-                                                    fontSize: 15),
-                                              )
-                                            ],
-                                          ))
+                                      Text(
+                                        DateFormat.yMd().format(ComplaintsModel
+                                            .dummy_complaints[index].date),
+                                        style:
+                                            GoogleFonts.righteous(fontSize: 14),
+                                      )
                                     ],
                                   ),
                                 ),
+                                flex: 2,
                               ),
-                            ),
+                              Flexible(
+                                child: Container(),
+                                flex: 1,
+                              ),
+                              Flexible(
+                                  flex: 3,
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        ComplaintsModel
+                                            .dummy_complaints[index].body,
+                                        style: GoogleFonts.fredokaOne(
+                                            fontSize: 15),
+                                      )
+                                    ],
+                                  ))
+                            ],
                           ),
-                          Divider(
-                            color: Colors.grey.shade600,
-                            thickness: 1,
-                          )
-                        ],
-                      );
-                    },
+                        ),
+                      ),
+                    ),
                   ),
-                
-    ));
+                  Divider(
+                    color: Colors.grey.shade600,
+                    thickness: 1,
+                  )
+                ],
+              );
+            },
+          ),
+        ));
   }
 }

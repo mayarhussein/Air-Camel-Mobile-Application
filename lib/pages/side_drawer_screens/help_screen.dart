@@ -1,18 +1,8 @@
 import 'package:air_camel/resources/app_theme.dart';
 import 'package:flutter/material.dart';
 
-class HelpScreen extends StatefulWidget {
+class HelpScreen extends StatelessWidget {
   static const routeName = '/help';
-
-  @override
-  State<HelpScreen> createState() => _HelpScreenState();
-}
-
-class _HelpScreenState extends State<HelpScreen> {
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {

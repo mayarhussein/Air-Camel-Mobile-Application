@@ -11,7 +11,7 @@ class NotificationsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Notifications Screen",
+          "Notifications",
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
