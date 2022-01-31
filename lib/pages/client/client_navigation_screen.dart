@@ -98,26 +98,32 @@ class _ClientNavigationScreenState extends State<ClientNavigationScreen> {
       if (drawerIndex == DrawerIndex.Help) {
         setState(() {
           Navigator.of(context).pushNamed(HelpScreen.routeName);
+          drawerIndex = DrawerIndex.HOME;
         });
       } else if (drawerIndex == DrawerIndex.Notifications) {
         setState(() {
           Navigator.of(context).pushNamed(NotificationsScreen.routeName);
+          drawerIndex = DrawerIndex.HOME;
         });
       } else if (drawerIndex == DrawerIndex.Credit) {
         setState(() {
           Navigator.of(context).pushNamed(CreditScreen.routeName);
+          drawerIndex = DrawerIndex.HOME;
         });
       } else if (drawerIndex == DrawerIndex.Offers) {
         setState(() {
           Navigator.of(context).pushNamed(OffersScreen.routeName);
+          drawerIndex = DrawerIndex.HOME;
         });
       } else if (drawerIndex == DrawerIndex.Invite) {
         setState(() {
           Navigator.of(context).pushNamed(InviteScreen.routeName);
+          drawerIndex = DrawerIndex.HOME;
         });
       } else if (drawerIndex == DrawerIndex.About) {
         setState(() {
           Navigator.of(context).pushNamed(AboutUsScreen.routeName);
+          drawerIndex = DrawerIndex.HOME;
         });
       } else {
         //do in your way......

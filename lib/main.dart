@@ -66,10 +66,10 @@ class MyApp extends StatelessWidget {
             // platform: TargetPlatform.iOS,
           ),
 
-           home: ClientNavigationScreen(),
+          //  home: ClientNavigationScreen(),
           //home:SplashScreen(3,WelcomeScreen.routeName),
           // home: WelcomeScreen(),
-          //home: CompanyNavigationScreen(),
+          home: CompanyNavigationScreen(),
           routes: {
             FiltersScreen.routeName: (ctx) => FiltersScreen(),
             ClientNavigationScreen.routeName: (ctx) => ClientNavigationScreen(),
@@ -85,10 +85,9 @@ class MyApp extends StatelessWidget {
             CreditScreen.routeName: (ctx) => CreditScreen(),
             OffersScreen.routeName: (ctx) => OffersScreen(),
             InviteScreen.routeName: (ctx) => InviteScreen(),
-            EditCategories.routeName : (ctx) => EditCategories(),
+            EditCategories.routeName: (ctx) => EditCategories(),
             ComplaintsScreen.routeName: (ctx) => ComplaintsScreen(),
             PayementsHistory.routeName: (ctx) => PayementsHistory()
-
           },
         ));
   }
