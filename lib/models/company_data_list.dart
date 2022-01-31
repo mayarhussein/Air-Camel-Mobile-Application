@@ -20,7 +20,7 @@ class CompanyDataList {
   static List<CompanyDataList> companyList = <CompanyDataList>[
     CompanyDataList(
       // imagePath: 'assets/company/company_1.png',
-      titleTxt: 'Grand Royal Hotel',
+      titleTxt: 'Grand Royal ',
       subTxt: 'Wembley, London',
       dist: 2.0,
       reviews: 80,
@@ -29,7 +29,7 @@ class CompanyDataList {
     ),
     CompanyDataList(
       // imagePath: 'assets/company/company_2.png',
-      titleTxt: 'Queen Hotel',
+      titleTxt: 'Queen ',
       subTxt: 'Wembley, London',
       dist: 4.0,
       reviews: 74,
@@ -38,7 +38,7 @@ class CompanyDataList {
     ),
     CompanyDataList(
       // imagePath: 'assets/company/company_3.png',
-      titleTxt: 'Grand Royal Hotel',
+      titleTxt: 'Grand Royal ',
       subTxt: 'Wembley, London',
       dist: 3.0,
       reviews: 62,
@@ -47,7 +47,7 @@ class CompanyDataList {
     ),
     CompanyDataList(
       // imagePath: 'assets/company/company_4.png',
-      titleTxt: 'Queen Hotel',
+      titleTxt: 'Queen',
       subTxt: 'Wembley, London',
       dist: 7.0,
       reviews: 90,
@@ -56,7 +56,7 @@ class CompanyDataList {
     ),
     CompanyDataList(
       // imagePath: 'assets/company/company_5.png',
-      titleTxt: 'Grand Royal Hotel',
+      titleTxt: 'Grand Royal ',
       subTxt: 'Wembley, London',
       dist: 2.0,
       reviews: 240,
