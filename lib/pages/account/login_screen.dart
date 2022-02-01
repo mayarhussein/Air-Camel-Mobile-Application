@@ -1,3 +1,4 @@
+import 'package:air_camel/constants.dart';
 import 'package:air_camel/pages/client/client_navigation_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -93,11 +94,10 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
+          centerTitle: true,
+          backgroundColor: bgColor,
           title: Text('Login',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 30,
-                  fontFamily: 'WorkSans-Regular')),
+              style: TextStyle(fontSize: 30, fontFamily: 'WorkSans-Regular')),
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.close),
@@ -108,7 +108,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         body: Container(
           child: Card(
-              margin: EdgeInsets.symmetric(horizontal: 40, vertical: 60),
+              margin: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
               child: Container(
                   width: double.infinity,
                   height: double.infinity,
@@ -132,7 +132,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               },
                               validator: (value) {
                                 if (value.toString().isEmpty)
-                                  return 'Please enter email';
+                                  return 'This field is REQUIRED';
                               },
                               onSaved: (value) => _email = value.toString(),
                             ),
@@ -147,6 +147,10 @@ class _LoginScreenState extends State<LoginScreen> {
                               onSaved: (value) => _password = value.toString(),
                               onFieldSubmitted: (_) {
                                 _saveForm();
+                              },
+                              validator: (value) {
+                                if (value.toString().isEmpty)
+                                  return 'This field is REQUIRED';
                               },
                             ),
                             TextButton(

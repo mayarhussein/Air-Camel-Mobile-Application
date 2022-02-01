@@ -4,11 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 class ShipmentsList extends StatelessWidget {
-
-
   @override
   Widget build(BuildContext context) {
-     return Container(
+    return Container(
       child: ListView.builder(
         itemCount: OrdersModel.dummy_orders.length,
         itemBuilder: (context, index) {

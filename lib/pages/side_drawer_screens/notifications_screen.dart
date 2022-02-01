@@ -1,3 +1,4 @@
+import 'package:air_camel/constants.dart';
 import 'package:air_camel/models/drawer/notification.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -10,7 +11,7 @@ class NotificationsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Notifications",
           style: TextStyle(
             fontSize: 20,
@@ -24,7 +25,7 @@ class NotificationsScreen extends StatelessWidget {
             Navigator.pop(context);
           },
         ),
-        backgroundColor: Colors.amber.shade100,
+        backgroundColor: bgColor,
         elevation: 0,
         shadowColor: Colors.white,
       ),

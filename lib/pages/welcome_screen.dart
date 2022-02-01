@@ -33,39 +33,22 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              SizedBox(
+                height: 50,
+              ),
               //1
               Center(
-                child: ClipOval(
-                    child: Container(
-                        width: 180,
-                        height: 180,
-                        color: Colors.grey,
-                        alignment: Alignment.center,
-                        child: const Text('Logo',
-                            style: TextStyle(
-                                fontSize: 50,
-                                color: Colors.white,
-                                fontFamily: 'Roboto-Bold')))),
+                child: Container(
+                    width: 250,
+                    height: 250,
+                    alignment: Alignment.center,
+                    child: Image.asset(
+                      "assets/images/logo.png",
+                      fit: BoxFit.fill,
+                    )),
               ),
               //2
-              const SizedBox(height: 30),
-              //3
-              const Text('Air Camel',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 30,
-                      fontFamily: 'WorkSans-SemiBold')),
-              //4
-              const SizedBox(height: 30),
-              //5
-              Text('dgdfgfgfhfghgh fgfhdfhf',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white.withOpacity(0.5),
-                    fontSize: 18,
-                    fontFamily: 'WorkSans-SemiBold',
-                  )),
+
               //6
               MyButton('Login', LoginScreen.routeName, _role),
               //7

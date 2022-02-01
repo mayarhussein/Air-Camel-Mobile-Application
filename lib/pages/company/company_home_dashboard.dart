@@ -1,3 +1,4 @@
+import 'package:air_camel/constants.dart';
 import 'package:air_camel/models/orders.dart';
 import 'package:air_camel/pages/company/edit_categories.dart';
 import 'package:air_camel/pages/company/payment_history.dart';
@@ -68,6 +69,7 @@ class CompanyHomeDashboard extends StatelessWidget {
           ),
           // CompanyHomeBtn("Show Complanits", ComplaintsScreen.routeName),
           Card(
+            // color: bgColor,
             margin: EdgeInsets.all(10),
             elevation: 9,
             child: Container(

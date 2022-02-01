@@ -1,3 +1,4 @@
+import 'package:air_camel/constants.dart';
 import 'package:air_camel/models/complaints.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -10,14 +11,17 @@ class ComplaintsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            title: Text(
-          "Complaints",
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
+          title: Text(
+            "Complaints",
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-        )),
+          backgroundColor: bgColor,
+        ),
         body: Container(
+          color: bgColor,
           child: ListView.builder(
             itemCount: ComplaintsModel.dummy_complaints.length,
             itemBuilder: (context, index) {

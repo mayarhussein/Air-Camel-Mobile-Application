@@ -1,3 +1,4 @@
+import 'package:air_camel/constants.dart';
 import 'package:air_camel/providers/account_provider.dart';
 import 'package:air_camel/providers/accounts_provider.dart';
 import 'package:air_camel/pages/client/client_navigation_screen.dart';
@@ -91,12 +92,11 @@ class _SignupScreenState extends State<SignupScreen> {
 
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: bgColor,
           automaticallyImplyLeading: false,
+          centerTitle: true,
           title: const Text('Register',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 30,
-                  fontFamily: 'WorkSans-Regular')),
+              style: TextStyle(fontSize: 30, fontFamily: 'WorkSans-Regular')),
           actions: <Widget>[
             IconButton(
               icon: const Icon(Icons.close),
@@ -107,7 +107,7 @@ class _SignupScreenState extends State<SignupScreen> {
         ),
         body: Container(
           child: Card(
-              margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 60),
+              margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
               child: Container(
                   width: double.infinity,
                   height: double.infinity,
@@ -205,6 +205,10 @@ class _SignupScreenState extends State<SignupScreen> {
                                   FocusScope.of(context)
                                       .requestFocus(_phoneNumberFocusNode);
                                 },
+                                validator: (value) {
+                                  if (value.toString().isEmpty)
+                                    return 'This field is REQUIRED';
+                                },
                                 onSaved: (value) {
                                   _newAccount = AccountProvider(
                                       id: _newAccount.id,
@@ -225,6 +229,10 @@ class _SignupScreenState extends State<SignupScreen> {
                               focusNode: _phoneNumberFocusNode,
                               onFieldSubmitted: (_) {
                                 _saveForm();
+                              },
+                              validator: (value) {
+                                if (value.toString().isEmpty)
+                                  return 'This field is REQUIRED';
                               },
                               onSaved: (value) {
                                 _newAccount = AccountProvider(
