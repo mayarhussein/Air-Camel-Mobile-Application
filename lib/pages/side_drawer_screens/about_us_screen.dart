@@ -1,3 +1,4 @@
+import 'package:air_camel/constants.dart';
 import 'package:flutter/material.dart';
 
 class AboutUsScreen extends StatelessWidget {
@@ -14,10 +15,7 @@ class AboutUsScreen extends StatelessWidget {
             centerTitle: true,
             title: Text(
               'About Us',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
+              style: headFont1,
             ),
             leading: IconButton(
               icon: Icon(Icons.arrow_back_ios_new),
@@ -40,12 +38,10 @@ class AboutUsScreen extends StatelessWidget {
                 ),
                 Container(
                   padding: const EdgeInsets.only(top: 16),
-                  child: const Text(
+                  child: Text(
                     'Just a project for graduation for some students in Alexandria University',
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 16,
-                    ),
+                    style: defaultFont1,
                   ),
                 ),
                 Expanded(
@@ -56,18 +52,20 @@ class AboutUsScreen extends StatelessWidget {
                         width: 120,
                         height: 40,
                         decoration: BoxDecoration(
-                          color: Colors.green.shade300,
+                          color: Colors.transparent,
                           borderRadius:
                               const BorderRadius.all(Radius.circular(4.0)),
                           boxShadow: <BoxShadow>[
                             BoxShadow(
-                                color: Colors.grey.withOpacity(0.6),
+                                color: Colors.transparent,
                                 offset: const Offset(4, 4),
                                 blurRadius: 8.0),
                           ],
                         ),
                         child: Material(
-                          color: Colors.transparent,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)),
+                          color: Colors.green.shade300,
                           child: InkWell(
                             onTap: () {
                               //method here for functionality
@@ -87,10 +85,7 @@ class AboutUsScreen extends StatelessWidget {
                                     padding: const EdgeInsets.all(4.0),
                                     child: Text(
                                       'Contact Us',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.white,
-                                      ),
+                                      style: btnFont1,
                                     ),
                                   ),
                                 ],

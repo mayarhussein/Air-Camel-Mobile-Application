@@ -1,3 +1,4 @@
+import 'package:air_camel/constants.dart';
 import 'package:air_camel/providers/account_provider.dart';
 import 'package:air_camel/models/drawer/drawer_list.dart';
 import 'package:air_camel/resources/app_theme.dart';
@@ -136,11 +137,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                     padding: const EdgeInsets.only(top: 8, left: 4),
                     child: Text(
                       'Name Here',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        color: AppTheme.grey,
-                        fontSize: 18,
-                      ),
+                      style: headFontBig1,
                     ),
                   ),
                 ],
@@ -173,12 +170,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
               ListTile(
                 title: Text(
                   'Sign Out',
-                  style: TextStyle(
-                    fontFamily: AppTheme.fontName,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 16,
-                    color: AppTheme.darkText,
-                  ),
+                  style: defaultFont1,
                   textAlign: TextAlign.left,
                 ),
                 trailing: Icon(
@@ -254,13 +246,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                   ),
                   Text(
                     listData.labelName,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 16,
-                      color:
-                          // widget.screenIndex == listData.index ? Colors.blue :
-                          AppTheme.nearlyBlack,
-                    ),
+                    style: defaultFont1,
                     textAlign: TextAlign.left,
                   ),
                 ],

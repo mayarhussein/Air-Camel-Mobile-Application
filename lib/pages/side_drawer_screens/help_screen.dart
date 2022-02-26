@@ -1,3 +1,4 @@
+import 'package:air_camel/constants.dart';
 import 'package:air_camel/resources/app_theme.dart';
 import 'package:flutter/material.dart';
 
@@ -18,10 +19,7 @@ class HelpScreen extends StatelessWidget {
             centerTitle: true,
             title: Text(
               'How can we help you?',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
+              style: headFont1,
             ),
             leading: IconButton(
               icon: Icon(Icons.arrow_back_ios_new),
@@ -46,12 +44,10 @@ class HelpScreen extends StatelessWidget {
                 ),
                 Container(
                   padding: const EdgeInsets.only(top: 16),
-                  child: const Text(
+                  child: Text(
                     'It looks like you are experiencing some \nproblems.We are here to help so please \nget in touch with us',
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 16,
-                    ),
+                    style: defaultFont1,
                   ),
                 ),
                 Expanded(
@@ -59,16 +55,15 @@ class HelpScreen extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: Center(
                       child: Container(
-                        width: 140,
+                        width: 160,
                         height: 40,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           color: Colors.transparent,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(4.0)),
+                          borderRadius: BorderRadius.all(Radius.circular(4.0)),
                           boxShadow: <BoxShadow>[
                             BoxShadow(
-                                color: Colors.grey.withOpacity(0.6),
-                                offset: const Offset(4, 4),
+                                color: Colors.transparent,
+                                offset: Offset(4, 4),
                                 blurRadius: 8.0),
                           ],
                         ),
@@ -83,10 +78,7 @@ class HelpScreen extends StatelessWidget {
                                 padding: const EdgeInsets.all(4.0),
                                 child: Text(
                                   'Send Us A Message',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.white,
-                                  ),
+                                  style: btnFont1,
                                 ),
                               ),
                             ),

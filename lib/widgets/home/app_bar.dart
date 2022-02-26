@@ -1,3 +1,4 @@
+import 'package:air_camel/constants.dart';
 import 'package:air_camel/resources/app_theme.dart';
 import 'package:flutter/material.dart';
 
@@ -43,10 +44,7 @@ class HomeAppBar extends StatelessWidget {
               child: Center(
                 child: Text(
                   'Explore',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 22,
-                  ),
+                  style: headFont1,
                 ),
               ),
             ),

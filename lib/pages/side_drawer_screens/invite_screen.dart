@@ -1,3 +1,4 @@
+import 'package:air_camel/constants.dart';
 import 'package:flutter/material.dart';
 
 class InviteScreen extends StatelessWidget {
@@ -14,10 +15,7 @@ class InviteScreen extends StatelessWidget {
             centerTitle: true,
             title: Text(
               'Invite Your Friends',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
+              style: headFont1,
             ),
             leading: IconButton(
               icon: Icon(Icons.arrow_back_ios_new),
@@ -43,12 +41,10 @@ class InviteScreen extends StatelessWidget {
                 ),
                 Container(
                   padding: const EdgeInsets.only(top: 16),
-                  child: const Text(
+                  child: Text(
                     'Share to some of your friends. \nWe are sure we can be useful \nfor them too.',
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 16,
-                    ),
+                    style: defaultFont1,
                   ),
                 ),
                 Expanded(
@@ -58,19 +54,20 @@ class InviteScreen extends StatelessWidget {
                       child: Container(
                         width: 120,
                         height: 40,
-                        decoration: BoxDecoration(
-                          color: Colors.blue,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(4.0)),
+                        decoration: const BoxDecoration(
+                          color: Colors.transparent,
+                          borderRadius: BorderRadius.all(Radius.circular(4.0)),
                           boxShadow: <BoxShadow>[
                             BoxShadow(
-                                color: Colors.grey.withOpacity(0.6),
-                                offset: const Offset(4, 4),
+                                color: Colors.transparent,
+                                offset: Offset(4, 4),
                                 blurRadius: 8.0),
                           ],
                         ),
                         child: Material(
-                          color: Colors.transparent,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)),
+                          color: Colors.blue,
                           child: InkWell(
                             onTap: () {
                               //method here for functionality
@@ -81,7 +78,7 @@ class InviteScreen extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
-                                  Icon(
+                                  const Icon(
                                     Icons.share,
                                     color: Colors.white,
                                     size: 22,
@@ -90,10 +87,7 @@ class InviteScreen extends StatelessWidget {
                                     padding: const EdgeInsets.all(4.0),
                                     child: Text(
                                       'Share',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.white,
-                                      ),
+                                      style: btnFont1,
                                     ),
                                   ),
                                 ],

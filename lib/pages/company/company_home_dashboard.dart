@@ -25,10 +25,7 @@ class CompanyHomeDashboard extends StatelessWidget {
             child: Center(
                 child: Text(
               "Home",
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
+              style: headFont1,
             )),
           ),
           Container(
@@ -78,11 +75,10 @@ class CompanyHomeDashboard extends StatelessWidget {
               child: Column(
                 children: [
                   Padding(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 20),
                     child: Text("Pending Requests:",
-                        textAlign: TextAlign.start,
-                        style: GoogleFonts.fredokaOne(fontSize: 20)),
+                        textAlign: TextAlign.start, style: subTitle1),
                   ),
                   Container(
                     height: 420,
@@ -113,10 +109,6 @@ class CompanyHomeDashboard extends StatelessWidget {
                     ], begin: Alignment.topLeft)),
                     padding: EdgeInsets.all(15),
                     width: 250,
-                    // child: Text(
-                    //   FeaturedOffer.featuredOffersList[index].offerMsg,
-                    //   style: GoogleFonts.lobster(fontSize: 25),
-                    // ),
                   ),
                 );
               },

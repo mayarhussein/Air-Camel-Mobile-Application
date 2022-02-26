@@ -1,3 +1,4 @@
+import 'package:air_camel/constants.dart';
 import 'package:air_camel/models/drawer/payments.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -46,17 +47,15 @@ class CreditScreen extends StatelessWidget {
                                       'assets/images/credit_background.png'),
                                   fit: BoxFit.fill)),
                           child: Column(
-                            children: const [
+                            children: [
                               Padding(
                                 padding: EdgeInsets.all(20),
                                 child: Text(
                                   "Credit",
-                                  style: TextStyle(
-                                      fontSize: 32,
-                                      fontWeight: FontWeight.bold),
+                                  style: headFontBig1,
                                 ),
                               ),
-                              Padding(
+                              const Padding(
                                 padding: EdgeInsets.only(left: 40, bottom: 35),
                                 child: Text("Amount 73.20 EGP"),
                               )
@@ -71,8 +70,7 @@ class CreditScreen extends StatelessWidget {
                           top: 30, right: 10, left: 10, bottom: 20),
                       child: Text(
                         "Payments history",
-                        style: TextStyle(
-                            fontSize: 26, fontWeight: FontWeight.bold),
+                        style: headFont1,
                       ),
                     ),
                     Container(
@@ -100,10 +98,7 @@ class CreditScreen extends StatelessWidget {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text(
-                                          "Company Name",
-                                          style: TextStyle(fontSize: 16),
-                                        ),
+                                        Text("Company Name", style: subTitle1),
                                         Text(
                                           "Amount: " +
                                               Payment.paymentList[index].amount

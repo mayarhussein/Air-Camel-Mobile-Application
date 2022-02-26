@@ -1,3 +1,4 @@
+import 'package:air_camel/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -34,7 +35,7 @@ class CompanyHomeBtn extends StatelessWidget {
                 Icon(icon),
                 Text(
                   title,
-                  style: GoogleFonts.pacifico(fontSize: 15),
+                  style: btnFont2,
                   textAlign: TextAlign.center,
                 ),
               ],
