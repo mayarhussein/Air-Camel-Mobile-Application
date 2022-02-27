@@ -96,7 +96,7 @@ class CompanyHomeDashboard extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
                 return Card(
-                  color: Colors.amber.shade100,
+                  color: bgColor,
                   clipBehavior: Clip.antiAliasWithSaveLayer,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)),

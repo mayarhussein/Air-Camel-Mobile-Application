@@ -8,7 +8,7 @@ class HelpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(color: Colors.amber.shade100),
+      decoration: BoxDecoration(color: bgColor),
 
       // color: Colors.white,
       child: SafeArea(
@@ -27,12 +27,12 @@ class HelpScreen extends StatelessWidget {
                 Navigator.pop(context);
               },
             ),
-            backgroundColor: Colors.amber.shade100,
+            backgroundColor: bgColor,
             elevation: 0,
             shadowColor: Colors.transparent,
           ),
           body: Container(
-            decoration: BoxDecoration(color: Colors.amber.shade100),
+            decoration: BoxDecoration(color: bgColor),
             child: Column(
               children: <Widget>[
                 Container(

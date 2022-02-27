@@ -23,13 +23,13 @@ class AboutUsScreen extends StatelessWidget {
                 Navigator.pop(context);
               },
             ),
-            backgroundColor: Colors.amber.shade100,
+            backgroundColor: bgColor,
             elevation: 0,
             shadowColor: Colors.transparent,
           ),
           backgroundColor: Colors.white,
           body: Container(
-            decoration: BoxDecoration(color: Colors.amber.shade100),
+            decoration: BoxDecoration(color: bgColor),
             child: Column(
               children: <Widget>[
                 Container(

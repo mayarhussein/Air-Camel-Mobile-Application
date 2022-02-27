@@ -21,12 +21,12 @@ class OffersScreen extends StatelessWidget {
               Navigator.pop(context);
             },
           ),
-          backgroundColor: Colors.amber.shade100,
+          backgroundColor: bgColor,
           elevation: 0,
           shadowColor: Colors.white,
         ),
         body: Container(
-          decoration: BoxDecoration(color: Colors.amber.shade100),
+          decoration: BoxDecoration(color: bgColor),
           child: Container(
             padding: EdgeInsets.all(20),
             child: ListView.builder(
@@ -41,7 +41,7 @@ class OffersScreen extends StatelessWidget {
                         onTap: () {},
                         child: Card(
                           shadowColor: Colors.white,
-                          color: Colors.amber.shade100,
+                          color: bgColor,
                           elevation: 5,
                           clipBehavior: Clip.antiAliasWithSaveLayer,
                           shape: RoundedRectangleBorder(

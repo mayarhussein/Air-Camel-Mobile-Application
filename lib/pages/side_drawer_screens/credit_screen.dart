@@ -16,12 +16,12 @@ class CreditScreen extends StatelessWidget {
             Navigator.pop(context);
           },
         ),
-        backgroundColor: Colors.amber.shade100,
+        backgroundColor: bgColor,
         elevation: 0,
         shadowColor: Colors.white,
       ),
       body: Container(
-        decoration: BoxDecoration(color: Colors.amber.shade100),
+        decoration: BoxDecoration(color: bgColor),
         child: ListView(
           children: [
             Container(
@@ -84,7 +84,7 @@ class CreditScreen extends StatelessWidget {
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10)),
                             elevation: 2,
-                            color: Colors.amber.shade100.withOpacity(0.9),
+                            color: bgColor.withOpacity(0.9),
                             child: Container(
                               width: double.maxFinite * 0.9,
                               child: Column(

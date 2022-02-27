@@ -33,7 +33,7 @@ class ComplaintsScreen extends StatelessWidget {
                       onTap: () {},
                       child: Card(
                         shadowColor: Colors.white,
-                        color: Colors.amber.shade100,
+                        color: bgColor,
                         elevation: 5,
                         clipBehavior: Clip.antiAliasWithSaveLayer,
                         shape: RoundedRectangleBorder(

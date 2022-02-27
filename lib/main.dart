@@ -55,15 +55,15 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.amber,
 
             //textTheme: AppTheme.textTheme,
-            textTheme: ThemeData.light().textTheme.copyWith(
-                bodyText1: TextStyle(color: Color.fromRGBO(20, 51, 51, 1)),
-                bodyText2: TextStyle(color: Color.fromRGBO(20, 51, 51, 1)),
-                subtitle1: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontFamily: 'WorkSans-Regular',
-                    fontWeight: FontWeight.bold)),
-            // platform: TargetPlatform.iOS,
+            // textTheme: ThemeData.light().textTheme.copyWith(
+            //     bodyText1: TextStyle(color: Color.fromRGBO(20, 51, 51, 1)),
+            //     bodyText2: TextStyle(color: Color.fromRGBO(20, 51, 51, 1)),
+            //     subtitle1: TextStyle(
+            //         color: Colors.white,
+            //         fontSize: 20,
+            //         fontFamily: 'WorkSans-Regular',
+            //         fontWeight: FontWeight.bold)),
+            // // platform: TargetPlatform.iOS,
           ),
 
           home: ClientNavigationScreen(),

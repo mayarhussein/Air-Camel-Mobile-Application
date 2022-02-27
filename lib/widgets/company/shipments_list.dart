@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
+import '../../constants.dart';
+
 class ShipmentsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,7 @@ class ShipmentsList extends StatelessWidget {
                   onTap: () {},
                   child: Card(
                     shadowColor: Colors.white,
-                    color: Colors.amber.shade100,
+                    color: bgColor,
                     elevation: 5,
                     clipBehavior: Clip.antiAliasWithSaveLayer,
                     shape: RoundedRectangleBorder(

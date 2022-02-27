@@ -1,5 +1,5 @@
 class OrdersModel {
-  int id;
+  int? id;
   int companyId;
   int clientId;
   String? description;
@@ -12,13 +12,13 @@ class OrdersModel {
   String paymentType;
 
   OrdersModel(
-      {required this.bill,
+      {this.id,
+      required this.bill,
       required this.clientId,
       required this.companyId,
       required this.date,
       this.description,
       required this.from,
-      required this.id,
       required this.paymentType,
       this.rating,
       required this.status,

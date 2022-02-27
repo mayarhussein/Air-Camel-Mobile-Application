@@ -1,4 +1,5 @@
 class NotificationModel {
+  int? id;
   String message;
   String subject;
   int idFrom;
@@ -6,6 +7,7 @@ class NotificationModel {
   DateTime dateTime;
 
   NotificationModel({
+    this.id,
     required this.message,
     required this.subject,
     required this.idFrom,

@@ -41,7 +41,7 @@ class ClientHomeScreen extends StatelessWidget {
                             decoration: BoxDecoration(
                                 gradient: LinearGradient(
                                     colors: [
-                                  Colors.amber.shade100,
+                                  bgColor,
                                   Colors.lightBlue.shade800,
                                 ],
                                     end: Alignment.topLeft,
@@ -79,7 +79,7 @@ class ClientHomeScreen extends StatelessWidget {
                             decoration: BoxDecoration(
                                 gradient: LinearGradient(
                                     colors: [
-                                  Colors.amber.shade100,
+                                  bgColor,
                                   Colors.lightGreen.shade800,
                                 ],
                                     begin: Alignment.bottomLeft,
@@ -125,7 +125,7 @@ class ClientHomeScreen extends StatelessWidget {
                             decoration: BoxDecoration(
                                 gradient: LinearGradient(
                                     colors: [
-                                  Colors.amber.shade100,
+                                  bgColor,
                                   Colors.red.shade400,
                                 ],
                                     begin: Alignment.topRight,
@@ -163,7 +163,7 @@ class ClientHomeScreen extends StatelessWidget {
                             decoration: BoxDecoration(
                                 gradient: LinearGradient(
                                     colors: [
-                                  Colors.amber.shade100,
+                                  bgColor,
                                   Colors.purple.shade400,
                                 ],
                                     begin: Alignment.topLeft,
@@ -199,7 +199,7 @@ class ClientHomeScreen extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
                     return Card(
-                      color: Colors.amber.shade100,
+                      color: bgColor,
                       clipBehavior: Clip.antiAliasWithSaveLayer,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10)),
