@@ -1,11 +1,11 @@
-class Offer {
+class OfferModel {
   int? id;
   int idCompany;
   DateTime dateTime;
   DateTime expireTime;
   String offerMsg;
 
-  Offer({
+  OfferModel({
     this.id,
     required this.idCompany,
     required this.dateTime,

@@ -1,6 +1,6 @@
 import 'package:air_camel/models/bottom_navigation/bottom_bar_model.dart';
 import 'package:air_camel/models/drawer/drawer_list.dart';
-import 'package:air_camel/widgets/bottom_bar/bottom_bar.dart';
+import 'package:air_camel/widgets/client/bottom_bar/bar_wigets/bottom_bar.dart';
 import 'package:air_camel/widgets/drawer/home_drawer.dart';
 import 'package:air_camel/resources/app_theme.dart';
 import 'package:flutter/material.dart';

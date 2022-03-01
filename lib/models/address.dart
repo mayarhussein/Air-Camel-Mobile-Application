@@ -1,6 +1,4 @@
-import 'package:air_camel/providers/account_provider.dart';
-
-class Address {
+class AddressModel {
   int? id;
   int idAccount;
   String city;
@@ -10,7 +8,7 @@ class Address {
   String floor;
   String apt;
 
-  Address({
+  AddressModel({
     this.id,
     required this.idAccount,
     required this.city,

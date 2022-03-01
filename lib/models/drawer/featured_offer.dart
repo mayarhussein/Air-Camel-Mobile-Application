@@ -1,11 +1,11 @@
-class FeaturedOffer {
+class FeaturedOfferModel {
   int? id;
   int idCompany;
   DateTime dateTime;
   DateTime expireTime;
   String offerMsg;
 
-  FeaturedOffer({
+  FeaturedOfferModel({
     this.id,
     required this.idCompany,
     required this.dateTime,
@@ -13,32 +13,32 @@ class FeaturedOffer {
     required this.offerMsg,
   });
 
-  static List<FeaturedOffer> featuredOffersList = <FeaturedOffer>[
-    FeaturedOffer(
+  static List<FeaturedOfferModel> featuredOffersList = <FeaturedOfferModel>[
+    FeaturedOfferModel(
       idCompany: 0,
       dateTime: DateTime.now().subtract(Duration(days: 5)),
       expireTime: DateTime.now().subtract(Duration(days: 5)),
       offerMsg: "Featured Offer 1",
     ),
-    FeaturedOffer(
+    FeaturedOfferModel(
       idCompany: 0,
       dateTime: DateTime.now().subtract(Duration(days: 3)),
       expireTime: DateTime.now().subtract(Duration(days: 3)),
       offerMsg: "Featured Offer 2",
     ),
-    FeaturedOffer(
+    FeaturedOfferModel(
       idCompany: 0,
       dateTime: DateTime.now().subtract(Duration(days: 1)),
       expireTime: DateTime.now().subtract(Duration(days: 1)),
       offerMsg: "Featured Offer 3",
     ),
-    FeaturedOffer(
+    FeaturedOfferModel(
       idCompany: 0,
       dateTime: DateTime.now(),
       expireTime: DateTime.now(),
       offerMsg: "Featured Offer 4",
     ),
-    FeaturedOffer(
+    FeaturedOfferModel(
       idCompany: 0,
       dateTime: DateTime.now().subtract(Duration(days: 9)),
       expireTime: DateTime.now().subtract(Duration(days: 9)),

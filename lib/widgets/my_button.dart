@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../pages/welcome_screen.dart';
+import '../pages/launch_app/welcome_screen.dart';
 
 class MyButton extends StatelessWidget {
   final String title;
@@ -10,7 +10,6 @@ class MyButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     return Container(
       margin: const EdgeInsets.only(left: 20, right: 20, bottom: 5),
       child: ClipRRect(
@@ -25,7 +24,8 @@ class MyButton extends StatelessWidget {
                   child: ElevatedButton(
                       child: Text(title, style: TextStyle(color: Colors.white)),
                       onPressed: () => {
-                            Navigator.of(context).pushNamed(screenRoute, arguments: role)
+                            Navigator.of(context)
+                                .pushNamed(screenRoute, arguments: role)
                           },
                       style: ElevatedButton.styleFrom(
                           primary: Colors.amber.withOpacity(0.7),

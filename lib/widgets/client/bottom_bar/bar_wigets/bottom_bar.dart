@@ -1,6 +1,6 @@
 import 'package:air_camel/models/bottom_navigation/bottom_bar_model.dart';
 import 'package:air_camel/pages/client/bottom_bar_screens/new_shipment/new_shipment_menu_screen.dart';
-import 'package:air_camel/widgets/bottom_bar/bottom_bar_view.dart';
+import 'package:air_camel/widgets/client/bottom_bar/bar_wigets/bottom_bar_view.dart';
 import 'package:flutter/material.dart';
 
 class BottomBar extends StatelessWidget {

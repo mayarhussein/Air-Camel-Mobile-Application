@@ -1,6 +1,6 @@
 import 'package:air_camel/others/tab_clipper.dart';
 import 'package:air_camel/resources/app_theme.dart';
-import 'package:air_camel/widgets/bottom_bar/tab_icons.dart';
+import 'package:air_camel/widgets/client/bottom_bar/bar_wigets/tab_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:air_camel/models/bottom_navigation/bottom_bar_model.dart';
 

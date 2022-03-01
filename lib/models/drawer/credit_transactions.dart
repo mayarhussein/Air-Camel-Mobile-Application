@@ -1,4 +1,4 @@
-class CreditTransactions {
+class CreditTransactionsModel {
   int? id;
   double amount;
   String reason;
@@ -6,7 +6,7 @@ class CreditTransactions {
   int idAdmin;
   int idClient;
 
-  CreditTransactions({
+  CreditTransactionsModel({
     this.id,
     required this.amount,
     required this.reason,

@@ -92,7 +92,7 @@ class CompanyHomeDashboard extends StatelessWidget {
             height: 200,
             padding: EdgeInsets.symmetric(vertical: 10),
             child: ListView.builder(
-              // itemCount: FeaturedOffer.featuredOffersList.length,
+              // itemCount: FeaturedOfferModel.featuredOffersList.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
                 return Card(

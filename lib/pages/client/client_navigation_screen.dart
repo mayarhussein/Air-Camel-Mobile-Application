@@ -1,3 +1,4 @@
+import 'package:air_camel/pages/client/bottom_bar_screens/account/account_screen.dart';
 import 'package:air_camel/pages/side_drawer_screens/about_us_screen.dart';
 import 'package:air_camel/pages/side_drawer_screens/credit_screen.dart';
 import 'package:air_camel/pages/side_drawer_screens/help_screen.dart';
@@ -6,14 +7,13 @@ import 'package:air_camel/pages/side_drawer_screens/notifications_screen.dart';
 import 'package:air_camel/pages/side_drawer_screens/offers_screen.dart';
 import 'package:air_camel/providers/accounts_provider.dart';
 import 'package:air_camel/models/drawer/drawer_list.dart';
-import 'package:air_camel/pages/account/account_screen.dart';
-import 'package:air_camel/pages/client/bottom_bar_screens/client_home_screen.dart';
+import 'package:air_camel/pages/client/bottom_bar_screens/home/client_home_screen.dart';
 import 'package:air_camel/widgets/drawer/client_navigation_controller.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../my_trips_screen.dart';
+import 'bottom_bar_screens/settings/client_settings_screen.dart';
 
 class ClientNavigationScreen extends StatefulWidget {
   @override
@@ -73,13 +73,13 @@ class _ClientNavigationScreenState extends State<ClientNavigationScreen> {
         break;
       case 1:
         setState(() {
-          screenView = MyTripsScreen();
+          screenView = ClientSettingsScreen();
         });
         print("Blahblah");
         break;
       case 2:
         setState(() {
-          // screenView = HelpScreen();
+          screenView = ClientSettingsScreen();
         });
         print("Settings");
         break;

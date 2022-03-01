@@ -1,5 +1,6 @@
 // @dart=2.9
 import 'dart:io';
+
 import 'package:air_camel/pages/company/company_navigation_home_screen.dart';
 import 'package:air_camel/pages/client/bottom_bar_screens/new_shipment/filters_screen.dart';
 import 'package:air_camel/pages/client/bottom_bar_screens/new_shipment/new_shipment_menu_screen.dart';
@@ -8,21 +9,19 @@ import 'package:air_camel/pages/client/bottom_bar_screens/new_shipment/trip_deta
 import 'package:air_camel/pages/company/complaints_screen.dart';
 import 'package:air_camel/pages/company/edit_categories.dart';
 import 'package:air_camel/pages/company/payment_history.dart';
+import 'package:air_camel/pages/launch_app/login_screen.dart';
+import 'package:air_camel/pages/launch_app/signup_screen.dart';
 import 'package:air_camel/pages/side_drawer_screens/about_us_screen.dart';
 import 'package:air_camel/pages/side_drawer_screens/credit_screen.dart';
 import 'package:air_camel/pages/side_drawer_screens/help_screen.dart';
 import 'package:air_camel/pages/side_drawer_screens/invite_screen.dart';
 import 'package:air_camel/pages/side_drawer_screens/notifications_screen.dart';
 import 'package:air_camel/pages/side_drawer_screens/offers_screen.dart';
-import 'package:air_camel/pages/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:provider/provider.dart';
 import 'package:air_camel/providers/accounts_provider.dart';
-
-import 'pages/account/login_screen.dart';
-import 'pages/account/signup_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

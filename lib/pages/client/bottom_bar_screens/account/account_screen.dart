@@ -1,10 +1,11 @@
 import 'dart:async';
 
+import 'package:air_camel/pages/client/bottom_bar_screens/account/edit_email.dart';
+import 'package:air_camel/pages/client/bottom_bar_screens/account/edit_image.dart';
+import 'package:air_camel/pages/client/bottom_bar_screens/account/edit_name.dart';
+import 'package:air_camel/pages/client/bottom_bar_screens/account/edit_phone.dart';
 import 'package:flutter/material.dart';
-import 'package:air_camel/pages/account/edit_image.dart';
-import 'package:air_camel/pages/account/edit_name.dart';
-import 'package:air_camel/pages/account/edit_email.dart';
-import 'package:air_camel/pages/account/edit_phone.dart';
+
 import 'package:air_camel/widgets/display_image_widget.dart';
 
 import 'package:air_camel/providers/client_data.dart';
@@ -51,7 +52,6 @@ class _AccountScreenState extends State<AccountScreen> {
           buildUserInfoDisplay(client.name, 'Name', EditNameFormPage()),
           buildUserInfoDisplay(client.phone, 'Phone', EditPhoneFormPage()),
           buildUserInfoDisplay(client.email, 'Email', EditEmailFormPage()),
-         
         ],
       ),
     );
@@ -102,8 +102,6 @@ class _AccountScreenState extends State<AccountScreen> {
                   ]))
             ],
           ));
-
-  
 
   // Refrshes the Page after updating user info.
   FutureOr onGoBack(dynamic value) {

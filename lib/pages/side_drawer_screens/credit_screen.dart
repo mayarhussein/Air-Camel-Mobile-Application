@@ -101,7 +101,8 @@ class CreditScreen extends StatelessWidget {
                                         Text("Company Name", style: subTitle1),
                                         Text(
                                           "Amount: " +
-                                              Payment.paymentList[index].amount
+                                              PaymentModel
+                                                  .paymentList[index].amount
                                                   .toString(),
                                           style: TextStyle(fontSize: 16),
                                         ),
@@ -115,8 +116,9 @@ class CreditScreen extends StatelessWidget {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text("Date: " +
-                                            DateFormat.yMMMd().format(Payment
-                                                .paymentList[index].dateTime)),
+                                            DateFormat.yMMMd().format(
+                                                PaymentModel.paymentList[index]
+                                                    .dateTime)),
                                         Row(
                                           children: [
                                             TextButton(
@@ -142,7 +144,7 @@ class CreditScreen extends StatelessWidget {
                             ),
                           );
                         },
-                        itemCount: Payment.paymentList.length,
+                        itemCount: PaymentModel.paymentList.length,
                       ),
                     )
                   ],
