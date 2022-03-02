@@ -1,4 +1,5 @@
 import 'package:air_camel/pages/client/bottom_bar_screens/account/account_screen.dart';
+import 'package:air_camel/pages/client/bottom_bar_screens/notification/notification_screen.dart';
 import 'package:air_camel/pages/side_drawer_screens/about_us_screen.dart';
 import 'package:air_camel/pages/side_drawer_screens/credit_screen.dart';
 import 'package:air_camel/pages/side_drawer_screens/help_screen.dart';
@@ -45,20 +46,18 @@ class _ClientNavigationScreenState extends State<ClientNavigationScreen> {
         bottom: false,
         child: Scaffold(
           backgroundColor: Colors.white,
-          body: Stack(children: [
-            ClientNavigationController(
-              screenIndex: drawerIndex,
-              drawerWidth: MediaQuery.of(context).size.width * 0.75,
-              onDrawerCall: (DrawerIndex drawerIndexdata) {
-                changeIndexDrawer(drawerIndexdata);
-                //callback from drawer for replace screen as user need with passing DrawerIndex(Enum index)
-              },
-              onBottomBarCall: (index) {
-                changeIndexBottomBar(index);
-              },
-              screenView: screenView,
-            ),
-          ]),
+          body: ClientNavigationController(
+            screenIndex: drawerIndex,
+            drawerWidth: MediaQuery.of(context).size.width * 0.75,
+            onDrawerCall: (DrawerIndex drawerIndexdata) {
+              changeIndexDrawer(drawerIndexdata);
+              //callback from drawer for replace screen as user need with passing DrawerIndex(Enum index)
+            },
+            onBottomBarCall: (index) {
+              changeIndexBottomBar(index);
+            },
+            screenView: screenView,
+          ),
         ),
       ),
     );
@@ -73,7 +72,7 @@ class _ClientNavigationScreenState extends State<ClientNavigationScreen> {
         break;
       case 1:
         setState(() {
-          screenView = ClientSettingsScreen();
+          screenView = NotificationScreen();
         });
         print("Blahblah");
         break;

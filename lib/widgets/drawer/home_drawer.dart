@@ -105,8 +105,8 @@ class _HomeDrawerState extends State<HomeDrawer> {
                                   .value /
                               360),
                           child: Container(
-                            height: 120,
-                            width: 120,
+                            height: MediaQuery.of(context).size.width * 0.3,
+                            width: MediaQuery.of(context).size.height * 0.16,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               boxShadow: <BoxShadow>[
@@ -120,8 +120,10 @@ class _HomeDrawerState extends State<HomeDrawer> {
                                 borderRadius: const BorderRadius.all(
                                     Radius.circular(60.0)),
                                 child: Container(
-                                  width: 60,
-                                  height: 60,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.15,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.08,
                                   decoration: const BoxDecoration(
                                     shape: BoxShape.circle,
                                   ),
@@ -134,7 +136,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                     },
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 8, left: 4),
+                    padding: const EdgeInsets.only(top: 16, left: 4),
                     child: Text(
                       'Name Here',
                       style: headFontBig1,

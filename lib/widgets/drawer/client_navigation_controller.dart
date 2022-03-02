@@ -179,7 +179,6 @@ class _ClientNavigationControllerState extends State<ClientNavigationController>
                                         progress: iconAnimationController!),
                               ),
                               onTap: () {
-                                print(scrolloffset);
                                 FocusScope.of(context)
                                     .requestFocus(FocusNode());
                                 onDrawerClick();

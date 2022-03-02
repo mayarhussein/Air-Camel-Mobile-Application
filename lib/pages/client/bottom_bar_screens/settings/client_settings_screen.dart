@@ -5,10 +5,9 @@ class ClientSettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Container(
+    return Container(
       alignment: Alignment.center,
       child: Text("Here my Settings screen!!!!"),
-    ));
+    );
   }
 }
