@@ -1,5 +1,5 @@
 class OfferModel {
-  int? id;
+  String? id;
   int idCompany;
   DateTime dateTime;
   DateTime expireTime;

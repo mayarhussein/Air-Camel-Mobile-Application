@@ -1,5 +1,5 @@
 class NotificationModel {
-  int? id;
+  String? id;
   String message;
   String subject;
   int idFrom;

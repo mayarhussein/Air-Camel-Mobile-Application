@@ -1,5 +1,5 @@
 class OrdersModel {
-  int? id;
+  String? id;
   int companyId;
   int clientId;
   String? description;
@@ -31,7 +31,7 @@ class OrdersModel {
         companyId: 0,
         date: DateTime.now(),
         from: "Zew",
-        id: 0,
+        id: "0",
         paymentType: "Cash",
         status: "Pending",
         to: "Mayoura"),
@@ -41,7 +41,7 @@ class OrdersModel {
         companyId: 0,
         date: DateTime.now(),
         from: "Zew",
-        id: 0,
+        id: "0",
         paymentType: "Cash",
         status: "Pending",
         to: "Mayoura"),
@@ -51,7 +51,7 @@ class OrdersModel {
         companyId: 0,
         date: DateTime.now(),
         from: "Zew",
-        id: 0,
+        id: "0",
         paymentType: "Cash",
         status: "Pending",
         to: "Mayoura"),
@@ -61,7 +61,7 @@ class OrdersModel {
         companyId: 0,
         date: DateTime.now(),
         from: "Zew",
-        id: 0,
+        id: "0",
         paymentType: "Cash",
         status: "Pending",
         to: "Mayoura"),
@@ -71,7 +71,7 @@ class OrdersModel {
         companyId: 0,
         date: DateTime.now(),
         from: "Zew",
-        id: 0,
+        id: "0",
         paymentType: "Cash",
         status: "Pending",
         to: "Mayoura"),

@@ -1,5 +1,5 @@
 class CreditTransactionsModel {
-  int? id;
+  String? id;
   double amount;
   String reason;
   DateTime dateTime;

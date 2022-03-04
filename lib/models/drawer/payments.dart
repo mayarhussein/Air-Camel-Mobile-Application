@@ -1,5 +1,5 @@
 class PaymentModel {
-  int? id;
+  String? id;
   double amount;
   int idCompany;
   DateTime dateTime;
