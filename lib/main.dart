@@ -80,7 +80,6 @@ class MyApp extends StatelessWidget {
                 CompanyNavigationScreen(),
             HelpScreen.routeName: (ctx) => HelpScreen(),
             AboutUsScreen.routeName: (ctx) => AboutUsScreen(),
-            NotificationsScreen.routeName: (ctx) => NotificationsScreen(),
             CreditScreen.routeName: (ctx) => CreditScreen(),
             OffersScreen.routeName: (ctx) => OffersScreen(),
             InviteScreen.routeName: (ctx) => InviteScreen(),

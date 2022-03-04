@@ -33,10 +33,6 @@ class _HomeDrawerState extends State<HomeDrawer> {
   void setDrawerListArray() {
     drawerList = <DrawerList>[
       DrawerList(
-          index: DrawerIndex.Notifications,
-          labelName: 'Notifications ',
-          icon: Icon(Icons.notifications_active)),
-      DrawerList(
         index: DrawerIndex.Credit,
         labelName: 'Credit & Payments',
         icon: Icon(Icons.credit_card_rounded),

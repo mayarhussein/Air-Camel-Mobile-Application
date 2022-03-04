@@ -37,7 +37,7 @@ class AboutUsScreen extends StatelessWidget {
                   child: Image.asset('assets/images/about_us.png'),
                 ),
                 Container(
-                  padding: const EdgeInsets.only(top: 16),
+                  padding: const EdgeInsets.all(16),
                   child: Text(
                     'Just a project for graduation for some students in Alexandria University',
                     textAlign: TextAlign.center,

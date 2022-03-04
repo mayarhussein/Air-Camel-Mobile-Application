@@ -50,10 +50,10 @@ class _AccountScreenState extends State<AccountScreen> {
                   ),
                   // flex: 2,
                 ),
-                Padding(
+                Flexible(
+                    child: Padding(
                   padding: const EdgeInsets.all(10.0),
-                  child: Flexible(
-                      child: Column(
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -78,8 +78,8 @@ class _AccountScreenState extends State<AccountScreen> {
                         ),
                       ),
                     ],
-                  )),
-                )
+                  ),
+                ))
               ],
             ),
           ),

@@ -99,11 +99,6 @@ class _ClientNavigationScreenState extends State<ClientNavigationScreen> {
           Navigator.of(context).pushNamed(HelpScreen.routeName);
           drawerIndex = DrawerIndex.HOME;
         });
-      } else if (drawerIndex == DrawerIndex.Notifications) {
-        setState(() {
-          Navigator.of(context).pushNamed(NotificationsScreen.routeName);
-          drawerIndex = DrawerIndex.HOME;
-        });
       } else if (drawerIndex == DrawerIndex.Credit) {
         setState(() {
           Navigator.of(context).pushNamed(CreditScreen.routeName);
