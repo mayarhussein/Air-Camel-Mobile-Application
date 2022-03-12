@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1023851599548",
+    "firebase_url": "https://air-camel-default-rtdb.firebaseio.com",
+    "project_id": "air-camel",
+    "storage_bucket": "air-camel.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1023851599548:android:4e6ea300efd5cbccece2b9",
+        "android_client_info": {
+          "package_name": "com.example.air_camel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1023851599548-a87u36f1hmfhuvbkfa6gs8j3devskleu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCo01-pC-ZUC7LCr0dMVtGjYkZAy60RA48"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1023851599548-a87u36f1hmfhuvbkfa6gs8j3devskleu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
