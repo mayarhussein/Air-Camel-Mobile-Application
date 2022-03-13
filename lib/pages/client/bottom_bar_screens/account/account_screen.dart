@@ -23,7 +23,7 @@ class _AccountScreenState extends State<AccountScreen> {
         future: usersData.doc(theUser.uid).get(),
         builder: (ctx, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
 
           Map<String, dynamic> data =
