@@ -7,14 +7,14 @@ import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
 import 'package:image_picker/image_picker.dart';
 
-class EditImagePage extends StatefulWidget {
-  const EditImagePage({Key? key}) : super(key: key);
+class EditImageScreen extends StatefulWidget {
+  const EditImageScreen({Key? key}) : super(key: key);
 
   @override
-  _EditImagePageState createState() => _EditImagePageState();
+  _EditImageScreenState createState() => _EditImageScreenState();
 }
 
-class _EditImagePageState extends State<EditImagePage> {
+class _EditImageScreenState extends State<EditImageScreen> {
   var client = ClientData.myClient;
 
   @override

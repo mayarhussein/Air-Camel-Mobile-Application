@@ -1,16 +1,20 @@
 import 'dart:async';
 
 import 'package:air_camel/constants.dart';
+import 'package:air_camel/pages/client/bottom_bar_screens/account/edit_profile.dart';
 import 'package:air_camel/pages/client/bottom_bar_screens/account/edit_email.dart';
 import 'package:air_camel/pages/client/bottom_bar_screens/account/edit_image.dart';
 import 'package:air_camel/pages/client/bottom_bar_screens/account/edit_name.dart';
 import 'package:air_camel/pages/client/bottom_bar_screens/account/edit_phone.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:air_camel/widgets/display_image_widget.dart';
 
 import 'package:air_camel/providers/client_data.dart';
 import 'package:air_camel/providers/client.dart';
+import 'package:provider/single_child_widget.dart';
 
 class AccountScreen extends StatefulWidget {
   static const routeName = '/account';
@@ -21,167 +25,198 @@ class AccountScreen extends StatefulWidget {
 class _AccountScreenState extends State<AccountScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: mainPadding,
-      child: Column(
-        children: [
-          SizedBox(
-            width: double.maxFinite,
-            height: MediaQuery.of(context).size.height * 0.12,
-            child: Container(
-              alignment: Alignment.bottomCenter,
-              child: Text(
-                "Profile",
-                style: headFont1,
+    final theUser = FirebaseAuth.instance.currentUser!;
+    CollectionReference usersData =
+        FirebaseFirestore.instance.collection('users');
+
+    return FutureBuilder<DocumentSnapshot>(
+        future: usersData.doc(theUser.uid).get(),
+        builder: (ctx, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          }
+
+          Map<String, dynamic> data =
+              snapshot.data!.data() as Map<String, dynamic>;
+          String firstName = data['firstName'];
+          String lastName = data['lastName'];
+          String email = data['email'];
+          String phoneNumber = data['phoneNumber'];
+    
+
+          return Container(
+            width: double.infinity,
+            padding: mainPadding,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  SizedBox(
+                    width: double.maxFinite,
+                    height: MediaQuery.of(context).size.height * 0.12,
+                    child: Container(
+                      alignment: Alignment.bottomCenter,
+                      child: Text("Profile", style: headFont1),
+                    ),
+                  ),
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.3,
+                    padding: EdgeInsets.only(
+                        top: MediaQuery.of(context).size.height * 0.08),
+                    child: Row(
+                      children: [
+                        Flexible(
+                          child: CircleAvatar(
+                            radius: MediaQuery.of(context).size.height * 0.1,
+                            backgroundColor: Colors.amber,
+                          ),
+                          // flex: 2,
+                        ),
+                        Flexible(
+                            child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                  child: Text(
+                                'Name : ' + firstName + ' ' + lastName,
+                                style: defaultFont1,
+                                textAlign: TextAlign.left,
+                              )),
+                              Container(
+                                child: Text(
+                                  "Email : " + email,
+                                  style: defaultFont1,
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                              Container(
+                                child: Text(
+                                  "Phone : " + phoneNumber,
+                                  style: defaultFont1,
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ))
+                      ],
+                    ),
+                  ),
+                  Container(
+                    height: 400,
+                    child: Column(
+                      children: [
+                        InkWell(
+                          onTap: () => Navigator.of(context)
+                              .pushReplacementNamed(
+                                  EditProfileScreen.routeName),
+                                  
+                          child: Card(
+                            elevation: 5,
+                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            child: SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.2,
+                              width: double.infinity,
+                              child: Container(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Text(
+                                      "Edit Profile",
+                                      style: headFontBig1,
+                                    ),
+                                    Image(
+                                      image: AssetImage(
+                                          "assets/images/profile.png"),
+                                      fit: BoxFit.scaleDown,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            InkWell(
+                              child: Card(
+                                elevation: 5,
+                                clipBehavior: Clip.antiAliasWithSaveLayer,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                                child: SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.2,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.4,
+                                  child: Container(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        Text(
+                                          "History",
+                                          style: headFontBig1,
+                                        ),
+                                        Image(
+                                          image: AssetImage(
+                                              "assets/images/history.png"),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            InkWell(
+                              child: Card(
+                                elevation: 5,
+                                clipBehavior: Clip.antiAliasWithSaveLayer,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                                child: SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.2,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.4,
+                                  child: Container(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        Text(
+                                          "Settings",
+                                          style: headFontBig1,
+                                        ),
+                                        Image(
+                                          image: AssetImage(
+                                              "assets/images/settings.png"),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                  )
+                ],
               ),
             ),
-          ),
-          Container(
-            height: MediaQuery.of(context).size.height * 0.3,
-            padding:
-                EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.08),
-            child: Row(
-              children: [
-                Flexible(
-                  child: CircleAvatar(
-                    radius: MediaQuery.of(context).size.height * 0.1,
-                    backgroundColor: Colors.amber,
-                  ),
-                  // flex: 2,
-                ),
-                Flexible(
-                    child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                          child: Text(
-                        "Name : ",
-                        style: defaultFont1,
-                        textAlign: TextAlign.left,
-                      )),
-                      Container(
-                        child: Text(
-                          "Email : ",
-                          style: defaultFont1,
-                          textAlign: TextAlign.left,
-                        ),
-                      ),
-                      Container(
-                        child: Text(
-                          "Phone : ",
-                          style: defaultFont1,
-                          textAlign: TextAlign.left,
-                        ),
-                      ),
-                    ],
-                  ),
-                ))
-              ],
-            ),
-          ),
-          Container(
-            height: 400,
-            child: Column(
-              children: [
-                InkWell(
-                  child: Card(
-                    elevation: 5,
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    child: SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.2,
-                      width: double.infinity,
-                      child: Container(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Text(
-                              "Edit Profile",
-                              style: headFontBig1,
-                            ),
-                            Image(
-                              image: AssetImage("assets/images/profile.png"),
-                              fit: BoxFit.scaleDown,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    InkWell(
-                      child: Card(
-                        elevation: 5,
-                        clipBehavior: Clip.antiAliasWithSaveLayer,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        child: SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.2,
-                          width: MediaQuery.of(context).size.width * 0.4,
-                          child: Container(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Text(
-                                  "History",
-                                  style: headFontBig1,
-                                ),
-                                Image(
-                                  image:
-                                      AssetImage("assets/images/history.png"),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    InkWell(
-                      child: Card(
-                        elevation: 5,
-                        clipBehavior: Clip.antiAliasWithSaveLayer,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        child: SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.2,
-                          width: MediaQuery.of(context).size.width * 0.4,
-                          child: Container(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Text(
-                                  "Settings",
-                                  style: headFontBig1,
-                                ),
-                                Image(
-                                  image:
-                                      AssetImage("assets/images/settings.png"),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    )
-                  ],
-                )
-              ],
-            ),
-          )
-        ],
-      ),
-    );
+          );
+        });
   }
 }
 

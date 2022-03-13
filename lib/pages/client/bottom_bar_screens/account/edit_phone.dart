@@ -1,18 +1,20 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:string_validator/string_validator.dart';
 import 'package:air_camel/providers/client_data.dart';
 import 'package:air_camel/widgets/appbar_widget.dart';
 
 // This class handles the Page to edit the Phone Section of the User Profile.
-class EditPhoneFormPage extends StatefulWidget {
-  const EditPhoneFormPage({Key? key}) : super(key: key);
+class EditPhoneScreen extends StatefulWidget {
+  const EditPhoneScreen({Key? key}) : super(key: key);
   @override
-  EditPhoneFormPageState createState() {
-    return EditPhoneFormPageState();
+  EditPhoneScreenState createState() {
+    return EditPhoneScreenState();
   }
 }
 
-class EditPhoneFormPageState extends State<EditPhoneFormPage> {
+class EditPhoneScreenState extends State<EditPhoneScreen> {
   final _formKey = GlobalKey<FormState>();
   final phoneController = TextEditingController();
   var user = ClientData.myClient;
@@ -23,15 +25,36 @@ class EditPhoneFormPageState extends State<EditPhoneFormPage> {
     super.dispose();
   }
 
-  void updateUserValue(String phone) {
-    String formattedPhoneNumber = "(" +
-        phone.substring(0, 3) +
+
+  Future <void> updateUserValue(String phoneNumber) async {
+    FocusScope.of(context).unfocus();
+
+    final user = FirebaseAuth.instance.currentUser!;
+    final userData =  FirebaseFirestore.instance.collection('users');
+
+        String formattedPhoneNumber = "(" +
+        phoneNumber.substring(0, 3) +
         ") " +
-        phone.substring(3, 6) +
+        phoneNumber.substring(3, 6) +
         "-" +
-        phone.substring(6, phone.length);
-    user.phone = formattedPhoneNumber;
+        phoneNumber.substring(6, phoneNumber.length);
+    
+
+  await userData
+    .doc(user.uid)
+    .update({
+       'phoneNumber': formattedPhoneNumber,
+      })
+    .then((value) => print("User Updated"))
+    .catchError((error) => print("Failed to update user: $error"));
+
+   
   }
+
+
+
+
+
 
   @override
   Widget build(BuildContext context) {

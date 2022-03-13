@@ -1,32 +1,49 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:string_validator/string_validator.dart';
 import 'package:air_camel/providers/client_data.dart';
 import 'package:air_camel/widgets/appbar_widget.dart';
 
 // This class handles the Page to edit the Name Section of the User Profile.
-class EditNameFormPage extends StatefulWidget {
-  const EditNameFormPage({Key? key}) : super(key: key);
+class EditNameScreen extends StatefulWidget {
+  const EditNameScreen({Key? key}) : super(key: key);
 
   @override
-  EditNameFormPageState createState() {
-    return EditNameFormPageState();
+  EditNameScreenState createState() {
+    return EditNameScreenState();
   }
 }
 
-class EditNameFormPageState extends State<EditNameFormPage> {
+class EditNameScreenState extends State<EditNameScreen> {
   final _formKey = GlobalKey<FormState>();
   final firstNameController = TextEditingController();
-  final secondNameController = TextEditingController();
-  var user = ClientData.myClient;
+  final lastNameController = TextEditingController();
 
   @override
   void dispose() {
     firstNameController.dispose();
+    lastNameController.dispose();
     super.dispose();
   }
 
-  void updateUserValue(String name) {
-    user.name = name;
+  Future <void> updateUserValue(String firstName, String lastName) async {
+    FocusScope.of(context).unfocus();
+
+    final user = FirebaseAuth.instance.currentUser!;
+    final userData =  FirebaseFirestore.instance.collection('users');
+
+    
+  await userData
+    .doc(user.uid)
+    .update({
+       'firstName': firstName,
+      'lastName': lastName,
+      })
+    .then((value) => print("User Updated"))
+    .catchError((error) => print("Failed to update user: $error"));
+
+   
   }
 
   @override
@@ -39,9 +56,9 @@ class EditNameFormPageState extends State<EditNameFormPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              SizedBox(
+              const SizedBox(
                   width: 330,
-                  child: const Text(
+                  child: Text(
                     "What's Your Name?",
                     style: TextStyle(
                       fontSize: 25,
@@ -88,7 +105,7 @@ class EditNameFormPageState extends State<EditNameFormPage> {
                             },
                             decoration:
                                 const InputDecoration(labelText: 'Last Name'),
-                            controller: secondNameController,
+                            controller: lastNameController,
                           )))
                 ],
               ),
@@ -100,22 +117,21 @@ class EditNameFormPageState extends State<EditNameFormPage> {
                         width: 330,
                         height: 50,
                         child: ElevatedButton(
-                        
                           onPressed: () {
                             // Validate returns true if the form is valid, or false otherwise.
                             if (_formKey.currentState!.validate() &&
-                                isAlpha(firstNameController.text +
-                                    secondNameController.text)) {
-                              updateUserValue(firstNameController.text +
-                                  " " +
-                                  secondNameController.text);
+                                isAlpha(firstNameController.text) && 
+                                    isAlpha(lastNameController.text)) {
+                              updateUserValue(firstNameController.text,lastNameController.text);
+                                  
                               Navigator.pop(context);
                             }
-                          },style: ElevatedButton.styleFrom(
+                          },
+                          style: ElevatedButton.styleFrom(
                             primary: Colors.amber,
-                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30)),
-                              ),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30)),
+                          ),
                           child: const Text(
                             'Update',
                             style: TextStyle(fontSize: 15, color: Colors.white),
