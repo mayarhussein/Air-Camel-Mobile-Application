@@ -2,8 +2,8 @@ import 'dart:async';
 import 'package:air_camel/pages/client/bottom_bar_screens/account/edit_email.dart';
 import 'package:air_camel/pages/client/bottom_bar_screens/account/edit_image.dart';
 import 'package:air_camel/pages/client/bottom_bar_screens/account/edit_name.dart';
+import 'package:air_camel/pages/client/bottom_bar_screens/account/edit_password.dart';
 import 'package:air_camel/pages/client/bottom_bar_screens/account/edit_phone.dart';
-import 'package:air_camel/widgets/appbar_widget.dart';
 import 'package:air_camel/widgets/display_image_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -24,11 +24,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     final theUser = FirebaseAuth.instance.currentUser!;
     CollectionReference usersData = FirebaseFirestore.instance.collection('users');
 
-    return FutureBuilder<DocumentSnapshot>(
-        future: usersData.doc(theUser.uid).get(),
+    return StreamBuilder<DocumentSnapshot>(
+        stream: usersData.doc(theUser.uid).snapshots(),
         builder: (ctx, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
 
           Map<String, dynamic> data =
@@ -41,10 +41,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
           return Scaffold(
             appBar: AppBar(
+                          automaticallyImplyLeading: false,
+
                 leading: IconButton(
-                    icon: Icon(Icons.arrow_back_ios_new),
+                    icon: const Icon(Icons.arrow_back_ios_new),
                     onPressed: () {
-                      //Navigator.pop(context);
+                      Navigator.of(context).pop();
                     })),
             body: Column(
               children: [
@@ -74,7 +76,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     )),
                 buildUserInfoDisplay(firstName +' '+ lastName, ' Name', EditNameScreen()),
                 buildUserInfoDisplay(email, 'Email', EditEmailScreen()),
-                // buildUserInfoDisplay("", 'Password', EditEmailScreen()),
+                buildUserInfoDisplay('', 'Password', EditPasswordScreen()),
                 buildUserInfoDisplay(phoneNumber, 'Phone Number', EditPhoneScreen()),
 
                 //Expanded(
@@ -87,28 +89,27 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         });
   }
 
-  // Widget builds the display item with the proper formatting to display the user's info
   Widget buildUserInfoDisplay(String getValue, String title, Widget editPage) =>
       Padding(
-          padding: EdgeInsets.only(bottom: 10),
+          padding: const EdgeInsets.only(bottom: 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 title,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w500,
                   color: Colors.grey,
                 ),
               ),
-              SizedBox(
+             const SizedBox(
                 height: 1,
               ),
               Container(
                   width: 350,
                   height: 40,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       border: Border(
                           bottom: BorderSide(
                     color: Colors.grey,
@@ -122,9 +123,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             },
                             child: Text(
                               getValue,
-                              style: TextStyle(fontSize: 16, height: 1.4),
+                              style: const TextStyle(fontSize: 16, height: 1.4),
                             ))),
-                    Icon(
+                   const Icon(
                       Icons.keyboard_arrow_right,
                       color: Colors.grey,
                       size: 40.0,

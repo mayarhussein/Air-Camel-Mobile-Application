@@ -67,8 +67,7 @@ class _AuthScreenState extends State<AuthScreen> {
         // final url = await ref.getDownloadURL();
         // print(url);
 
-        // Creating a new user
-        // Users Collection is created on the fly and 2 fields are created
+       
 
 
       String formattedPhoneNumber = "(" +
@@ -78,7 +77,8 @@ class _AuthScreenState extends State<AuthScreen> {
         "-" +
         phoneNumber.substring(6, phoneNumber.length);
         
-
+        // Creating a new user
+        // Users Collection is created on the fly and 2 fields are created
         await FirebaseFirestore.instance
             .collection('users')
             .doc(authResult.user!.uid)

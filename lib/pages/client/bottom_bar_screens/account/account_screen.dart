@@ -1,20 +1,10 @@
 import 'dart:async';
-
 import 'package:air_camel/constants.dart';
 import 'package:air_camel/pages/client/bottom_bar_screens/account/edit_profile.dart';
-import 'package:air_camel/pages/client/bottom_bar_screens/account/edit_email.dart';
-import 'package:air_camel/pages/client/bottom_bar_screens/account/edit_image.dart';
-import 'package:air_camel/pages/client/bottom_bar_screens/account/edit_name.dart';
-import 'package:air_camel/pages/client/bottom_bar_screens/account/edit_phone.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import 'package:air_camel/widgets/display_image_widget.dart';
-
-import 'package:air_camel/providers/client_data.dart';
-import 'package:air_camel/providers/client.dart';
-import 'package:provider/single_child_widget.dart';
 
 class AccountScreen extends StatefulWidget {
   static const routeName = '/account';

@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:air_camel/providers/client_data.dart';
 import 'package:air_camel/widgets/appbar_widget.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
@@ -15,7 +14,6 @@ class EditImageScreen extends StatefulWidget {
 }
 
 class _EditImageScreenState extends State<EditImageScreen> {
-  var client = ClientData.myClient;
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +23,9 @@ class _EditImageScreenState extends State<EditImageScreen> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          SizedBox(
+          const SizedBox(
               width: 330,
-              child: const Text(
+              child:  Text(
                 "Upload a photo of yourself:",
                 style: TextStyle(
                   fontSize: 23,
@@ -35,7 +33,7 @@ class _EditImageScreenState extends State<EditImageScreen> {
                 ),
               )),
           Padding(
-              padding: EdgeInsets.only(top: 20),
+              padding: const EdgeInsets.only(top: 20),
               child: SizedBox(
                   width: 330,
                   child: GestureDetector(
@@ -50,13 +48,13 @@ class _EditImageScreenState extends State<EditImageScreen> {
                       final imageFile = File('${location.path}/$name');
                       final newImage =
                           await File(image.path).copy(imageFile.path);
-                      setState(
-                          () => client = client.copy(imagePath: newImage.path));
+                      // setState(
+                      //     () => client = client.copy(imagePath: newImage.path));
                     },
-                    child: Image.network(client.image),
+                    child: Image.network('xx'),
                   ))),
           Padding(
-              padding: EdgeInsets.only(top: 40),
+              padding: const EdgeInsets.only(top: 40),
               child: Align(
                   alignment: Alignment.bottomCenter,
                   child: SizedBox(

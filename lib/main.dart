@@ -11,9 +11,8 @@ import 'package:air_camel/pages/company/complaints_screen.dart';
 import 'package:air_camel/pages/company/edit_categories.dart';
 import 'package:air_camel/pages/company/payment_history.dart';
 import 'package:air_camel/pages/launch_app/auth_screen.dart';
-import 'package:air_camel/pages/launch_app/login_screen.dart';
-import 'package:air_camel/pages/launch_app/signup_screen.dart';
-import 'package:air_camel/pages/launch_app/welcome_screen.dart';
+import 'package:air_camel/pages/launch_app/login_screen.txt';
+import 'package:air_camel/pages/launch_app/splash_screen.dart';
 import 'package:air_camel/pages/side_drawer_screens/about_us_screen.dart';
 import 'package:air_camel/pages/side_drawer_screens/credit_screen.dart';
 import 'package:air_camel/pages/side_drawer_screens/help_screen.dart';
@@ -79,12 +78,19 @@ class MyApp extends StatelessWidget {
               builder: (ctx, userSanpshot) {
                 if (userSanpshot.hasData) {
                   final user = FirebaseAuth.instance.currentUser;
-                  CollectionReference usersData = FirebaseFirestore.instance.collection('users');
+                  CollectionReference usersData =
+                      FirebaseFirestore.instance.collection('users');
 
-                  return FutureBuilder(
-                      future: usersData.doc(user.uid).get(),
-                      builder: (ctx, snapshot) {
-                        Map<String, dynamic> data = snapshot.data.data() as Map<String, dynamic>;
+                  return StreamBuilder<DocumentSnapshot>(
+                      stream: usersData.doc(user.uid).snapshots(),
+                      builder:  (ctx, snapshot)  {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return SplashScreen();
+                        }
+
+                        Map<String, dynamic> data =
+                            snapshot.data.data() as Map<String, dynamic>;
                         String role = data['role'];
                         if (role == 'client') {
                           return ClientNavigationScreen(); // If there is a valid token
@@ -102,10 +108,8 @@ class MyApp extends StatelessWidget {
             ClientNavigationScreen.routeName: (ctx) => ClientNavigationScreen(),
             NewShipmentMenu.routeName: (ctx) => NewShipmentMenu(),
             LoginScreen.routeName: (ctx) => LoginScreen(),
-            SignupScreen.routeName: (ctx) => SignupScreen(),
             TripDetailsScreen.routeName: (ctx) => TripDetailsScreen(),
-            CompanyNavigationScreen.routeName: (ctx) =>
-                CompanyNavigationScreen(),
+            CompanyNavigationScreen.routeName: (ctx) =>CompanyNavigationScreen(),
             HelpScreen.routeName: (ctx) => HelpScreen(),
             AboutUsScreen.routeName: (ctx) => AboutUsScreen(),
             CreditScreen.routeName: (ctx) => CreditScreen(),

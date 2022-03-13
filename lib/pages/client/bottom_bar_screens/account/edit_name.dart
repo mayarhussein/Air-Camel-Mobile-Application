@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:string_validator/string_validator.dart';
-import 'package:air_camel/providers/client_data.dart';
 import 'package:air_camel/widgets/appbar_widget.dart';
 
 // This class handles the Page to edit the Name Section of the User Profile.
@@ -70,7 +69,7 @@ class EditNameScreenState extends State<EditNameScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Padding(
-                      padding: EdgeInsets.fromLTRB(0, 40, 16, 0),
+                      padding: const EdgeInsets.fromLTRB(0, 40, 16, 0),
                       child: SizedBox(
                           height: 100,
                           width: 150,
@@ -85,11 +84,11 @@ class EditNameScreenState extends State<EditNameScreen> {
                               return null;
                             },
                             decoration:
-                                InputDecoration(labelText: 'First Name'),
+                               const InputDecoration(labelText: 'First Name'),
                             controller: firstNameController,
                           ))),
                   Padding(
-                      padding: EdgeInsets.fromLTRB(0, 40, 16, 0),
+                      padding: const EdgeInsets.fromLTRB(0, 40, 16, 0),
                       child: SizedBox(
                           height: 100,
                           width: 150,
@@ -110,7 +109,7 @@ class EditNameScreenState extends State<EditNameScreen> {
                 ],
               ),
               Padding(
-                  padding: EdgeInsets.only(top: 150),
+                  padding: const EdgeInsets.only(top: 150),
                   child: Align(
                       alignment: Alignment.bottomCenter,
                       child: SizedBox(
@@ -120,8 +119,8 @@ class EditNameScreenState extends State<EditNameScreen> {
                           onPressed: () {
                             // Validate returns true if the form is valid, or false otherwise.
                             if (_formKey.currentState!.validate() &&
-                                isAlpha(firstNameController.text) && 
-                                    isAlpha(lastNameController.text)) {
+                                isAlpha(firstNameController.text.trim()) && 
+                                    isAlpha(lastNameController.text.trim())) {
                               updateUserValue(firstNameController.text,lastNameController.text);
                                   
                               Navigator.pop(context);

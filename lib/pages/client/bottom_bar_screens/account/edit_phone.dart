@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:string_validator/string_validator.dart';
-import 'package:air_camel/providers/client_data.dart';
 import 'package:air_camel/widgets/appbar_widget.dart';
 
 // This class handles the Page to edit the Phone Section of the User Profile.
@@ -17,7 +16,6 @@ class EditPhoneScreen extends StatefulWidget {
 class EditPhoneScreenState extends State<EditPhoneScreen> {
   final _formKey = GlobalKey<FormState>();
   final phoneController = TextEditingController();
-  var user = ClientData.myClient;
 
   @override
   void dispose() {
@@ -25,36 +23,27 @@ class EditPhoneScreenState extends State<EditPhoneScreen> {
     super.dispose();
   }
 
-
-  Future <void> updateUserValue(String phoneNumber) async {
+  Future<void> updateUserValue(String phoneNumber) async {
     FocusScope.of(context).unfocus();
 
     final user = FirebaseAuth.instance.currentUser!;
-    final userData =  FirebaseFirestore.instance.collection('users');
+    final userData = FirebaseFirestore.instance.collection('users');
 
-        String formattedPhoneNumber = "(" +
+    String formattedPhoneNumber = "(" +
         phoneNumber.substring(0, 3) +
         ") " +
         phoneNumber.substring(3, 6) +
         "-" +
         phoneNumber.substring(6, phoneNumber.length);
-    
 
-  await userData
-    .doc(user.uid)
-    .update({
-       'phoneNumber': formattedPhoneNumber,
-      })
-    .then((value) => print("User Updated"))
-    .catchError((error) => print("Failed to update user: $error"));
-
-   
+    await userData
+        .doc(user.uid)
+        .update({
+          'phoneNumber': formattedPhoneNumber,
+        })
+        .then((value) => print("User Updated"))
+        .catchError((error) => print("Failed to update user: $error"));
   }
-
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -66,15 +55,15 @@ class EditPhoneScreenState extends State<EditPhoneScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                SizedBox(
+                const SizedBox(
                     width: 320,
-                    child: const Text(
+                    child: Text(
                       "What's Your Phone Number?",
                       style:
                           TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                     )),
                 Padding(
-                    padding: EdgeInsets.only(top: 40),
+                    padding: const EdgeInsets.only(top: 40),
                     child: SizedBox(
                         height: 100,
                         width: 320,
@@ -96,7 +85,7 @@ class EditPhoneScreenState extends State<EditPhoneScreen> {
                           ),
                         ))),
                 Padding(
-                    padding: EdgeInsets.only(top: 150),
+                    padding: const EdgeInsets.only(top: 150),
                     child: Align(
                         alignment: Alignment.bottomCenter,
                         child: SizedBox(
@@ -107,17 +96,19 @@ class EditPhoneScreenState extends State<EditPhoneScreen> {
                               // Validate returns true if the form is valid, or false otherwise.
                               if (_formKey.currentState!.validate() &&
                                   isNumeric(phoneController.text)) {
-                                updateUserValue(phoneController.text);
+                                updateUserValue(phoneController.text.trim());
                                 Navigator.pop(context);
                               }
-                            },style: ElevatedButton.styleFrom(
-                            primary: Colors.amber,
-                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30)),
-                              ),
+                            },
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.amber,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30)),
+                            ),
                             child: const Text(
                               'Update',
-                              style: TextStyle(fontSize: 15, color: Colors.white),
+                              style:
+                                  TextStyle(fontSize: 15, color: Colors.white),
                             ),
                           ),
                         )))
