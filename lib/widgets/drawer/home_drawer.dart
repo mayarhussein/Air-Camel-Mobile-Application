@@ -1,5 +1,5 @@
 import 'package:air_camel/constants.dart';
-import 'package:air_camel/providers/account_provider.dart';
+import 'package:air_camel/models/account.dart';
 import 'package:air_camel/models/drawer/drawer_list.dart';
 import 'package:air_camel/resources/app_theme.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -73,138 +73,127 @@ class _HomeDrawerState extends State<HomeDrawer> {
 
     //print(account);
 
+    Account? account = Provider.of<AccountsProvider>(context).account;
 
-    final theUser = FirebaseAuth.instance.currentUser!;
-    CollectionReference usersData = FirebaseFirestore.instance.collection('users');
+    String firstName = account!.firstName;
+    String lastName = account.lastName;
 
-    return FutureBuilder<DocumentSnapshot>(
-        future: usersData.doc(theUser.uid).get(),
-        builder: (ctx, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          }
-
-          Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
-          String firstName = data['firstName'];
-          String lastName = data['lastName'];
-
-
-        return Scaffold(
-          backgroundColor: AppTheme.notWhite.withOpacity(0.5),
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.only(top: 40.0),
-                child: Container(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      AnimatedBuilder(
-                        animation: widget.iconAnimationController!,
-                        builder: (BuildContext context, Widget? child) {
-                          return ScaleTransition(
-                            scale: AlwaysStoppedAnimation<double>(1.0 -
-                                (widget.iconAnimationController!.value) * 0.2),
-                            child: RotationTransition(
-                              turns: AlwaysStoppedAnimation<double>(Tween<double>(
-                                          begin: 0.0, end: 24.0)
-                                      .animate(CurvedAnimation(
-                                          parent: widget.iconAnimationController!,
-                                          curve: Curves.fastOutSlowIn))
-                                      .value /
-                                  360),
-                              child: Container(
-                                height: MediaQuery.of(context).size.width * 0.3,
-                                width: MediaQuery.of(context).size.height * 0.16,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  boxShadow: <BoxShadow>[
-                                    BoxShadow(
-                                        color: AppTheme.grey.withOpacity(0.6),
-                                        offset: const Offset(2.0, 4.0),
-                                        blurRadius: 8),
-                                  ],
-                                ),
-                                child: ClipRRect(
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(60.0)),
-                                    child: Container(
-                                      width:
-                                          MediaQuery.of(context).size.width * 0.15,
-                                      height:
-                                          MediaQuery.of(context).size.height * 0.08,
-                                      decoration: const BoxDecoration(
-                                        shape: BoxShape.circle,
-                                      ),
-                                    )
-                                    // Image.asset('assets/images/userImage.png'),
-                                    ),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 16, left: 4),
-                        child: Text(
-                          firstName+' '+ lastName,
-                          style: headFontBig1,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 4,
-              ),
-              Divider(
-                height: 1,
-                color: AppTheme.grey.withOpacity(0.6),
-              ),
-              Expanded(
-                child: ListView.builder(
-                  physics: const BouncingScrollPhysics(),
-                  padding: const EdgeInsets.all(0.0),
-                  itemCount: drawerList?.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return inkwell(drawerList![index]);
-                  },
-                ),
-              ),
-              Divider(
-                height: 1,
-                color: AppTheme.grey.withOpacity(0.6),
-              ),
-              Column(
+    return Scaffold(
+      backgroundColor: AppTheme.notWhite.withOpacity(0.5),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.only(top: 40.0),
+            child: Container(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  ListTile(
-                    title: Text(
-                      'Sign Out',
-                      style: defaultFont1,
-                      textAlign: TextAlign.left,
-                    ),
-                    trailing: Icon(
-                      Icons.power_settings_new,
-                      color: Colors.red,
-                    ),
-                    onTap: () {FirebaseAuth.instance.signOut(); ;
+                  AnimatedBuilder(
+                    animation: widget.iconAnimationController!,
+                    builder: (BuildContext context, Widget? child) {
+                      return ScaleTransition(
+                        scale: AlwaysStoppedAnimation<double>(1.0 -
+                            (widget.iconAnimationController!.value) * 0.2),
+                        child: RotationTransition(
+                          turns: AlwaysStoppedAnimation<double>(Tween<double>(
+                                      begin: 0.0, end: 24.0)
+                                  .animate(CurvedAnimation(
+                                      parent: widget.iconAnimationController!,
+                                      curve: Curves.fastOutSlowIn))
+                                  .value /
+                              360),
+                          child: Container(
+                            height: MediaQuery.of(context).size.width * 0.3,
+                            width: MediaQuery.of(context).size.height * 0.16,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              boxShadow: <BoxShadow>[
+                                BoxShadow(
+                                    color: AppTheme.grey.withOpacity(0.6),
+                                    offset: const Offset(2.0, 4.0),
+                                    blurRadius: 8),
+                              ],
+                            ),
+                            child: ClipRRect(
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(60.0)),
+                                child: Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.15,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.08,
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                  ),
+                                )
+                                // Image.asset('assets/images/userImage.png'),
+                                ),
+                          ),
+                        ),
+                      );
                     },
                   ),
-                  SizedBox(
-                    height: MediaQuery.of(context).padding.bottom,
-                  )
+                  Padding(
+                    padding: const EdgeInsets.only(top: 16, left: 4),
+                    child: Text(
+                      firstName + ' ' + lastName,
+                      style: headFontBig1,
+                    ),
+                  ),
                 ],
               ),
+            ),
+          ),
+          const SizedBox(
+            height: 4,
+          ),
+          Divider(
+            height: 1,
+            color: AppTheme.grey.withOpacity(0.6),
+          ),
+          Expanded(
+            child: ListView.builder(
+              physics: const BouncingScrollPhysics(),
+              padding: const EdgeInsets.all(0.0),
+              itemCount: drawerList?.length,
+              itemBuilder: (BuildContext context, int index) {
+                return inkwell(drawerList![index]);
+              },
+            ),
+          ),
+          Divider(
+            height: 1,
+            color: AppTheme.grey.withOpacity(0.6),
+          ),
+          Column(
+            children: <Widget>[
+              ListTile(
+                title: Text(
+                  'Sign Out',
+                  style: defaultFont1,
+                  textAlign: TextAlign.left,
+                ),
+                trailing: Icon(
+                  Icons.power_settings_new,
+                  color: Colors.red,
+                ),
+                onTap: () {
+                  FirebaseAuth.instance.signOut();
+                  ;
+                },
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).padding.bottom,
+              )
             ],
           ),
-        );
-      }
+        ],
+      ),
     );
   }
 

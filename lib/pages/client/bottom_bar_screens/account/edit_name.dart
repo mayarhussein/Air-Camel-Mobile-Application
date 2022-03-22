@@ -1,6 +1,9 @@
+import 'package:air_camel/models/account.dart';
+import 'package:air_camel/providers/accounts_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:string_validator/string_validator.dart';
 import 'package:air_camel/widgets/appbar_widget.dart';
 
@@ -26,23 +29,21 @@ class EditNameScreenState extends State<EditNameScreen> {
     super.dispose();
   }
 
-  Future <void> updateUserValue(String firstName, String lastName) async {
+  Future<void> updateUserValue(String firstName, String lastName) async {
     FocusScope.of(context).unfocus();
 
     final user = FirebaseAuth.instance.currentUser!;
-    final userData =  FirebaseFirestore.instance.collection('users');
+    final userData = FirebaseFirestore.instance.collection('users');
 
-    
-  await userData
-    .doc(user.uid)
-    .update({
-       'firstName': firstName,
+    await userData.doc(user.uid).update({
+      'firstName': firstName,
       'lastName': lastName,
-      })
-    .then((value) => print("User Updated"))
-    .catchError((error) => print("Failed to update user: $error"));
-
-   
+    }).then((value) {
+      print("User Updated");
+      Provider.of<AccountsProvider>(context, listen: false)
+          .editName(firstName, lastName);
+      Navigator.pop(context);
+    }).catchError((error) => print("Failed to update user: $error"));
   }
 
   @override
@@ -84,7 +85,7 @@ class EditNameScreenState extends State<EditNameScreen> {
                               return null;
                             },
                             decoration:
-                               const InputDecoration(labelText: 'First Name'),
+                                const InputDecoration(labelText: 'First Name'),
                             controller: firstNameController,
                           ))),
                   Padding(
@@ -119,11 +120,10 @@ class EditNameScreenState extends State<EditNameScreen> {
                           onPressed: () {
                             // Validate returns true if the form is valid, or false otherwise.
                             if (_formKey.currentState!.validate() &&
-                                isAlpha(firstNameController.text.trim()) && 
-                                    isAlpha(lastNameController.text.trim())) {
-                              updateUserValue(firstNameController.text,lastNameController.text);
-                                  
-                              Navigator.pop(context);
+                                isAlpha(firstNameController.text.trim()) &&
+                                isAlpha(lastNameController.text.trim())) {
+                              updateUserValue(firstNameController.text,
+                                  lastNameController.text);
                             }
                           },
                           style: ElevatedButton.styleFrom(

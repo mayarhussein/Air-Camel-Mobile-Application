@@ -1,13 +1,16 @@
 import 'dart:async';
+import 'package:air_camel/models/account.dart';
 import 'package:air_camel/pages/client/bottom_bar_screens/account/edit_email.dart';
 import 'package:air_camel/pages/client/bottom_bar_screens/account/edit_image.dart';
 import 'package:air_camel/pages/client/bottom_bar_screens/account/edit_name.dart';
 import 'package:air_camel/pages/client/bottom_bar_screens/account/edit_password.dart';
 import 'package:air_camel/pages/client/bottom_bar_screens/account/edit_phone.dart';
+import 'package:air_camel/providers/accounts_provider.dart';
 import 'package:air_camel/widgets/display_image_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 // This class handles the Page to dispaly the user's info on the "Edit Profile" Screen
 class EditProfileScreen extends StatefulWidget {
@@ -20,73 +23,81 @@ class EditProfileScreen extends StatefulWidget {
 class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   Widget build(BuildContext context) {
+    Account? account = Provider.of<AccountsProvider>(context).account;
 
-    final theUser = FirebaseAuth.instance.currentUser!;
-    CollectionReference usersData = FirebaseFirestore.instance.collection('users');
+    String firstName = account!.firstName;
+    String lastName = account.lastName;
+    String email = account.email;
+    String phoneNumber = account.phoneNumber;
+    String formattedPhoneNumber = "(+" +
+        phoneNumber.substring(0, 2) +
+        ") " +
+        phoneNumber.substring(2, 7) +
+        "-" +
+        phoneNumber.substring(7, phoneNumber.length);
+    // return StreamBuilder<DocumentSnapshot>(
+    //     stream: usersData.doc(theUser.uid).snapshots(),
+    //     builder: (ctx, snapshot) {
+    //       if (snapshot.connectionState == ConnectionState.waiting) {
+    //         return const Center(child: CircularProgressIndicator());
+    //       }
 
-    return StreamBuilder<DocumentSnapshot>(
-        stream: usersData.doc(theUser.uid).snapshots(),
-        builder: (ctx, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
+    //       Map<String, dynamic> data =
+    //           snapshot.data!.data() as Map<String, dynamic>;
+    //       String firstName = data['firstName'];
+    //       String lastName = data['lastName'];
+    //       String email = data['email'];
+    //       String phoneNumber = data['phoneNumber'];
+    //       String password = data['password'];
 
-          Map<String, dynamic> data =
-              snapshot.data!.data() as Map<String, dynamic>;
-          String firstName = data['firstName'];
-          String lastName = data['lastName'];
-          String email = data['email'];
-          String phoneNumber = data['phoneNumber'];
-          String password = data['password'];
+    return Scaffold(
+      appBar: AppBar(
+          automaticallyImplyLeading: false,
+          leading: IconButton(
+              icon: const Icon(Icons.arrow_back_ios_new),
+              onPressed: () {
+                Navigator.of(context).pop();
+              })),
+      body: Column(
+        children: [
+          AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            toolbarHeight: 10,
+          ),
+          const Center(
+              child: Padding(
+                  padding: EdgeInsets.only(bottom: 20),
+                  child: Text(
+                    'Edit Profile',
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.w700,
+                      color: Color.fromRGBO(64, 105, 225, 1),
+                    ),
+                  ))),
+          InkWell(
+              onTap: () {
+                navigateSecondPage(EditImageScreen());
+              },
+              child: DisplayImage(
+                imagePath: "",
+                onPressed: () {},
+              )),
+          buildUserInfoDisplay(
+              firstName + ' ' + lastName, ' Name', EditNameScreen()),
+          buildUserInfoDisplay(email, 'Email', EditEmailScreen()),
+          buildUserInfoDisplay('', 'Password', EditPasswordScreen()),
+          buildUserInfoDisplay(
+              formattedPhoneNumber, 'Phone Number', EditPhoneScreen()),
 
-          return Scaffold(
-            appBar: AppBar(
-                          automaticallyImplyLeading: false,
-
-                leading: IconButton(
-                    icon: const Icon(Icons.arrow_back_ios_new),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    })),
-            body: Column(
-              children: [
-                AppBar(
-                  backgroundColor: Colors.transparent,
-                  elevation: 0,
-                  toolbarHeight: 10,
-                ),
-                const Center(
-                    child: Padding(
-                        padding: EdgeInsets.only(bottom: 20),
-                        child: Text(
-                          'Edit Profile',
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.w700,
-                            color: Color.fromRGBO(64, 105, 225, 1),
-                          ),
-                        ))),
-                InkWell(
-                    onTap: () {
-                      navigateSecondPage(EditImageScreen());
-                    },
-                    child: DisplayImage(
-                      imagePath: "",
-                      onPressed: () {},
-                    )),
-                buildUserInfoDisplay(firstName +' '+ lastName, ' Name', EditNameScreen()),
-                buildUserInfoDisplay(email, 'Email', EditEmailScreen()),
-                buildUserInfoDisplay('', 'Password', EditPasswordScreen()),
-                buildUserInfoDisplay(phoneNumber, 'Phone Number', EditPhoneScreen()),
-
-                //Expanded(
-                // child: '',
-                //  flex: 4,
-                //)
-              ],
-            ),
-          );
-        });
+          //Expanded(
+          // child: '',
+          //  flex: 4,
+          //)
+        ],
+      ),
+    );
   }
 
   Widget buildUserInfoDisplay(String getValue, String title, Widget editPage) =>
@@ -103,7 +114,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   color: Colors.grey,
                 ),
               ),
-             const SizedBox(
+              const SizedBox(
                 height: 1,
               ),
               Container(
@@ -125,7 +136,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               getValue,
                               style: const TextStyle(fontSize: 16, height: 1.4),
                             ))),
-                   const Icon(
+                    const Icon(
                       Icons.keyboard_arrow_right,
                       color: Colors.grey,
                       size: 40.0,

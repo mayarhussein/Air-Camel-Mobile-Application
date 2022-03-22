@@ -1,8 +1,10 @@
+import 'package:air_camel/providers/accounts_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:air_camel/widgets/appbar_widget.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:provider/provider.dart';
 //import { getAuth, updateEmail } from "firebase/auth";
 
 class EditEmailScreen extends StatefulWidget {
@@ -28,28 +30,26 @@ class EditEmailScreenState extends State<EditEmailScreen> {
   Future<void> updateUserValue(String newEmail, oldEmail, oldPassword) async {
     FocusScope.of(context).unfocus();
 
-
 // CollectionReference usersData = FirebaseFirestore.instance.collection('users');
 //         DocumentReference myDoc = usersData.doc(theUser.uid);
-
 
     // Sign in First
     UserCredential authResult = await _auth.signInWithEmailAndPassword(
         email: oldEmail, password: oldPassword);
-    
+
     // Update in authentication table
-    await authResult.user!.updateEmail(newEmail);
-
-
-    //  Update in users table 
-     await FirebaseFirestore.instance
-        .collection('users')
-        .doc(authResult.user!.uid)
-        .update({'email': newEmail})
-        .then((value) => print("User Updated"))
-        .catchError((error) => print("Failed to update user: $error"));
-
-   
+    await authResult.user!.updateEmail(newEmail).then((value) {
+      //  Update in users table
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(authResult.user!.uid)
+          .update({'email': newEmail}).then((value) {
+        print("User Updated");
+        Provider.of<AccountsProvider>(context, listen: false)
+            .editEmail(newEmail);
+        Navigator.pop(context);
+      }).catchError((error) => print("Failed to update user: $error"));
+    });
   }
 
   @override
@@ -115,9 +115,10 @@ class EditEmailScreenState extends State<EditEmailScreen> {
                                     if (_formKey.currentState!.validate() &&
                                         EmailValidator.validate(
                                             emailController.text)) {
-                                      updateUserValue(emailController.text.trim(),
-                                          email, password);
-                                      Navigator.pop(context);
+                                      updateUserValue(
+                                          emailController.text.trim(),
+                                          email,
+                                          password);
                                     }
                                   },
                                   style: ElevatedButton.styleFrom(

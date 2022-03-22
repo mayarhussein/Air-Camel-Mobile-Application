@@ -1,6 +1,8 @@
+import 'package:air_camel/providers/accounts_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:string_validator/string_validator.dart';
 import 'package:air_camel/widgets/appbar_widget.dart';
 
@@ -29,20 +31,14 @@ class EditPhoneScreenState extends State<EditPhoneScreen> {
     final user = FirebaseAuth.instance.currentUser!;
     final userData = FirebaseFirestore.instance.collection('users');
 
-    String formattedPhoneNumber = "(" +
-        phoneNumber.substring(0, 3) +
-        ") " +
-        phoneNumber.substring(3, 6) +
-        "-" +
-        phoneNumber.substring(6, phoneNumber.length);
-
-    await userData
-        .doc(user.uid)
-        .update({
-          'phoneNumber': formattedPhoneNumber,
-        })
-        .then((value) => print("User Updated"))
-        .catchError((error) => print("Failed to update user: $error"));
+    await userData.doc(user.uid).update({
+      'phoneNumber': phoneNumber,
+    }).then((value) {
+      print("User Updated");
+      Provider.of<AccountsProvider>(context, listen: false)
+          .editPhoneNumber(phoneNumber);
+      Navigator.pop(context);
+    }).catchError((error) => print("Failed to update user: $error"));
   }
 
   @override
@@ -97,7 +93,6 @@ class EditPhoneScreenState extends State<EditPhoneScreen> {
                               if (_formKey.currentState!.validate() &&
                                   isNumeric(phoneController.text)) {
                                 updateUserValue(phoneController.text.trim());
-                                Navigator.pop(context);
                               }
                             },
                             style: ElevatedButton.styleFrom(

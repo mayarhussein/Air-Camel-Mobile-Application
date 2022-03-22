@@ -83,15 +83,23 @@ class MyApp extends StatelessWidget {
 
                   return StreamBuilder<DocumentSnapshot>(
                       stream: usersData.doc(user.uid).snapshots(),
-                      builder:  (ctx, snapshot)  {
+                      builder: (ctx, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
                           return SplashScreen();
                         }
-
                         Map<String, dynamic> data =
                             snapshot.data.data() as Map<String, dynamic>;
                         String role = data['role'];
+                        Provider.of<AccountsProvider>(ctx, listen: false)
+                            .createAccount(
+                                id: user.uid,
+                                firstName: data['firstName'],
+                                lastName: data['lastName'],
+                                email: data['email'],
+                                password: data['password'],
+                                phoneNumber: data['phoneNumber'],
+                                role: role);
                         if (role == 'client') {
                           return ClientNavigationScreen(); // If there is a valid token
                         } else if (role == 'company') {
@@ -109,7 +117,8 @@ class MyApp extends StatelessWidget {
             NewShipmentMenu.routeName: (ctx) => NewShipmentMenu(),
             LoginScreen.routeName: (ctx) => LoginScreen(),
             TripDetailsScreen.routeName: (ctx) => TripDetailsScreen(),
-            CompanyNavigationScreen.routeName: (ctx) =>CompanyNavigationScreen(),
+            CompanyNavigationScreen.routeName: (ctx) =>
+                CompanyNavigationScreen(),
             HelpScreen.routeName: (ctx) => HelpScreen(),
             AboutUsScreen.routeName: (ctx) => AboutUsScreen(),
             CreditScreen.routeName: (ctx) => CreditScreen(),

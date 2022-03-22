@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:air_camel/providers/accounts_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
@@ -17,10 +18,16 @@ class _AuthScreenState extends State<AuthScreen> {
   final _auth = FirebaseAuth.instance;
   var _isLoading = false;
 
-  void _submitAuthForm(String email, String password, String firstName,
-     String lastName, String phoneNumber, Role? role,
-     // File image,
-       bool isLogin, BuildContext ctx) async {
+  void _submitAuthForm(
+      String email,
+      String password,
+      String firstName,
+      String lastName,
+      String phoneNumber,
+      Role? role,
+      // File image,
+      bool isLogin,
+      BuildContext ctx) async {
     UserCredential authResult;
 
     void _showErrorDialog(String message) {
@@ -55,7 +62,6 @@ class _AuthScreenState extends State<AuthScreen> {
         authResult = await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
 
-       
         // Access the root of bucket
         // final ref = FirebaseStorage.instance
         //     .ref()
@@ -67,30 +73,46 @@ class _AuthScreenState extends State<AuthScreen> {
         // final url = await ref.getDownloadURL();
         // print(url);
 
-       
+        String formattedPhoneNumber = "(" +
+            phoneNumber.substring(0, 3) +
+            ") " +
+            phoneNumber.substring(3, 6) +
+            "-" +
+            phoneNumber.substring(6, phoneNumber.length);
 
-
-      String formattedPhoneNumber = "(" +
-        phoneNumber.substring(0, 3) +
-        ") " +
-        phoneNumber.substring(3, 6) +
-        "-" +
-        phoneNumber.substring(6, phoneNumber.length);
-        
         // Creating a new user
         // Users Collection is created on the fly and 2 fields are created
         await FirebaseFirestore.instance
             .collection('users')
             .doc(authResult.user!.uid)
-            .set({ 
-              'email': email,
-              'password' : password, 
-              'firstName': firstName, 
-              'lastName':lastName, 
-              'phoneNumber': formattedPhoneNumber, 
-              'role': role.toString().substring(5)});
-
+            .set({
+          'email': email,
+          'password': password,
+          'firstName': firstName,
+          'lastName': lastName,
+          'phoneNumber': formattedPhoneNumber,
+          'role': role.toString().substring(5)
+        });
       }
+
+      // print(firstName +
+      //     "  " +
+      //     lastName +
+      //     "  " +
+      //     email +
+      //     "  " +
+      //     password +
+      //     "  " +
+      //     phoneNumber +
+      //     "  2222");
+      // Provider.of<AccountsProvider>(context, listen: false).createAccount(
+      //     id: authResult.user!.uid,
+      //     firstName: firstName,
+      //     lastName: lastName,
+      //     email: email,
+      //     password: password,
+      //     phoneNumber: phoneNumber,
+      //     role: role.toString().substring(5));
     } on PlatformException catch (error) {
       var errorMessage = 'Authentication failed';
       if (error.toString().contains('EMAIL_EXISTS')) {
@@ -106,8 +128,9 @@ class _AuthScreenState extends State<AuthScreen> {
       }
       _showErrorDialog(errorMessage);
 
-       ScaffoldMessenger.of(ctx).showSnackBar(SnackBar(
-       content: Text(errorMessage), backgroundColor: Theme.of(ctx).errorColor));
+      ScaffoldMessenger.of(ctx).showSnackBar(SnackBar(
+          content: Text(errorMessage),
+          backgroundColor: Theme.of(ctx).errorColor));
 
       setState(() {
         _isLoading = false;
@@ -157,6 +180,5 @@ class _AuthScreenState extends State<AuthScreen> {
         ))
       ]),
     );
-  
   }
 }
