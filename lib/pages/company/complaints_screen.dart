@@ -11,7 +11,7 @@ class ComplaintsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(
+          title: const Text(
             "Complaints",
             style: TextStyle(
               fontSize: 20,
@@ -50,7 +50,7 @@ class ComplaintsScreen extends StatelessWidget {
                                     children: [
                                       Row(
                                         children: [
-                                          Icon(Icons.person),
+                                          const Icon(Icons.person),
                                           Text(
                                             ComplaintsModel
                                                 .dummy_complaints[index]
