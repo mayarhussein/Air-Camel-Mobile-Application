@@ -76,10 +76,13 @@ class MyApp extends StatelessWidget {
               // Life Listener
               stream: FirebaseAuth.instance.authStateChanges(),
               builder: (ctx, userSanpshot) {
-                if (userSanpshot.hasData ) {
+                if (userSanpshot.hasData) {
                   final user = FirebaseAuth.instance.currentUser;
-                  CollectionReference usersData = FirebaseFirestore.instance.collection('users');
-               
+                  CollectionReference usersData =
+                      FirebaseFirestore.instance.collection('users');
+                  CollectionReference notificationsData =
+                      usersData.doc(user.uid).collection('notifications');
+
                   return StreamBuilder<DocumentSnapshot>(
                       stream: usersData.doc(user.uid).snapshots(),
                       builder: (ctx, snapshot) {
@@ -90,6 +93,7 @@ class MyApp extends StatelessWidget {
                         Map<String, dynamic> data =
                             snapshot.data.data() as Map<String, dynamic>;
                         String role = data['role'];
+
                         Provider.of<AccountsProvider>(ctx, listen: false)
                             .createAccount(
                                 id: user.uid,
@@ -99,11 +103,17 @@ class MyApp extends StatelessWidget {
                                 password: data['password'],
                                 phoneNumber: data['phoneNumber'],
                                 role: role);
-                        if (role == 'client') {
-                          return ClientNavigationScreen(); // If there is a valid token
-                        } else if (role == 'company') {
-                          return CompanyNavigationScreen();
-                        }
+
+                        return StreamBuilder(
+                            stream: notificationsData.snapshots(),
+                            builder: (ctx, snapshot) {
+                             
+                              if (role == 'client') {
+                                return ClientNavigationScreen();
+                              } else if (role == 'company') {
+                                return CompanyNavigationScreen();
+                              }
+                            });
                       });
                 }
                 return AuthScreen();
