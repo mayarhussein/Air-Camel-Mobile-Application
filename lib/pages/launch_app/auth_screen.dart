@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:provider/single_child_widget.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../widgets/auth_form.dart';
 
@@ -82,6 +83,8 @@ class _AuthScreenState extends State<AuthScreen> {
 
         // Creating a new user
         // Users Collection is created on the fly and 2 fields are created
+
+       
         await FirebaseFirestore.instance
             .collection('users')
             .doc(authResult.user!.uid)
@@ -95,12 +98,33 @@ class _AuthScreenState extends State<AuthScreen> {
         });
 
         final theUser = authResult.user!.uid;
+        var uuid = Uuid();
 
         await FirebaseFirestore.instance
             .collection('users/$theUser/notifications')
             .doc(authResult.user!.uid)
-            .set({'id': 1});
+            .set({
+          'id': uuid.v4(),
+          'message': 'Hello ' + firstName + '! Welcome to AirCamel',
+          'subject': 'welcome',
+          'idFrom': 'Admin',
+          'idTo': theUser,
+          'dateTime': DateTime.now(),
+          'isOpen': false
+        });
       }
+
+      /*
+
+      String? id;
+  String message;
+  String subject;
+  int idFrom;
+  int idTo;
+  DateTime dateTime;
+  bool isOpen;
+
+    */
 
       // print(firstName +
       //     "  " +

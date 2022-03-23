@@ -29,7 +29,7 @@ class NotificationsScreen extends StatelessWidget {
       body: Container(
         padding: EdgeInsets.all(20),
         child: ListView.builder(
-          itemCount: NotificationModel.dummy_notifications.length,
+          itemCount: 3,
           itemBuilder: (context, index) {
             return Column(
               children: [
@@ -56,14 +56,14 @@ class NotificationsScreen extends StatelessWidget {
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
                                     Icon(Icons.notifications_active),
-                                    Text(
-                                      DateFormat.yMd().format(
-                                          NotificationModel
-                                              .dummy_notifications[index]
-                                              .dateTime),
-                                      style:
-                                          GoogleFonts.righteous(fontSize: 14),
-                                    )
+                                    // Text(
+                                    //   DateFormat.yMd().format(
+                                    //       NotificationModel
+                                    //           .dummy_notifications[index]
+                                    //           .dateTime),
+                                    //   style:
+                                    //       GoogleFonts.righteous(fontSize: 14),
+                                    // )
                                   ],
                                 ),
                               ),
@@ -77,12 +77,12 @@ class NotificationsScreen extends StatelessWidget {
                                 flex: 3,
                                 child: Column(
                                   children: [
-                                    Text(
-                                      NotificationModel
-                                          .dummy_notifications[index].message,
-                                      style: GoogleFonts.fredokaOne(
-                                          fontSize: 15),
-                                    )
+                                    // Text(
+                                    //   NotificationModel
+                                    //       .dummy_notifications[index].message,
+                                    //   style: GoogleFonts.fredokaOne(
+                                    //       fontSize: 15),
+                                    // )
                                   ],
                                 ))
                           ],

@@ -76,11 +76,10 @@ class MyApp extends StatelessWidget {
               // Life Listener
               stream: FirebaseAuth.instance.authStateChanges(),
               builder: (ctx, userSanpshot) {
-                if (userSanpshot.hasData) {
+                if (userSanpshot.hasData ) {
                   final user = FirebaseAuth.instance.currentUser;
-                  CollectionReference usersData =
-                      FirebaseFirestore.instance.collection('users');
-
+                  CollectionReference usersData = FirebaseFirestore.instance.collection('users');
+               
                   return StreamBuilder<DocumentSnapshot>(
                       stream: usersData.doc(user.uid).snapshots(),
                       builder: (ctx, snapshot) {

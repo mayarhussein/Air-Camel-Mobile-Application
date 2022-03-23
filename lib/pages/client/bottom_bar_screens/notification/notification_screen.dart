@@ -36,7 +36,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
           Container(
             height: MediaQuery.of(context).size.height * 0.74,
             child: ListView.builder(
-              itemCount: NotificationModel.dummy_notifications.length,
+              itemCount: 3,
               itemBuilder: (context, index) {
                 return Column(
                   children: [
@@ -45,17 +45,17 @@ class _NotificationScreenState extends State<NotificationScreen> {
                       height: MediaQuery.of(context).size.height * 0.15,
                       child: InkWell(
                         onTap: () {
-                          setState(() {
-                            NotificationModel
-                                .dummy_notifications[index].isOpen = true;
-                          });
+                          // setState(() {
+                          //   NotificationModel
+                          //       .dummy_notifications[index].isOpen = true;
+                          // });
                         },
                         child: Card(
                           // shadowColor: bgColor,
-                          color: NotificationModel
-                                  .dummy_notifications[index].isOpen
-                              ? Colors.white
-                              : bgColor,
+                          // color: NotificationModel
+                          //         .dummy_notifications[index].isOpen
+                          //     ? Colors.white
+                          //     : bgColor,
                           elevation: 5,
 
                           clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -73,14 +73,14 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                           MainAxisAlignment.spaceEvenly,
                                       children: [
                                         Icon(Icons.notifications_active),
-                                        Text(
-                                          DateFormat.yMd().format(
-                                              NotificationModel
-                                                  .dummy_notifications[index]
-                                                  .dateTime),
-                                          style: GoogleFonts.righteous(
-                                              fontSize: 14),
-                                        )
+                                       // Text(
+                                          // DateFormat.yMd().format(
+                                          //     NotificationModel
+                                          //         .dummy_notifications[index]
+                                          //         .dateTime),
+                                          //style: GoogleFonts.righteous(
+                                           //   fontSize: 14),
+                                       // )
                                       ],
                                     ),
                                   ),
@@ -94,12 +94,12 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                     flex: 3,
                                     child: Column(
                                       children: [
-                                        Text(
-                                          NotificationModel
-                                              .dummy_notifications[index]
-                                              .message,
-                                          style: defaultFont1,
-                                        )
+                                        // Text(
+                                        //   NotificationModel
+                                        //       .dummy_notifications[index]
+                                        //       .message,
+                                        //   style: defaultFont1,
+                                        // )
                                       ],
                                     ))
                               ],
