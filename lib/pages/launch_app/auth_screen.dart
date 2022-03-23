@@ -93,6 +93,13 @@ class _AuthScreenState extends State<AuthScreen> {
           'phoneNumber': formattedPhoneNumber,
           'role': role.toString().substring(5)
         });
+
+        final theUser = authResult.user!.uid;
+
+        await FirebaseFirestore.instance
+            .collection('users/$theUser/notifications')
+            .doc(authResult.user!.uid)
+            .set({'id': 1});
       }
 
       // print(firstName +
