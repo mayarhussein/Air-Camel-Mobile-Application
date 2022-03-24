@@ -1,6 +1,9 @@
 // @dart=2.9
+// ignore_for_file: missing_return
+
 import 'dart:io';
 
+import 'package:air_camel/models/drawer/notification.dart';
 import 'package:air_camel/pages/client/bottom_bar_screens/account/edit_profile.dart';
 import 'package:air_camel/pages/company/company_navigation_home_screen.dart';
 import 'package:air_camel/pages/client/bottom_bar_screens/new_shipment/filters_screen.dart';
@@ -19,6 +22,7 @@ import 'package:air_camel/pages/side_drawer_screens/help_screen.dart';
 import 'package:air_camel/pages/side_drawer_screens/invite_screen.dart';
 import 'package:air_camel/pages/side_drawer_screens/notifications_screen.dart';
 import 'package:air_camel/pages/side_drawer_screens/offers_screen.dart';
+import 'package:air_camel/providers/notifications_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -52,6 +56,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (ctx) => AccountsProvider()),
+          ChangeNotifierProvider(create: (ctx) => NotificationsProvider()),
         ],
         child: MaterialApp(
           title: 'AirCamel',
@@ -85,13 +90,13 @@ class MyApp extends StatelessWidget {
 
                   return StreamBuilder<DocumentSnapshot>(
                       stream: usersData.doc(user.uid).snapshots(),
-                      builder: (ctx, snapshot) {
-                        if (snapshot.connectionState ==
+                      builder: (ctx, usersSnapshot) {
+                        if (usersSnapshot.connectionState ==
                             ConnectionState.waiting) {
                           return SplashScreen();
                         }
                         Map<String, dynamic> data =
-                            snapshot.data.data() as Map<String, dynamic>;
+                            usersSnapshot.data.data() as Map<String, dynamic>;
                         String role = data['role'];
 
                         Provider.of<AccountsProvider>(ctx, listen: false)
@@ -103,11 +108,29 @@ class MyApp extends StatelessWidget {
                                 password: data['password'],
                                 phoneNumber: data['phoneNumber'],
                                 role: role);
-
-                        return StreamBuilder(
-                            stream: notificationsData.snapshots(),
-                            builder: (ctx, snapshot) {
-                             
+                        return StreamBuilder<QuerySnapshot>(
+                            stream: usersData
+                                .doc(user.uid)
+                                .collection('notifications')
+                                .snapshots(),
+                            builder: (ctx, notificationsSnapshot) {
+                              if (notificationsSnapshot.data == null) {
+                                return SplashScreen();
+                              }
+                              List<NotificationModel> notificationList =
+                                  notificationsSnapshot.data.docs.map((item) {
+                                Timestamp stamp = item['dateTime'];
+                                return NotificationModel(
+                                    message: item["message"],
+                                    subject: item["subject"],
+                                    idFrom: item["idFrom"],
+                                    idTo: item["idTo"],
+                                    dateTime: DateTime.parse(
+                                        stamp.toDate().toString()),
+                                    isOpen: item["isOpen"]);
+                              }).toList();
+                              Provider.of<NotificationsProvider>(ctx)
+                                  .setNotifications(notificationList);
                               if (role == 'client') {
                                 return ClientNavigationScreen();
                               } else if (role == 'company') {
