@@ -1,8 +1,10 @@
 import 'package:air_camel/constants.dart';
 import 'package:air_camel/models/drawer/notification.dart';
+import 'package:air_camel/providers/notifications_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({Key? key}) : super(key: key);
@@ -16,6 +18,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final notificationsData = Provider.of<NotificationsProvider>(context);
+
     return Container(
       width: double.infinity,
       padding: mainPadding,
@@ -36,7 +40,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
           Container(
             height: MediaQuery.of(context).size.height * 0.74,
             child: ListView.builder(
-              itemCount: 3,
+              itemCount: notificationsData.notifications.length,
               itemBuilder: (context, index) {
                 return Column(
                   children: [
@@ -45,19 +49,17 @@ class _NotificationScreenState extends State<NotificationScreen> {
                       height: MediaQuery.of(context).size.height * 0.15,
                       child: InkWell(
                         onTap: () {
-                          // setState(() {
-                          //   NotificationModel
-                          //       .dummy_notifications[index].isOpen = true;
-                          // });
+                          setState(() {
+                            notificationsData.notifications[index].isOpen =
+                                true;
+                          });
                         },
                         child: Card(
-                          // shadowColor: bgColor,
-                          // color: NotificationModel
-                          //         .dummy_notifications[index].isOpen
-                          //     ? Colors.white
-                          //     : bgColor,
+                          shadowColor: bgColor,
+                          color: notificationsData.notifications[index].isOpen
+                              ? Colors.white
+                              : bgColor,
                           elevation: 5,
-
                           clipBehavior: Clip.antiAliasWithSaveLayer,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10)),
@@ -73,14 +75,14 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                           MainAxisAlignment.spaceEvenly,
                                       children: [
                                         Icon(Icons.notifications_active),
-                                       // Text(
-                                          // DateFormat.yMd().format(
-                                          //     NotificationModel
-                                          //         .dummy_notifications[index]
-                                          //         .dateTime),
-                                          //style: GoogleFonts.righteous(
-                                           //   fontSize: 14),
-                                       // )
+                                        Text(
+                                          DateFormat.yMd().format(
+                                              notificationsData
+                                                  .notifications[index]
+                                                  .dateTime),
+                                          style: GoogleFonts.righteous(
+                                              fontSize: 14),
+                                        )
                                       ],
                                     ),
                                   ),
@@ -94,12 +96,11 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                     flex: 3,
                                     child: Column(
                                       children: [
-                                        // Text(
-                                        //   NotificationModel
-                                        //       .dummy_notifications[index]
-                                        //       .message,
-                                        //   style: defaultFont1,
-                                        // )
+                                        Text(
+                                          notificationsData
+                                              .notifications[index].message,
+                                          style: defaultFont1,
+                                        )
                                       ],
                                     ))
                               ],

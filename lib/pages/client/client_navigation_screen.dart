@@ -4,7 +4,6 @@ import 'package:air_camel/pages/side_drawer_screens/about_us_screen.dart';
 import 'package:air_camel/pages/side_drawer_screens/credit_screen.dart';
 import 'package:air_camel/pages/side_drawer_screens/help_screen.dart';
 import 'package:air_camel/pages/side_drawer_screens/invite_screen.dart';
-import 'package:air_camel/pages/side_drawer_screens/notifications_screen.dart';
 import 'package:air_camel/pages/side_drawer_screens/offers_screen.dart';
 import 'package:air_camel/providers/accounts_provider.dart';
 import 'package:air_camel/models/drawer/drawer_list.dart';
@@ -74,7 +73,6 @@ class _ClientNavigationScreenState extends State<ClientNavigationScreen> {
         setState(() {
           screenView = NotificationScreen();
         });
-        print("Blahblah");
         break;
       case 2:
         setState(() {

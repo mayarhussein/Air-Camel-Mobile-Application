@@ -1,6 +1,6 @@
 class OfferModel {
   String? id;
-  int idCompany;
+  String idCompany;
   DateTime dateTime;
   DateTime expireTime;
   String offerMsg;
