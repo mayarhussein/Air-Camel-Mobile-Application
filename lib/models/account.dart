@@ -6,7 +6,7 @@ class Account {
   String password;
   String phoneNumber;
   final String role;
-  String? image;
+  String image;
 
   Account(
       {this.id,
@@ -16,5 +16,5 @@ class Account {
       required this.password,
       required this.phoneNumber,
       required this.role,
-      this.image});
+      required this.image});
 }

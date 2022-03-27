@@ -112,6 +112,7 @@ class MyApp extends StatelessWidget {
                                 email: data['email'],
                                 password: data['password'],
                                 phoneNumber: data['phoneNumber'],
+                                image: data['image'],
                                 role: role);
                         return StreamBuilder<QuerySnapshot>(
                             stream: usersData
