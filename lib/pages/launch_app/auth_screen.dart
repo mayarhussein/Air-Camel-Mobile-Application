@@ -62,6 +62,8 @@ class _AuthScreenState extends State<AuthScreen> {
         // Sign up
         authResult = await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
+        final theUser = authResult.user!.uid;
+        var uuid = const Uuid();
 
         //Future<String> uploadImage(var image ) async {
         FirebaseStorage storage = FirebaseStorage.instance;
@@ -69,22 +71,18 @@ class _AuthScreenState extends State<AuthScreen> {
             storage // Access the root cloud storage bucket (The main bucket)
                 .ref() //  root bucket
                 .child("user_image") // Folder
-                .child(authResult.user!.uid + '.jpg'); // File
+                .child(theUser + '.jpg'); // File
 
         // Uploading the file
         await ref.putFile(image);
-        final image_url = ( await ref.getDownloadURL()).toString();
+        final image_url = (await ref.getDownloadURL()).toString();
 
-        
         String formattedPhoneNumber = "(" +
             phoneNumber.substring(0, 3) +
             ") " +
             phoneNumber.substring(3, 6) +
             "-" +
             phoneNumber.substring(6, phoneNumber.length);
-
-        final theUser = authResult.user!.uid;
-        var uuid = const Uuid();
 
         // Creating a new user
         // Users Collection is created on the fly and 2 fields are created
