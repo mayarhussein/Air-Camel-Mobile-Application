@@ -22,6 +22,7 @@ class _AccountScreenState extends State<AccountScreen> {
     String lastName = account.lastName;
     String email = account.email;
     String phoneNumber = account.phoneNumber;
+    String image = account.image;
 
     return Container(
       width: double.infinity,
@@ -46,7 +47,8 @@ class _AccountScreenState extends State<AccountScreen> {
                   Flexible(
                     child: CircleAvatar(
                       radius: MediaQuery.of(context).size.height * 0.1,
-                      backgroundColor: Colors.amber,
+                      backgroundColor: Colors.transparent,
+                      child: Image.network(image.toString()),
                     ),
                     // flex: 2,
                   ),

@@ -77,13 +77,6 @@ class _AuthScreenState extends State<AuthScreen> {
         await ref.putFile(image);
         final image_url = (await ref.getDownloadURL()).toString();
 
-        String formattedPhoneNumber = "(" +
-            phoneNumber.substring(0, 3) +
-            ") " +
-            phoneNumber.substring(3, 6) +
-            "-" +
-            phoneNumber.substring(6, phoneNumber.length);
-
         // Creating a new user
         // Users Collection is created on the fly and 2 fields are created
         await FirebaseFirestore.instance.collection('users').doc(theUser).set({
@@ -91,7 +84,7 @@ class _AuthScreenState extends State<AuthScreen> {
           'password': password,
           'firstName': firstName,
           'lastName': lastName,
-          'phoneNumber': formattedPhoneNumber,
+          'phoneNumber': phoneNumber,
           'role': role.toString().substring(5),
           'image_url': image_url
         });

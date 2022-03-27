@@ -89,7 +89,6 @@ class MyApp extends StatelessWidget {
                   final user = FirebaseAuth.instance.currentUser;
                   CollectionReference usersData =
                       FirebaseFirestore.instance.collection('users');
-
                   return StreamBuilder<DocumentSnapshot>(
                       stream: usersData.doc(user.uid).snapshots(),
                       builder: (ctx, usersSnapshot) {

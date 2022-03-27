@@ -1,7 +1,8 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:air_camel/models/account.dart';
 import 'package:air_camel/pages/client/bottom_bar_screens/account/edit_email.dart';
-import 'package:air_camel/pages/client/bottom_bar_screens/account/edit_image.dart';
+
 import 'package:air_camel/pages/client/bottom_bar_screens/account/edit_name.dart';
 import 'package:air_camel/pages/client/bottom_bar_screens/account/edit_password.dart';
 import 'package:air_camel/pages/client/bottom_bar_screens/account/edit_phone.dart';
@@ -9,7 +10,9 @@ import 'package:air_camel/providers/accounts_provider.dart';
 import 'package:air_camel/widgets/display_image_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 // This class handles the Page to dispaly the user's info on the "Edit Profile" Screen
@@ -29,6 +32,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     String lastName = account.lastName;
     String email = account.email;
     String phoneNumber = account.phoneNumber;
+    String image = account.image;
     String formattedPhoneNumber = "(+" +
         phoneNumber.substring(0, 2) +
         ") " +
@@ -77,13 +81,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     ),
                   ))),
           InkWell(
-              onTap: () {
-                navigateSecondPage(EditImageScreen());
-              },
               child: DisplayImage(
-                imagePath: "",
-                onPressed: () {},
-              )),
+            imagePath: image,
+            onPressed: _pickImage,
+          )),
           buildUserInfoDisplay(
               firstName + ' ' + lastName, ' Name', EditNameScreen()),
           buildUserInfoDisplay(email, 'Email', EditEmailScreen()),
@@ -154,5 +155,33 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   void navigateSecondPage(Widget editForm) {
     Route route = MaterialPageRoute(builder: (context) => editForm);
     Navigator.push(context, route).then(onGoBack);
+  }
+
+  File? _ImageFile;
+
+  void _pickImage() async {
+    final pickedImageFile = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 50,
+      maxWidth: 150,
+    );
+    setState(() {
+      _ImageFile = File(pickedImageFile!.path);
+    });
+    final accountData = Provider.of<AccountsProvider>(context, listen: false);
+    String? userId = accountData.account!.id;
+    FirebaseStorage storage = FirebaseStorage.instance;
+    Reference ref =
+        storage // Access the root cloud storage bucket (The main bucket)
+            .ref() //  root bucket
+            .child("user_image") // Folder
+            .child(userId.toString() + '.jpg'); // File
+
+    // Uploading the file
+    await ref.putFile(_ImageFile!);
+    final image_url = (await ref.getDownloadURL()).toString();
+
+    await FirebaseFirestore.instance.collection('users').doc(userId).update(
+        {'image_url': image_url}).then((_) => accountData.editImage(image_url));
   }
 }

@@ -17,7 +17,6 @@ class AccountsProvider with ChangeNotifier {
     required String phoneNumber,
     required String image,
     required String role,
-    
   }) {
     _account = Account(
         id: id,
@@ -73,6 +72,10 @@ class AccountsProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void editImage(String image) {
+    _account!.image = image;
+    notifyListeners();
+  }
   // AccountProvider findById(String id) {
   //   return _items.firstWhere((account) => account.id == id);
   // }
