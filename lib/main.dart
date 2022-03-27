@@ -2,13 +2,8 @@
 // ignore_for_file: missing_return
 
 import 'dart:io';
-
 import 'package:air_camel/main_controller.dart';
-import 'package:air_camel/models/drawer/credit_transactions.dart';
-import 'package:air_camel/models/drawer/payments.dart';
 import 'package:air_camel/providers/credit_payments_provider.dart';
-
-import 'package:air_camel/models/notification.dart';
 import 'package:air_camel/pages/client/bottom_bar_screens/account/edit_profile.dart';
 import 'package:air_camel/pages/company/company_navigation_home_screen.dart';
 import 'package:air_camel/pages/client/bottom_bar_screens/new_shipment/filters_screen.dart';
@@ -18,23 +13,19 @@ import 'package:air_camel/pages/client/bottom_bar_screens/new_shipment/trip_deta
 import 'package:air_camel/pages/company/complaints_screen.dart';
 import 'package:air_camel/pages/company/edit_categories.dart';
 import 'package:air_camel/pages/company/payment_history.dart';
-import 'package:air_camel/pages/launch_app/auth_screen.dart';
 import 'package:air_camel/pages/launch_app/login_screen.txt';
-import 'package:air_camel/pages/launch_app/splash_screen.dart';
 import 'package:air_camel/pages/side_drawer_screens/about_us_screen.dart';
 import 'package:air_camel/pages/side_drawer_screens/credit_screen.dart';
 import 'package:air_camel/pages/side_drawer_screens/help_screen.dart';
 import 'package:air_camel/pages/side_drawer_screens/invite_screen.dart';
 import 'package:air_camel/pages/side_drawer_screens/offers_screen.dart';
 import 'package:air_camel/providers/notifications_provider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:provider/provider.dart';
 import 'package:air_camel/providers/accounts_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -72,8 +63,7 @@ class MyApp extends StatelessWidget {
           ),
 
           home: MainController(),
-          //home:SplashScreen(3,WelcomeScreen.routeName),
-          // home: CompanyNavigationScreen(),
+      
           routes: {
             FiltersScreen.routeName: (ctx) => FiltersScreen(),
             ClientNavigationScreen.routeName: (ctx) => ClientNavigationScreen(),
