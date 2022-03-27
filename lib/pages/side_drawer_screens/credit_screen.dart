@@ -1,13 +1,16 @@
 import 'package:air_camel/constants.dart';
 import 'package:air_camel/models/drawer/payments.dart';
+import 'package:air_camel/providers/credit_payments_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class CreditScreen extends StatelessWidget {
   static const routeName = '/credit';
 
   @override
   Widget build(BuildContext context) {
+    final creditData = Provider.of<CreditPaymentsProvider>(context);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -55,9 +58,11 @@ class CreditScreen extends StatelessWidget {
                                   style: headFontBig1,
                                 ),
                               ),
-                              const Padding(
+                              Padding(
                                 padding: EdgeInsets.only(left: 40, bottom: 35),
-                                child: Text("Amount 73.20 EGP"),
+                                child: Text("Amount " +
+                                    creditData.creditAmount.toString() +
+                                    " EGP"),
                               )
                             ],
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -98,11 +103,13 @@ class CreditScreen extends StatelessWidget {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text("Company Name", style: subTitle1),
+                                        Text(
+                                            creditData
+                                                .payments[index].companyName,
+                                            style: subTitle1),
                                         Text(
                                           "Amount: " +
-                                              PaymentModel
-                                                  .paymentList[index].amount
+                                              creditData.payments[index].amount
                                                   .toString(),
                                           style: TextStyle(fontSize: 16),
                                         ),
@@ -116,9 +123,8 @@ class CreditScreen extends StatelessWidget {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text("Date: " +
-                                            DateFormat.yMMMd().format(
-                                                PaymentModel.paymentList[index]
-                                                    .dateTime)),
+                                            DateFormat.yMMMd().format(creditData
+                                                .payments[index].dateTime)),
                                         Row(
                                           children: [
                                             TextButton(
@@ -144,7 +150,7 @@ class CreditScreen extends StatelessWidget {
                             ),
                           );
                         },
-                        itemCount: PaymentModel.paymentList.length,
+                        itemCount: creditData.payments.length,
                       ),
                     )
                   ],

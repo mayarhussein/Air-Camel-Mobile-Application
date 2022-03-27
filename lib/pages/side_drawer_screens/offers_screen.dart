@@ -27,6 +27,7 @@ class OffersScreen extends StatelessWidget {
               Timestamp stamp1 = item['dateTime'];
               Timestamp stamp2 = item['expireTime'];
               return OfferModel(
+                  id: item['id'],
                   idCompany: item['idCompany'],
                   dateTime: DateTime.parse(stamp1.toDate().toString()),
                   expireTime: DateTime.parse(stamp2.toDate().toString()),

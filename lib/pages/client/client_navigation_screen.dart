@@ -13,8 +13,6 @@ import 'package:air_camel/widgets/drawer/client_navigation_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'bottom_bar_screens/settings/client_settings_screen.dart';
-
 class ClientNavigationScreen extends StatefulWidget {
   @override
   _ClientNavigationScreenState createState() => _ClientNavigationScreenState();
@@ -76,7 +74,7 @@ class _ClientNavigationScreenState extends State<ClientNavigationScreen> {
         break;
       case 2:
         setState(() {
-          screenView = ClientSettingsScreen();
+          // screenView = ClientSettingsScreen();
         });
         print("Settings");
         break;

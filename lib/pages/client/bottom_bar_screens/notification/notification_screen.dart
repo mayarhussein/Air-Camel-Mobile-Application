@@ -1,5 +1,5 @@
 import 'package:air_camel/constants.dart';
-import 'package:air_camel/models/drawer/notification.dart';
+import 'package:air_camel/models/notification.dart';
 import 'package:air_camel/providers/notifications_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';

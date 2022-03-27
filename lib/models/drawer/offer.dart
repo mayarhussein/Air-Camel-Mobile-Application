@@ -6,7 +6,7 @@ class OfferModel {
   String offerMsg;
 
   OfferModel({
-    this.id,
+    required this.id,
     required this.idCompany,
     required this.dateTime,
     required this.expireTime,

@@ -3,7 +3,11 @@
 
 import 'dart:io';
 
-import 'package:air_camel/models/drawer/notification.dart';
+import 'package:air_camel/models/drawer/credit_transactions.dart';
+import 'package:air_camel/models/drawer/payments.dart';
+import 'package:air_camel/providers/credit_payments_provider.dart';
+
+import 'package:air_camel/models/notification.dart';
 import 'package:air_camel/pages/client/bottom_bar_screens/account/edit_profile.dart';
 import 'package:air_camel/pages/company/company_navigation_home_screen.dart';
 import 'package:air_camel/pages/client/bottom_bar_screens/new_shipment/filters_screen.dart';
@@ -56,6 +60,7 @@ class MyApp extends StatelessWidget {
         providers: [
           ChangeNotifierProvider(create: (ctx) => AccountsProvider()),
           ChangeNotifierProvider(create: (ctx) => NotificationsProvider()),
+          ChangeNotifierProvider(create: (ctx) => CreditPaymentsProvider()),
         ],
         child: MaterialApp(
           title: 'AirCamel',
@@ -79,7 +84,7 @@ class MyApp extends StatelessWidget {
           home: StreamBuilder(
               // Life Listener
               stream: FirebaseAuth.instance.authStateChanges(),
-              builder: (ctx, userSanpshot) {
+              builder: (_, userSanpshot) {
                 if (userSanpshot.hasData) {
                   final user = FirebaseAuth.instance.currentUser;
                   CollectionReference usersData =
@@ -130,11 +135,67 @@ class MyApp extends StatelessWidget {
                               }).toList();
                               Provider.of<NotificationsProvider>(ctx)
                                   .setNotifications(notificationList);
-                              if (role == 'client') {
-                                return ClientNavigationScreen();
-                              } else if (role == 'company') {
-                                return CompanyNavigationScreen();
-                              }
+                              //------------------------------------------------------------------
+                              return StreamBuilder<QuerySnapshot>(
+                                  stream: usersData
+                                      .doc(user.uid)
+                                      .collection('payments')
+                                      .snapshots(),
+                                  builder: (ctx, paymentsSnapshot) {
+                                    if (paymentsSnapshot.data == null) {
+                                      return SplashScreen();
+                                    }
+                                    List<PaymentModel> paymentsList =
+                                        paymentsSnapshot.data.docs.map((item) {
+                                      Timestamp stamp = item['dateTime'];
+                                      return PaymentModel(
+                                          amount: double.parse(
+                                              item["amount"].toString()),
+                                          dateTime: DateTime.parse(
+                                              stamp.toDate().toString()),
+                                          idClient: item["idClient"],
+                                          idCompany: item["idCompany"],
+                                          companyName: item["companyName"]);
+                                    }).toList();
+                                    Provider.of<CreditPaymentsProvider>(ctx)
+                                        .setPayments(paymentsList);
+                                    //------------------------------------------------------------------
+                                    return StreamBuilder<QuerySnapshot>(
+                                        stream: usersData
+                                            .doc(user.uid)
+                                            .collection('credit_transactions')
+                                            .snapshots(),
+                                        builder:
+                                            (ctx, creditTransactionsSnapshot) {
+                                          if (creditTransactionsSnapshot.data ==
+                                              null) {
+                                            return SplashScreen();
+                                          }
+                                          List<CreditTransactionsModel>
+                                              creditTransactionsList =
+                                              creditTransactionsSnapshot
+                                                  .data.docs
+                                                  .map((item) {
+                                            Timestamp stamp = item['dateTime'];
+                                            return CreditTransactionsModel(
+                                                amount: double.parse(
+                                                    item["amount"].toString()),
+                                                dateTime: DateTime.parse(
+                                                    stamp.toDate().toString()),
+                                                reason: item['reason']);
+                                          }).toList();
+                                          Provider.of<CreditPaymentsProvider>(
+                                                  ctx)
+                                              .setCreditTransactions(
+                                                  creditTransactionsList);
+                                          //------------------------------------------------------------------
+                                          if (role == 'client') {
+                                            return ClientNavigationScreen();
+                                          } else if (role == 'company') {
+                                            return CompanyNavigationScreen();
+                                          }
+                                        });
+                                  });
                             });
                       });
                 }
