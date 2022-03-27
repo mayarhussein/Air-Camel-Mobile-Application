@@ -64,7 +64,6 @@ class _AuthScreenState extends State<AuthScreen> {
             email: email, password: password);
 
         //Future<String> uploadImage(var image ) async {
-        var image_url;
         FirebaseStorage storage = FirebaseStorage.instance;
         Reference ref =
             storage // Access the root cloud storage bucket (The main bucket)
@@ -73,16 +72,10 @@ class _AuthScreenState extends State<AuthScreen> {
                 .child(authResult.user!.uid + '.jpg'); // File
 
         // Uploading the file
-        UploadTask uploadTask = ref.putFile(image);
+        await ref.putFile(image);
+        final image_url = ( await ref.getDownloadURL()).toString();
 
-        // String url = (await ref.getDownloadURL()).toString();
-        //return url;
-
-        uploadTask.then((res) {
-          print('xxxx');
-          //image_url = res.ref.getDownloadURL();
-        });
-
+        
         String formattedPhoneNumber = "(" +
             phoneNumber.substring(0, 3) +
             ") " +
@@ -90,16 +83,12 @@ class _AuthScreenState extends State<AuthScreen> {
             "-" +
             phoneNumber.substring(6, phoneNumber.length);
 
-
         final theUser = authResult.user!.uid;
-        var uuid = const Uuid();   
+        var uuid = const Uuid();
 
         // Creating a new user
         // Users Collection is created on the fly and 2 fields are created
-        await FirebaseFirestore.instance
-            .collection('users')
-            .doc(theUser)
-            .set({
+        await FirebaseFirestore.instance.collection('users').doc(theUser).set({
           'email': email,
           'password': password,
           'firstName': firstName,
@@ -108,8 +97,6 @@ class _AuthScreenState extends State<AuthScreen> {
           'role': role.toString().substring(5),
           'image_url': image_url
         });
-
-       
 
         // Creating Notifications Collection with welcome notifiation
 
