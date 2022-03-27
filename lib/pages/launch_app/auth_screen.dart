@@ -26,7 +26,7 @@ class _AuthScreenState extends State<AuthScreen> {
       String lastName,
       String phoneNumber,
       Role? role,
-      // File image,
+      File image,
       bool isLogin,
       BuildContext ctx) async {
     UserCredential authResult;
@@ -63,16 +63,25 @@ class _AuthScreenState extends State<AuthScreen> {
         authResult = await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
 
-        // Access the root of bucket
-        // final ref = FirebaseStorage.instance
-        //     .ref()
-        //     .child('user_image') // Folder
-        //     .child(authResult.user!.uid + '.jpg'); // File
+        //Future<String> uploadImage(var image ) async {
+        var image_url;
+        FirebaseStorage storage = FirebaseStorage.instance;
+        Reference ref =
+            storage // Access the root cloud storage bucket (The main bucket)
+                .ref() //  root bucket
+                .child("user_image") // Folder
+                .child(authResult.user!.uid + '.jpg'); // File
 
         // Uploading the file
-        // await ref.putFile(image);
-        // final url = await ref.getDownloadURL();
-        // print(url);
+        UploadTask uploadTask = ref.putFile(image);
+
+        // String url = (await ref.getDownloadURL()).toString();
+        //return url;
+
+        uploadTask.then((res) {
+          print('xxxx');
+          //image_url = res.ref.getDownloadURL();
+        });
 
         String formattedPhoneNumber = "(" +
             phoneNumber.substring(0, 3) +
@@ -81,28 +90,32 @@ class _AuthScreenState extends State<AuthScreen> {
             "-" +
             phoneNumber.substring(6, phoneNumber.length);
 
+
+        final theUser = authResult.user!.uid;
+        var uuid = const Uuid();   
+
         // Creating a new user
         // Users Collection is created on the fly and 2 fields are created
-
-       
         await FirebaseFirestore.instance
             .collection('users')
-            .doc(authResult.user!.uid)
+            .doc(theUser)
             .set({
           'email': email,
           'password': password,
           'firstName': firstName,
           'lastName': lastName,
           'phoneNumber': formattedPhoneNumber,
-          'role': role.toString().substring(5)
+          'role': role.toString().substring(5),
+          'image_url': image_url
         });
 
-        final theUser = authResult.user!.uid;
-        var uuid = Uuid();
+       
+
+        // Creating Notifications Collection with welcome notifiation
 
         await FirebaseFirestore.instance
             .collection('users/$theUser/notifications')
-            .doc(authResult.user!.uid)
+            .doc(theUser)
             .set({
           'id': uuid.v4(),
           'message': 'Hello ' + firstName + '! Welcome to AirCamel',
@@ -113,37 +126,6 @@ class _AuthScreenState extends State<AuthScreen> {
           'isOpen': false
         });
       }
-
-      /*
-
-      String? id;
-  String message;
-  String subject;
-  int idFrom;
-  int idTo;
-  DateTime dateTime;
-  bool isOpen;
-
-    */
-
-      // print(firstName +
-      //     "  " +
-      //     lastName +
-      //     "  " +
-      //     email +
-      //     "  " +
-      //     password +
-      //     "  " +
-      //     phoneNumber +
-      //     "  2222");
-      // Provider.of<AccountsProvider>(context, listen: false).createAccount(
-      //     id: authResult.user!.uid,
-      //     firstName: firstName,
-      //     lastName: lastName,
-      //     email: email,
-      //     password: password,
-      //     phoneNumber: phoneNumber,
-      //     role: role.toString().substring(5));
     } on PlatformException catch (error) {
       var errorMessage = 'Authentication failed';
       if (error.toString().contains('EMAIL_EXISTS')) {
@@ -159,7 +141,7 @@ class _AuthScreenState extends State<AuthScreen> {
       }
       _showErrorDialog(errorMessage);
 
-      ScaffoldMessenger.of(ctx).showSnackBar(SnackBar(
+      Scaffold.of(ctx).showSnackBar(SnackBar(
           content: Text(errorMessage),
           backgroundColor: Theme.of(ctx).errorColor));
 

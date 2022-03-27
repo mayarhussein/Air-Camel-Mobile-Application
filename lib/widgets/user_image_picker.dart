@@ -3,27 +3,33 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class UserImagePicker extends StatefulWidget {
+
+     
+  // Passing parameters: This function will be called inside this widget but will get passed from outside this widget
   final void Function(File pickedImage)? imagePickFn;
 
   UserImagePicker(this.imagePickFn);
+
 
   @override
   _UserImagePickerState createState() => _UserImagePickerState();
 }
 
 class _UserImagePickerState extends State<UserImagePicker> {
-  File? _pickedImage;
+  File? _ImageFile;
 
   void _pickImage() async {
     final pickedImageFile = await ImagePicker().pickImage(
-      source: ImageSource.camera,
+      source: ImageSource.gallery,
       imageQuality: 50,
       maxWidth: 150,
     );
     setState(() {
-      _pickedImage = File(pickedImageFile!.path);
+      _ImageFile = File(pickedImageFile!.path);
     });
-    widget.imagePickFn!(_pickedImage!);
+
+    // will send the parameter to _pickedImage function in AuthForm
+    widget.imagePickFn!(_ImageFile!);
   }
 
   @override
@@ -32,13 +38,18 @@ class _UserImagePickerState extends State<UserImagePicker> {
       CircleAvatar(
         radius: 40,
         backgroundColor: Colors.grey,
-        backgroundImage: _pickedImage != null ? FileImage(_pickedImage!) : null,
+        backgroundImage: _ImageFile != null ? FileImage(_ImageFile!) : null,
       ),
-      FlatButton.icon(
-          textColor: Theme.of(context).primaryColor,
+      TextButton.icon(  
+          style: TextButton.styleFrom(
+          primary:  Theme.of(context).primaryColor),
           onPressed: _pickImage,
-          icon: Icon(Icons.image),
-          label: Text('Add Image'))
+          icon: const Icon(Icons.image),
+          label: const Text('Upload an image'))
     ]);
   }
 }
+
+
+
+    

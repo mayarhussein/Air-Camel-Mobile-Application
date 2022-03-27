@@ -7,14 +7,17 @@ import 'package:string_validator/string_validator.dart';
 enum Role { client, company }
 
 class AuthForm extends StatefulWidget {
-  final void Function(
+
+    // Passing parameters: This function will be called inside this widget 
+    // but the parameters will get passed to outside this widget
+   final void Function(
       String email,
       String password,
       String firstName,
       String lastName,
       String phoneNumber,
       Role? role,
-      //File imageURL,
+      File imageURL,
       bool isLogin,
       BuildContext ctx) submitFn;
 
@@ -38,8 +41,8 @@ class _AuthFormState extends State<AuthForm> {
   String _userLastName = '';
   String _userPhoneNumber = '';
   String _userPassword = '';
-
   File? _userImageFile;
+
   final _firstNameFocusNode = FocusNode();
   final _lastNameFocusNode = FocusNode();
   final _phoneNumberFocusNode = FocusNode();
@@ -63,29 +66,28 @@ class _AuthFormState extends State<AuthForm> {
     final isValid = _formKey.currentState!.validate();
     FocusScope.of(context).unfocus();
 
-    // if (_userImageFile == null && !_isLogin) {
-    //   Scaffold.of(context).showSnackBar(SnackBar(
-    //     content: Text('Please pick an image'),
-    //     backgroundColor: Theme.of(context).errorColor,
-    //   ));
-    //   return;
-    // }
+    if (_userImageFile == null && !_isLogin) {
+      Scaffold.of(context).showSnackBar(SnackBar(
+        content: const Text('Please pick an image'),
+        backgroundColor: Theme.of(context).errorColor,
+      ));
+      return;
+    }
 
     if (isValid) {
       // triggers onSaved() in every textFormField
       _formKey.currentState!.save();
 
         
-
+    // will send the parameters to _submitAuthForm function in AuthScreen
       widget.submitFn(
-          // sends the parameters back to _submitAuthForm function in AuthScreen
           _userEmail.trim(),
           _userPassword.trim(),
           _userFirstName.trim(),
           _userLastName.trim(),
           _userPhoneNumber.trim(),
           _role,
-          //_userImageFile as File,
+          _userImageFile as File,
           _isLogin,
           context);
     }
@@ -96,10 +98,10 @@ class _AuthFormState extends State<AuthForm> {
     return Center(
         child: SingleChildScrollView(
       child: Card(
-        margin: EdgeInsets.all(20),
+        margin: const EdgeInsets.all(20),
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
             child: Form(
                 key: _formKey,
                 child: Column(
@@ -107,7 +109,7 @@ class _AuthFormState extends State<AuthForm> {
                   children: <Widget>[
                     if (!_isLogin) UserImagePicker(_pickedImage),
                     TextFormField(
-                      key: ValueKey('email'),
+                      key: const ValueKey('email'),
                       keyboardType: TextInputType.emailAddress,
                       decoration:
                           const InputDecoration(labelText: 'Email Address'),
@@ -133,7 +135,7 @@ class _AuthFormState extends State<AuthForm> {
                     ),
                     if (!_isLogin)
                       TextFormField(
-                        key: ValueKey('firstName'),
+                        key: const ValueKey('firstName'),
                         decoration:
                             const InputDecoration(labelText: 'First Name'),
                         focusNode: _firstNameFocusNode,
@@ -155,7 +157,7 @@ class _AuthFormState extends State<AuthForm> {
                       ),
                     if (!_isLogin)
                       TextFormField(
-                        key: ValueKey('lastName'),
+                        key: const ValueKey('lastName'),
                         decoration:
                             const InputDecoration(labelText: 'Last Name'),
                         focusNode: _lastNameFocusNode,
@@ -177,7 +179,7 @@ class _AuthFormState extends State<AuthForm> {
                       ),
                     if (!_isLogin)
                       TextFormField(
-                        key: ValueKey('phoneNumber'),
+                        key: const ValueKey('phoneNumber'),
                         decoration:
                             const InputDecoration(labelText: 'Phone Number'),
                         focusNode: _phoneNumberFocusNode,
@@ -201,8 +203,8 @@ class _AuthFormState extends State<AuthForm> {
                         },
                       ),
                     TextFormField(
-                      key: ValueKey('password'),
-                      decoration: InputDecoration(labelText: 'Password'),
+                      key: const ValueKey('password'),
+                      decoration: const InputDecoration(labelText: 'Password'),
                       obscureText: true,
                       focusNode: _passwordFocusNode,
                       validator: (value) {
@@ -219,7 +221,7 @@ class _AuthFormState extends State<AuthForm> {
                         _trySubmit();
                       },
                     ),
-                    SizedBox(height: 12),
+                    const SizedBox(height: 12),
                     if (!_isLogin)
                     Column(
                       children: <Widget>[
@@ -249,11 +251,11 @@ class _AuthFormState extends State<AuthForm> {
                         ),
                       ],
                     ),
-                    if (widget.isLoading) CircularProgressIndicator(),
+                    if (widget.isLoading)  CircularProgressIndicator(),
                     if (!widget.isLoading)
                       ElevatedButton(
                           child: Text(_isLogin ? 'Login' : 'Sign Up',
-                              style: TextStyle(color: Colors.white)),
+                              style: const TextStyle(color: Colors.white)),
                           onPressed: _trySubmit,
                           style: ElevatedButton.styleFrom(
                               side: const BorderSide(
@@ -270,7 +272,7 @@ class _AuthFormState extends State<AuthForm> {
                             _isLogin
                                 ? 'Create New Account'
                                 : 'I already have an account',
-                            style: TextStyle(
+                            style: const TextStyle(
                                 decoration: TextDecoration.underline)),
                         onPressed: () {
                           setState(() {
