@@ -3,6 +3,7 @@
 
 import 'dart:io';
 
+import 'package:air_camel/main_controller.dart';
 import 'package:air_camel/models/drawer/credit_transactions.dart';
 import 'package:air_camel/models/drawer/payments.dart';
 import 'package:air_camel/providers/credit_payments_provider.dart';
@@ -68,140 +69,9 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primaryColor: Colors.amber.shade600,
             primarySwatch: Colors.amber,
-
-            //textTheme: AppTheme.textTheme,
-            // textTheme: ThemeData.light().textTheme.copyWith(
-            //     bodyText1: TextStyle(color: Color.fromRGBO(20, 51, 51, 1)),
-            //     bodyText2: TextStyle(color: Color.fromRGBO(20, 51, 51, 1)),
-            //     subtitle1: TextStyle(
-            //         color: Colors.white,
-            //         fontSize: 20,
-            //         fontFamily: 'WorkSans-Regular',
-            //         fontWeight: FontWeight.bold)),
-            // // platform: TargetPlatform.iOS,
           ),
 
-          home: StreamBuilder(
-              // Life Listener
-              stream: FirebaseAuth.instance.authStateChanges(),
-              builder: (_, userSanpshot) {
-                if (userSanpshot.hasData) {
-                  final user = FirebaseAuth.instance.currentUser;
-                  CollectionReference usersData =
-                      FirebaseFirestore.instance.collection('users');
-                  return StreamBuilder<DocumentSnapshot>(
-                      stream: usersData.doc(user.uid).snapshots(),
-                      builder: (ctx, usersSnapshot) {
-                        if (usersSnapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return SplashScreen();
-                        }
-                        Map<String, dynamic> data =
-                            usersSnapshot.data.data() as Map<String, dynamic>;
-                        if (data == null) {
-                          return SplashScreen();
-                        }
-                        String role = data['role'];
-
-                        Provider.of<AccountsProvider>(ctx, listen: false)
-                            .createAccount(
-                                id: user.uid,
-                                firstName: data['firstName'],
-                                lastName: data['lastName'],
-                                email: data['email'],
-                                password: data['password'],
-                                phoneNumber: data['phoneNumber'],
-                                image: data['image_url'],
-                                role: role);
-                        return StreamBuilder<QuerySnapshot>(
-                            stream: usersData
-                                .doc(user.uid)
-                                .collection('notifications')
-                                .snapshots(),
-                            builder: (ctx, notificationsSnapshot) {
-                              if (notificationsSnapshot.data == null) {
-                                return SplashScreen();
-                              }
-                              List<NotificationModel> notificationList =
-                                  notificationsSnapshot.data.docs.map((item) {
-                                Timestamp stamp = item['dateTime'];
-                                return NotificationModel(
-                                    message: item["message"],
-                                    subject: item["subject"],
-                                    idFrom: item["idFrom"],
-                                    idTo: item["idTo"],
-                                    dateTime: DateTime.parse(
-                                        stamp.toDate().toString()),
-                                    isOpen: item["isOpen"]);
-                              }).toList();
-                              Provider.of<NotificationsProvider>(ctx)
-                                  .setNotifications(notificationList);
-                              //------------------------------------------------------------------
-                              return StreamBuilder<QuerySnapshot>(
-                                  stream: usersData
-                                      .doc(user.uid)
-                                      .collection('payments')
-                                      .snapshots(),
-                                  builder: (ctx, paymentsSnapshot) {
-                                    if (paymentsSnapshot.data == null) {
-                                      return SplashScreen();
-                                    }
-                                    List<PaymentModel> paymentsList =
-                                        paymentsSnapshot.data.docs.map((item) {
-                                      Timestamp stamp = item['dateTime'];
-                                      return PaymentModel(
-                                          amount: double.parse(
-                                              item["amount"].toString()),
-                                          dateTime: DateTime.parse(
-                                              stamp.toDate().toString()),
-                                          idClient: item["idClient"],
-                                          idCompany: item["idCompany"],
-                                          companyName: item["companyName"]);
-                                    }).toList();
-                                    Provider.of<CreditPaymentsProvider>(ctx)
-                                        .setPayments(paymentsList);
-                                    //------------------------------------------------------------------
-                                    return StreamBuilder<QuerySnapshot>(
-                                        stream: usersData
-                                            .doc(user.uid)
-                                            .collection('credit_transactions')
-                                            .snapshots(),
-                                        builder:
-                                            (ctx, creditTransactionsSnapshot) {
-                                          if (creditTransactionsSnapshot.data ==
-                                              null) {
-                                            return SplashScreen();
-                                          }
-                                          List<CreditTransactionsModel>
-                                              creditTransactionsList =
-                                              creditTransactionsSnapshot
-                                                  .data.docs
-                                                  .map((item) {
-                                            Timestamp stamp = item['dateTime'];
-                                            return CreditTransactionsModel(
-                                                amount: double.parse(
-                                                    item["amount"].toString()),
-                                                dateTime: DateTime.parse(
-                                                    stamp.toDate().toString()),
-                                                reason: item['reason']);
-                                          }).toList();
-                                          Provider.of<CreditPaymentsProvider>(
-                                                  ctx)
-                                              .setCreditTransactions(
-                                                  creditTransactionsList);
-                                          //------------------------------------------------------------------
-                                          if (role == 'client') {
-                                            return ClientNavigationScreen();
-                                          } else if (role == 'company') {
-                                            return CompanyNavigationScreen();
-                                          }
-                                        });
-                                  });
-                            });
-                      });
-                }
-                return AuthScreen();
-              }),
+          home: MainController(),
           //home:SplashScreen(3,WelcomeScreen.routeName),
           // home: CompanyNavigationScreen(),
           routes: {
