@@ -101,6 +101,9 @@ class MyApp extends StatelessWidget {
                         }
                         Map<String, dynamic> data =
                             usersSnapshot.data.data() as Map<String, dynamic>;
+                        if (data == null) {
+                          return SplashScreen();
+                        }
                         String role = data['role'];
 
                         Provider.of<AccountsProvider>(ctx, listen: false)
