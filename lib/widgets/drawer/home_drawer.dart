@@ -77,6 +77,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
 
     String firstName = account!.firstName;
     String lastName = account.lastName;
+    String? image = account.image;
 
     return Scaffold(
       backgroundColor: AppTheme.notWhite.withOpacity(0.5),
@@ -131,7 +132,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                                     shape: BoxShape.circle,
                                   ),
                                 )
-                                // Image.asset('assets/images/userImage.png'),
+                                //Image.asset(image.toString())
                                 ),
                           ),
                         ),

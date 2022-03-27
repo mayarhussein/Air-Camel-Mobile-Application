@@ -15,8 +15,9 @@ class AccountsProvider with ChangeNotifier {
     required String email,
     required String password,
     required String phoneNumber,
+    required String image,
     required String role,
-    String? image,
+    
   }) {
     _account = Account(
         id: id,
@@ -25,6 +26,7 @@ class AccountsProvider with ChangeNotifier {
         email: email,
         password: password,
         phoneNumber: phoneNumber,
+        image: image,
         role: role);
   }
 
@@ -39,13 +41,14 @@ class AccountsProvider with ChangeNotifier {
     required String email,
     required String password,
     required String phoneNumber,
-    image,
+    required String image,
   }) {
     _account!.email = email;
     _account!.firstName = firstName;
     _account!.lastName = lastName;
     _account!.password = password;
     _account!.phoneNumber = phoneNumber;
+    _account!.image = image;
     notifyListeners();
   }
 
