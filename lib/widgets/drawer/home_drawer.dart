@@ -115,7 +115,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                               shape: BoxShape.circle,
                               boxShadow: <BoxShadow>[
                                 BoxShadow(
-                                    color: AppTheme.grey.withOpacity(0.6),
+                                    color: Colors.transparent,
                                     offset: const Offset(2.0, 4.0),
                                     blurRadius: 8),
                               ],
@@ -124,16 +124,14 @@ class _HomeDrawerState extends State<HomeDrawer> {
                                 borderRadius: const BorderRadius.all(
                                     Radius.circular(60.0)),
                                 child: Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.15,
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.08,
-                                  decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                  ),
-                                child: Image.network( image.toString())
-                                )
-                              ),
+                                    width: MediaQuery.of(context).size.width *
+                                        0.15,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.08,
+                                    decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: Image.network(image.toString()))),
                           ),
                         ),
                       );
