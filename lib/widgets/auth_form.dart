@@ -84,7 +84,7 @@ class _AuthFormState extends State<AuthForm> {
           _userEmail.trim(),
           _userPassword.trim(),
           _userFirstName.trim(),
-          _userLastName.trim(),
+          _role == Role.client ? _userLastName.trim() : 'Company' ,
           _userPhoneNumber.trim(),
           _role,
           _userImageFile as File,
@@ -166,7 +166,7 @@ class _AuthFormState extends State<AuthForm> {
                       TextFormField(
                         key: const ValueKey('firstName'),
                         decoration:
-                            const InputDecoration(labelText: 'First Name'),
+                           InputDecoration(labelText: _role== Role.client?'First Name' : 'Name' ),
                         focusNode: _firstNameFocusNode,
                         validator: (value) {
                            if (value == null || value.isEmpty) {
@@ -184,7 +184,7 @@ class _AuthFormState extends State<AuthForm> {
                               .requestFocus(_lastNameFocusNode);
                         },
                       ),
-                    if (!_isLogin)
+                    if (!_isLogin && _role ==Role.client)
                       TextFormField(
                         key: const ValueKey('lastName'),
                         decoration:
