@@ -102,7 +102,23 @@ class _AuthScreenState extends State<AuthScreen> {
           'idTo': theUser,
           'dateTime': DateTime.now(),
           'isOpen': false
+
         });
+             // Creating Categories Collection with welcome notifiation
+
+  await FirebaseFirestore.instance
+            .collection('users/$theUser/categories')
+            .doc(theUser)
+            .set({
+          'isRegular': false,
+          'isFragile': false,
+          'isLarge': false,
+          'isMedecine': false,
+          'isFood': false
+         
+        });
+
+          
       }
     } on PlatformException catch (error) {
       var errorMessage = 'Authentication failed';

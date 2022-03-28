@@ -3,6 +3,7 @@
 
 import 'dart:io';
 import 'package:air_camel/main_controller.dart';
+import 'package:air_camel/providers/categories_provider.dart';
 import 'package:air_camel/providers/credit_payments_provider.dart';
 import 'package:air_camel/pages/client/bottom_bar_screens/account/edit_profile.dart';
 import 'package:air_camel/pages/company/company_navigation_home_screen.dart';
@@ -52,6 +53,7 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (ctx) => AccountsProvider()),
           ChangeNotifierProvider(create: (ctx) => NotificationsProvider()),
           ChangeNotifierProvider(create: (ctx) => CreditPaymentsProvider()),
+          ChangeNotifierProvider(create: (ctx)=> CategoriesProvider())
         ],
         child: MaterialApp(
           title: 'AirCamel',

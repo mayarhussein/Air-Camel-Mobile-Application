@@ -3,6 +3,7 @@ import 'package:air_camel/models/drawer/payments.dart';
 import 'package:air_camel/models/notification.dart';
 import 'package:air_camel/pages/client/client_navigation_screen.dart';
 import 'package:air_camel/pages/company/company_navigation_home_screen.dart';
+import 'package:air_camel/pages/company/edit_categories.dart';
 import 'package:air_camel/pages/launch_app/auth_screen.dart';
 import 'package:air_camel/pages/launch_app/splash_screen.dart';
 import 'package:air_camel/providers/accounts_provider.dart';
@@ -12,6 +13,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'providers/categories_provider.dart';
 
 class MainController extends StatelessWidget {
   @override
@@ -48,6 +51,8 @@ class MainController extends StatelessWidget {
                           phoneNumber: data['phoneNumber'],
                           image: data['image_url'],
                           role: role);
+
+                  //------------------------------------------------------------------------
                   return StreamBuilder<QuerySnapshot>(
                       stream: usersData
                           .doc(user.uid)
@@ -71,7 +76,7 @@ class MainController extends StatelessWidget {
                         }).toList();
                         Provider.of<NotificationsProvider>(ctx)
                             .setNotifications(notificationList);
-                        //------------------------------------------------------------------
+                        //---------------------------------------------------------------------------
                         return StreamBuilder<QuerySnapshot>(
                             stream: usersData
                                 .doc(user.uid)
@@ -95,7 +100,7 @@ class MainController extends StatelessWidget {
                               }).toList();
                               Provider.of<CreditPaymentsProvider>(ctx)
                                   .setPayments(paymentsList);
-                              //------------------------------------------------------------------
+                              //------------------------------------------------------------------------------
                               return StreamBuilder<QuerySnapshot>(
                                   stream: usersData
                                       .doc(user.uid)
@@ -125,7 +130,40 @@ class MainController extends StatelessWidget {
                                     if (role == 'client') {
                                       return ClientNavigationScreen();
                                     } else if (role == 'company') {
-                                      return CompanyNavigationScreen();
+                                      // return StreamBuilder<DocumentSnapshot>(
+                                      //     stream: FirebaseFirestore.instance
+                                      //         .collection(
+                                      //             'users/${user.uid}/categories')
+                                      //         .doc()
+                                      //         .snapshots(),
+                                      //     builder: (ctx, categoriesSnapshot) {
+                                      //       if (categoriesSnapshot.data ==
+                                      //           null) {
+                                      //         return SplashScreen();
+                                      //       }
+                                      //       Map<String, dynamic> data =
+                                      //           categoriesSnapshot.data!.data()
+                                      //               as Map<String, dynamic>;
+
+                                      //       Provider.of<CategoriesProvider>(ctx,
+                                      //               listen: false)
+                                      //           .setCategories(
+                                      //               isRegular:
+                                      //                   data['isRegular'],
+                                      //               isFragile:
+                                      //                   data['isFragile'],
+                                      //               isLarge: data['isLarge'],
+                                      //               isMedecine:
+                                      //                   data['isMedecine'],
+                                      //               isFood: data['isFood']);
+                                      //       if (categoriesSnapshot.hasData) {
+                                      //         return CompanyNavigationScreen();
+                                      //       } else {
+                                      //         return SplashScreen();
+                                      //       }
+                                      //     });
+                                 return CompanyNavigationScreen();
+
                                     } else
                                       return Container();
                                   });
