@@ -13,7 +13,6 @@ import 'package:air_camel/pages/client/bottom_bar_screens/new_shipment/trip_deta
 import 'package:air_camel/pages/company/complaints_screen.dart';
 import 'package:air_camel/pages/company/edit_categories.dart';
 import 'package:air_camel/pages/company/payment_history.dart';
-import 'package:air_camel/pages/launch_app/login_screen.txt';
 import 'package:air_camel/pages/side_drawer_screens/about_us_screen.dart';
 import 'package:air_camel/pages/side_drawer_screens/credit_screen.dart';
 import 'package:air_camel/pages/side_drawer_screens/help_screen.dart';
@@ -68,7 +67,6 @@ class MyApp extends StatelessWidget {
             FiltersScreen.routeName: (ctx) => FiltersScreen(),
             ClientNavigationScreen.routeName: (ctx) => ClientNavigationScreen(),
             NewShipmentMenu.routeName: (ctx) => NewShipmentMenu(),
-            LoginScreen.routeName: (ctx) => LoginScreen(),
             TripDetailsScreen.routeName: (ctx) => TripDetailsScreen(),
             CompanyNavigationScreen.routeName: (ctx) =>
                 CompanyNavigationScreen(),

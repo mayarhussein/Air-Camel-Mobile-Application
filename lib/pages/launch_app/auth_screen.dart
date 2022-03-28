@@ -38,7 +38,7 @@ class _AuthScreenState extends State<AuthScreen> {
           title: const Text('An Error Occurred!'),
           content: Text(message),
           actions: <Widget>[
-            FlatButton(
+            TextButton(
               child: const Text('Okay'),
               onPressed: () {
                 Navigator.of(ctx).pop();

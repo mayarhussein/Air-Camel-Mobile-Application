@@ -89,31 +89,33 @@ class _AccountScreenState extends State<AccountScreen> {
               height: 400,
               child: Column(
                 children: [
-                  InkWell(
-                    onTap: () => Navigator.of(context)
-                        .pushNamed(EditProfileScreen.routeName),
-                    child: Card(
-                      elevation: 5,
-                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      child: SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.2,
-                        width: double.infinity,
-                        child: Container(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Text(
-                                "Edit Profile",
-                                style: headFontBig1,
-                              ),
-                              Image(
-                                image: AssetImage("assets/images/profile.png"),
-                                fit: BoxFit.scaleDown,
-                              ),
-                            ],
+                  Expanded(
+                    child: InkWell(
+                      onTap: () => Navigator.of(context)
+                          .pushNamed(EditProfileScreen.routeName),
+                      child: Card(
+                        elevation: 5,
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                        child: SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.2,
+                          width: double.infinity,
+                          child: Container(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Text(
+                                  "Edit Profile",
+                                  style: headFontBig1,
+                                ),
+                                const Image(
+                                  image: AssetImage("assets/images/profile.png"),
+                                  fit: BoxFit.scaleDown,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -122,59 +124,63 @@ class _AccountScreenState extends State<AccountScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      InkWell(
-                        child: Card(
-                          elevation: 5,
-                          clipBehavior: Clip.antiAliasWithSaveLayer,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                          child: SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.2,
-                            width: MediaQuery.of(context).size.width * 0.4,
-                            child: Container(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  Text(
-                                    "History",
-                                    style: headFontBig1,
-                                  ),
-                                  Image(
-                                    image:
-                                        AssetImage("assets/images/history.png"),
-                                  ),
-                                ],
+                      Expanded(
+                        child: InkWell(
+                          child: Card(
+                            elevation: 5,
+                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            child: SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.2,
+                              width: MediaQuery.of(context).size.width * 0.4,
+                              child: Container(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Text(
+                                      "History",
+                                      style: headFontBig1,
+                                    ),
+                                    const Image(
+                                      image:
+                                          AssetImage("assets/images/history.png"),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                      InkWell(
-                        child: Card(
-                          elevation: 5,
-                          clipBehavior: Clip.antiAliasWithSaveLayer,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                          child: SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.2,
-                            width: MediaQuery.of(context).size.width * 0.4,
-                            child: Container(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  Text(
-                                    "Settings",
-                                    style: headFontBig1,
-                                  ),
-                                  Image(
-                                    image: AssetImage(
-                                        "assets/images/settings.png"),
-                                  ),
-                                ],
+                      Expanded(
+                        child: InkWell(
+                          child: Card(
+                            elevation: 5,
+                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            child: SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.2,
+                              width: MediaQuery.of(context).size.width * 0.4,
+                              child: Container(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Text(
+                                      "Settings",
+                                      style: headFontBig1,
+                                    ),
+                                    const Image(
+                                      image: AssetImage(
+                                          "assets/images/settings.png"),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),

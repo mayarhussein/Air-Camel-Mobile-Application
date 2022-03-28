@@ -108,6 +108,35 @@ class _AuthFormState extends State<AuthForm> {
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     if (!_isLogin) UserImagePicker(_pickedImage),
+                           if (!_isLogin)
+                    Column(
+                      children: <Widget>[
+                        ListTile(
+                          title: const Text('Client'),
+                          leading: Radio<Role>(
+                            value: Role.client,
+                            groupValue: _role,
+                            onChanged: (Role? value) {
+                              setState(() {
+                                _role = value;
+                              });
+                            },
+                          ),
+                        ),
+                        ListTile(
+                          title: const Text('Company'),
+                          leading: Radio<Role>(
+                            value: Role.company,
+                            groupValue: _role,
+                            onChanged: (Role? value) {
+                              setState(() {
+                                _role = value;
+                              });
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
                     TextFormField(
                       key: const ValueKey('email'),
                       keyboardType: TextInputType.emailAddress,
@@ -222,35 +251,7 @@ class _AuthFormState extends State<AuthForm> {
                       },
                     ),
                     const SizedBox(height: 12),
-                    if (!_isLogin)
-                    Column(
-                      children: <Widget>[
-                        ListTile(
-                          title: const Text('Client'),
-                          leading: Radio<Role>(
-                            value: Role.client,
-                            groupValue: _role,
-                            onChanged: (Role? value) {
-                              setState(() {
-                                _role = value;
-                              });
-                            },
-                          ),
-                        ),
-                        ListTile(
-                          title: const Text('Company'),
-                          leading: Radio<Role>(
-                            value: Role.company,
-                            groupValue: _role,
-                            onChanged: (Role? value) {
-                              setState(() {
-                                _role = value;
-                              });
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
+             
                     if (widget.isLoading)  CircularProgressIndicator(),
                     if (!widget.isLoading)
                       ElevatedButton(

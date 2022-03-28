@@ -39,20 +39,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         phoneNumber.substring(2, 7) +
         "-" +
         phoneNumber.substring(7, phoneNumber.length);
-    // return StreamBuilder<DocumentSnapshot>(
-    //     stream: usersData.doc(theUser.uid).snapshots(),
-    //     builder: (ctx, snapshot) {
-    //       if (snapshot.connectionState == ConnectionState.waiting) {
-    //         return const Center(child: CircularProgressIndicator());
-    //       }
-
-    //       Map<String, dynamic> data =
-    //           snapshot.data!.data() as Map<String, dynamic>;
-    //       String firstName = data['firstName'];
-    //       String lastName = data['lastName'];
-    //       String email = data['email'];
-    //       String phoneNumber = data['phoneNumber'];
-    //       String password = data['password'];
+ 
 
     return Scaffold(
       appBar: AppBar(
@@ -85,17 +72,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             imagePath: image,
             onPressed: _pickImage,
           )),
-          buildUserInfoDisplay(
-              firstName + ' ' + lastName, ' Name', EditNameScreen()),
-          buildUserInfoDisplay(email, 'Email', EditEmailScreen()),
+          buildUserInfoDisplay(firstName + ' ' + lastName, ' Name', EditNameScreen()),
+          buildUserInfoDisplay(email, 'Email',  EditEmailScreen()),
           buildUserInfoDisplay('', 'Password', EditPasswordScreen()),
-          buildUserInfoDisplay(
-              formattedPhoneNumber, 'Phone Number', EditPhoneScreen()),
+          buildUserInfoDisplay(formattedPhoneNumber, 'Phone Number', EditPhoneScreen()),
 
-          //Expanded(
-          // child: '',
-          //  flex: 4,
-          //)
         ],
       ),
     );
