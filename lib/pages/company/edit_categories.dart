@@ -18,13 +18,13 @@ class EditCategories extends StatefulWidget {
 }
 
 class _EditCategoriesState extends State<EditCategories> {
-  bool isRegular = false;
-  bool isFragile = false;
-  bool isLarge = false;
-  bool isMedecine = false;
-  bool isFood = false;
-
-  Future<void> _save() async {
+  Future<void> _save({
+    required bool isRegular,
+    required bool isFragile,
+    required bool isLarge,
+    required bool isMedecine,
+    required bool isFood,
+  }) async {
     final user = FirebaseAuth.instance.currentUser!;
     final data =
         FirebaseFirestore.instance.collection('users/${user.uid}/categories');
@@ -66,11 +66,11 @@ class _EditCategoriesState extends State<EditCategories> {
     CategoriesModel? categories =
         Provider.of<CategoriesProvider>(context, listen: false).categories;
 
-    //bool isRegular = categories!.isRegular;
-    //bool isFragile =categories.isFragile;
-    //bool isLarge = categories.isLarge;
-    //bool isMedecine = categories.isMedecine;
-    //bool isFood = categories.isFood;
+    bool isRegular = categories!.isRegular;
+    bool isFragile = categories.isFragile;
+    bool isLarge = categories.isLarge;
+    bool isMedecine = categories.isMedecine;
+    bool isFood = categories.isFood;
 
     return Scaffold(
         appBar: AppBar(
@@ -84,7 +84,12 @@ class _EditCategoriesState extends State<EditCategories> {
           actions: <Widget>[
             IconButton(
               icon: const Icon(Icons.save),
-              onPressed: _save,
+              onPressed: () => _save(
+                  isFood: isFood,
+                  isFragile: isFragile,
+                  isLarge: isLarge,
+                  isMedecine: isMedecine,
+                  isRegular: isRegular),
             ),
           ],
           backgroundColor: bgColor,
@@ -103,7 +108,7 @@ class _EditCategoriesState extends State<EditCategories> {
                 children: <Widget>[
                   _buildSwitchListTile(
                     'Regular',
-                    'Only accepts regular packages.',
+                    'Accepts regular packages.',
                     isRegular,
                     (newValue) {
                       setState(
@@ -115,7 +120,7 @@ class _EditCategoriesState extends State<EditCategories> {
                   ),
                   _buildSwitchListTile(
                     'Fragile',
-                    'Only accepts fragile packages.',
+                    'Accepts fragile packages.',
                     isFragile,
                     (newValue) {
                       setState(
@@ -127,7 +132,7 @@ class _EditCategoriesState extends State<EditCategories> {
                   ),
                   _buildSwitchListTile(
                     'Large',
-                    'Only accept large packages.',
+                    'Accepts large packages.',
                     isLarge,
                     (newValue) {
                       setState(
@@ -139,7 +144,7 @@ class _EditCategoriesState extends State<EditCategories> {
                   ),
                   _buildSwitchListTile(
                     'Medecine',
-                    'Only accepts medecine.',
+                    'Accepts medecine.',
                     isMedecine,
                     (newValue) {
                       setState(
@@ -151,7 +156,7 @@ class _EditCategoriesState extends State<EditCategories> {
                   ),
                   _buildSwitchListTile(
                     'Food',
-                    'Only accepts Food.',
+                    'Accepts Food.',
                     isFood,
                     (newValue) {
                       setState(

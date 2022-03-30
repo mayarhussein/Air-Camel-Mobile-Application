@@ -9,19 +9,17 @@ class CategoriesProvider with ChangeNotifier {
   CategoriesModel? _categories;
 
   void setCategories(
-      { required bool isRegular,
-        required bool isFragile,
-        required bool isLarge,
-        required bool isMedecine,
-        required bool isFood}) {
+      {required bool isRegular,
+      required bool isFragile,
+      required bool isLarge,
+      required bool isMedecine,
+      required bool isFood}) {
     _categories = CategoriesModel(
         isRegular: isRegular,
         isFragile: isFragile,
         isLarge: isLarge,
         isMedecine: isMedecine,
         isFood: isFood);
-
-    notifyListeners();
   }
 
   // getter
@@ -29,12 +27,8 @@ class CategoriesProvider with ChangeNotifier {
     return _categories;
   }
 
-  void EditCategories(
-      bool isRegular,
-     bool isFragile,
-       bool isLarge,
-       bool isMedecine,
-      bool isFood) {
+  void EditCategories(bool isRegular, bool isFragile, bool isLarge,
+      bool isMedecine, bool isFood) {
     _categories!.isRegular = isRegular;
     _categories!.isFragile = isFragile;
     _categories!.isLarge = isLarge;

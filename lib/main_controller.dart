@@ -1,3 +1,4 @@
+import 'package:air_camel/models/categories.dart';
 import 'package:air_camel/models/drawer/credit_transactions.dart';
 import 'package:air_camel/models/drawer/payments.dart';
 import 'package:air_camel/models/notification.dart';
@@ -130,40 +131,48 @@ class MainController extends StatelessWidget {
                                     if (role == 'client') {
                                       return ClientNavigationScreen();
                                     } else if (role == 'company') {
-                                      // return StreamBuilder<DocumentSnapshot>(
-                                      //     stream: FirebaseFirestore.instance
-                                      //         .collection(
-                                      //             'users/${user.uid}/categories')
-                                      //         .doc()
-                                      //         .snapshots(),
-                                      //     builder: (ctx, categoriesSnapshot) {
-                                      //       if (categoriesSnapshot.data ==
-                                      //           null) {
-                                      //         return SplashScreen();
-                                      //       }
-                                      //       Map<String, dynamic> data =
-                                      //           categoriesSnapshot.data!.data()
-                                      //               as Map<String, dynamic>;
+                                      return StreamBuilder<QuerySnapshot>(
+                                          stream: usersData
+                                              .doc(user.uid)
+                                              .collection('categories')
+                                              .snapshots(),
+                                          builder: (ctx, categoriesSnapshot) {
+                                            if (categoriesSnapshot.data ==
+                                                null) {
+                                              return SplashScreen();
+                                            }
+                                            List<CategoriesModel> data =
+                                                categoriesSnapshot.data!.docs
+                                                    .map((item) {
+                                              return CategoriesModel(
+                                                  isRegular: item["isRegular"],
+                                                  isFragile: item["isFragile"],
+                                                  isLarge: item["isLarge"],
+                                                  isMedecine:
+                                                      item["isMedecine"],
+                                                  isFood: item["isFood"]);
+                                            }).toList();
 
-                                      //       Provider.of<CategoriesProvider>(ctx,
-                                      //               listen: false)
-                                      //           .setCategories(
-                                      //               isRegular:
-                                      //                   data['isRegular'],
-                                      //               isFragile:
-                                      //                   data['isFragile'],
-                                      //               isLarge: data['isLarge'],
-                                      //               isMedecine:
-                                      //                   data['isMedecine'],
-                                      //               isFood: data['isFood']);
-                                      //       if (categoriesSnapshot.hasData) {
-                                      //         return CompanyNavigationScreen();
-                                      //       } else {
-                                      //         return SplashScreen();
-                                      //       }
-                                      //     });
-                                 return CompanyNavigationScreen();
+                                            print(data.first.isRegular
+                                                    .toString() +
+                                                " 1111");
+                                            print(data.first.isRegular
+                                                    .toString() +
+                                                " 22222");
+                                            Provider.of<CategoriesProvider>(ctx,
+                                                    listen: false)
+                                                .setCategories(
+                                                    isRegular:
+                                                        data.first.isRegular,
+                                                    isFragile:
+                                                        data.first.isFragile,
+                                                    isLarge: data.first.isLarge,
+                                                    isMedecine:
+                                                        data.first.isMedecine,
+                                                    isFood: data.first.isFood);
 
+                                            return CompanyNavigationScreen();
+                                          });
                                     } else
                                       return Container();
                                   });
