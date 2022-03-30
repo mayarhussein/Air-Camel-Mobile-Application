@@ -11,4 +11,7 @@ class OffersProvider with ChangeNotifier {
   List<OfferModel> get offers {
     return [...?_offers];
   }
+
+
+  
 }

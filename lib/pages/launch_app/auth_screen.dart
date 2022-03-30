@@ -62,8 +62,10 @@ class _AuthScreenState extends State<AuthScreen> {
         // Sign up
         authResult = await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
+
+
         final theUser = authResult.user!.uid;
-        var uuid = const Uuid();
+        var randomId = const Uuid().v4();
 
         //Future<String> uploadImage(var image ) async {
         FirebaseStorage storage = FirebaseStorage.instance;
@@ -93,9 +95,9 @@ class _AuthScreenState extends State<AuthScreen> {
 
         await FirebaseFirestore.instance
             .collection('users/$theUser/notifications')
-            .doc(theUser)
+            .doc(randomId)
             .set({
-          'id': uuid.v4(),
+          'id': randomId,
           'message': 'Hello ' + firstName + '! Welcome to AirCamel',
           'subject': 'welcome',
           'idFrom': 'Admin',

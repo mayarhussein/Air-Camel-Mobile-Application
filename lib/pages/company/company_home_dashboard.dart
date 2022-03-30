@@ -1,6 +1,7 @@
 import 'package:air_camel/constants.dart';
 import 'package:air_camel/models/orders.dart';
 import 'package:air_camel/pages/company/edit_categories.dart';
+import 'package:air_camel/pages/company/new_offer_screen.dart';
 import 'package:air_camel/pages/company/payment_history.dart';
 import 'package:air_camel/widgets/company/company_home_btn.dart';
 import 'package:air_camel/widgets/company/shipments_list.dart';
@@ -59,7 +60,7 @@ class CompanyHomeDashboard extends StatelessWidget {
                     Colors.red.shade100,
                     Colors.red.shade900,
                     Icons.error_outline_outlined),
-                CompanyHomeBtn("New Offer", PayementsHistory.routeName,
+                CompanyHomeBtn("New Offer", NewOfferScreen.routeName,
                     Colors.pink.shade100, Colors.pink.shade900, Icons.add)
               ],
             ),
