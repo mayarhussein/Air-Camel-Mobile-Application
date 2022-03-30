@@ -43,7 +43,7 @@ class _NewOfferScreenState extends State<NewOfferScreen> {
     final DateTime? selected = await showDatePicker(
       context: context,
       initialDate: selectedDate,
-      firstDate: DateTime(2010),
+      firstDate: DateTime.now(),
       lastDate: DateTime(2025),
     );
     if (selected != null && selected != selectedDate) {
