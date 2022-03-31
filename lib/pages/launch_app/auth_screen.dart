@@ -63,7 +63,6 @@ class _AuthScreenState extends State<AuthScreen> {
         authResult = await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
 
-
         final theUser = authResult.user!.uid;
         var randomId = const Uuid().v4();
 
@@ -104,23 +103,20 @@ class _AuthScreenState extends State<AuthScreen> {
           'idTo': theUser,
           'dateTime': DateTime.now(),
           'isOpen': false
-
         });
-             // Creating Categories Collection with welcome notifiation
+        // Creating Categories Collection with welcome notifiation
 
-  await FirebaseFirestore.instance
+        await FirebaseFirestore.instance
             .collection('users/$theUser/categories')
-            .doc(theUser)
+            .doc(randomId)
             .set({
+          'id': randomId,
           'isRegular': false,
           'isFragile': false,
           'isLarge': false,
           'isMedecine': false,
           'isFood': false
-         
         });
-
-          
       }
     } on PlatformException catch (error) {
       var errorMessage = 'Authentication failed';

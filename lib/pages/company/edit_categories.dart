@@ -18,6 +18,26 @@ class EditCategories extends StatefulWidget {
 }
 
 class _EditCategoriesState extends State<EditCategories> {
+  late String id;
+  late bool isRegular;
+  late bool isFragile;
+  late bool isLarge;
+  late bool isMedecine;
+  late bool isFood;
+
+  @override
+  void initState() {
+    CategoriesModel? categories =
+        Provider.of<CategoriesProvider>(context, listen: false).categories;
+    id = categories!.id;
+
+    isRegular = categories.isRegular;
+    isFragile = categories.isFragile;
+    isLarge = categories.isLarge;
+    isMedecine = categories.isMedecine;
+    isFood = categories.isFood;
+  }
+
   Future<void> _save({
     required bool isRegular,
     required bool isFragile,
@@ -28,15 +48,13 @@ class _EditCategoriesState extends State<EditCategories> {
     final user = FirebaseAuth.instance.currentUser!;
     final data =
         FirebaseFirestore.instance.collection('users/${user.uid}/categories');
-
-    await data.doc().update({
+    await data.doc(id).update({
       'isRegular': isRegular,
       'isFragile': isFragile,
       'isLarge': isLarge,
       'isMedecine': isMedecine,
       'isFood': isFood
     }).then((value) {
-      print('success');
       Provider.of<CategoriesProvider>(context, listen: false)
           .EditCategories(isRegular, isFragile, isLarge, isMedecine, isFood);
     }).catchError((error) => print("Failed to update categories: $error"));
@@ -63,15 +81,6 @@ class _EditCategoriesState extends State<EditCategories> {
 
   @override
   Widget build(BuildContext context) {
-    CategoriesModel? categories =
-        Provider.of<CategoriesProvider>(context, listen: false).categories;
-
-    bool isRegular = categories!.isRegular;
-    bool isFragile = categories.isFragile;
-    bool isLarge = categories.isLarge;
-    bool isMedecine = categories.isMedecine;
-    bool isFood = categories.isFood;
-
     return Scaffold(
         appBar: AppBar(
           title: const Text(

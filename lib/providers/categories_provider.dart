@@ -9,12 +9,14 @@ class CategoriesProvider with ChangeNotifier {
   CategoriesModel? _categories;
 
   void setCategories(
-      {required bool isRegular,
+      {required String id,
+      required bool isRegular,
       required bool isFragile,
       required bool isLarge,
       required bool isMedecine,
       required bool isFood}) {
     _categories = CategoriesModel(
+        id: id,
         isRegular: isRegular,
         isFragile: isFragile,
         isLarge: isLarge,

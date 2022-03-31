@@ -1,3 +1,4 @@
+import 'package:air_camel/models/account.dart';
 import 'package:air_camel/models/categories.dart';
 import 'package:air_camel/models/drawer/credit_transactions.dart';
 import 'package:air_camel/models/drawer/payments.dart';
@@ -8,6 +9,7 @@ import 'package:air_camel/pages/company/edit_categories.dart';
 import 'package:air_camel/pages/launch_app/auth_screen.dart';
 import 'package:air_camel/pages/launch_app/splash_screen.dart';
 import 'package:air_camel/providers/accounts_provider.dart';
+import 'package:air_camel/providers/companies_provider.dart';
 import 'package:air_camel/providers/credit_payments_provider.dart';
 import 'package:air_camel/providers/notifications_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -129,7 +131,38 @@ class MainController extends StatelessWidget {
                                             creditTransactionsList);
                                     //------------------------------------------------------------------
                                     if (role == 'client') {
-                                      return ClientNavigationScreen();
+                                      return StreamBuilder<QuerySnapshot>(
+                                          stream: usersData.snapshots(),
+                                          builder: (ctx, allUsersSnapshot) {
+                                            if (allUsersSnapshot.data == null) {
+                                              return SplashScreen();
+                                            }
+                                            List<Account?> list =
+                                                allUsersSnapshot.data!.docs
+                                                    .map((item) {
+                                              if (item["role"].toString() ==
+                                                  "company") {
+                                                return Account(
+                                                    firstName:
+                                                        item["firstName"],
+                                                    lastName: item["lastName"],
+                                                    email: item["email"],
+                                                    password: item["password"],
+                                                    phoneNumber:
+                                                        item["phoneNumber"],
+                                                    role: item["role"],
+                                                    image: item["image_url"]);
+                                              }
+                                            }).toList();
+                                            list = list
+                                                .whereType<Account>()
+                                                .toList();
+                                            Provider.of<CompaniesProvider>(ctx,
+                                                    listen: false)
+                                                .setCompanies(
+                                                    list as List<Account>);
+                                            return ClientNavigationScreen();
+                                          });
                                     } else if (role == 'company') {
                                       return StreamBuilder<QuerySnapshot>(
                                           stream: usersData
@@ -145,6 +178,7 @@ class MainController extends StatelessWidget {
                                                 categoriesSnapshot.data!.docs
                                                     .map((item) {
                                               return CategoriesModel(
+                                                  id: item["id"],
                                                   isRegular: item["isRegular"],
                                                   isFragile: item["isFragile"],
                                                   isLarge: item["isLarge"],
@@ -153,15 +187,10 @@ class MainController extends StatelessWidget {
                                                   isFood: item["isFood"]);
                                             }).toList();
 
-                                            print(data.first.isRegular
-                                                    .toString() +
-                                                " 1111");
-                                            print(data.first.isRegular
-                                                    .toString() +
-                                                " 22222");
                                             Provider.of<CategoriesProvider>(ctx,
                                                     listen: false)
                                                 .setCategories(
+                                                    id: data.first.id,
                                                     isRegular:
                                                         data.first.isRegular,
                                                     isFragile:
