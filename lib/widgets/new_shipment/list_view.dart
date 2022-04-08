@@ -1,4 +1,4 @@
-import 'package:air_camel/models/company_data_list.dart';
+import 'package:air_camel/models/account.dart';
 import 'package:air_camel/resources/app_theme.dart';
 import 'package:air_camel/widgets/new_shipment/company_item.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +14,7 @@ class HomeListView extends StatelessWidget {
       : super(key: key);
 
   final VoidCallback? callback;
-  final CompanyDataList? companyData;
+  final Account? companyData;
   final AnimationController? animationController;
   final Animation<double>? animation;
 
@@ -53,12 +53,12 @@ class HomeListView extends StatelessWidget {
                           children: <Widget>[
                             AspectRatio(
                               aspectRatio: 2,
-                              // child: Image.asset(
-                              //   "",
-                              //   fit: BoxFit.cover,
-                              // ),
+                              child: Image.network(
+                                companyData!.image,
+                                fit: BoxFit.cover,
+                              ),
                             ),
-                            HomeTripItem(companyData),
+                            HomeTripItem(companyData!),
                           ],
                         ),
                         Positioned(

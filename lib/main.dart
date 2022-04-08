@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:air_camel/main_controller.dart';
 import 'package:air_camel/pages/company/new_offer_screen.dart';
 import 'package:air_camel/providers/categories_provider.dart';
+import 'package:air_camel/providers/companies_provider.dart';
 import 'package:air_camel/providers/credit_payments_provider.dart';
 import 'package:air_camel/pages/client/bottom_bar_screens/account/edit_profile.dart';
 import 'package:air_camel/pages/company/company_navigation_home_screen.dart';
@@ -54,7 +55,8 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (ctx) => AccountsProvider()),
           ChangeNotifierProvider(create: (ctx) => NotificationsProvider()),
           ChangeNotifierProvider(create: (ctx) => CreditPaymentsProvider()),
-          ChangeNotifierProvider(create: (ctx)=> CategoriesProvider())
+          ChangeNotifierProvider(create: (ctx) => CategoriesProvider()),
+          ChangeNotifierProvider(create: (ctx) => CompaniesProvider())
         ],
         child: MaterialApp(
           title: 'AirCamel',
@@ -63,9 +65,7 @@ class MyApp extends StatelessWidget {
             primaryColor: Colors.amber.shade600,
             primarySwatch: Colors.amber,
           ),
-
           home: MainController(),
-      
           routes: {
             FiltersScreen.routeName: (ctx) => FiltersScreen(),
             ClientNavigationScreen.routeName: (ctx) => ClientNavigationScreen(),

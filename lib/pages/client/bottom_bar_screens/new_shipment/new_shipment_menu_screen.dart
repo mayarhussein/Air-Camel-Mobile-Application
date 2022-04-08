@@ -1,4 +1,5 @@
-import 'package:air_camel/models/company_data_list.dart';
+import 'package:air_camel/models/account.dart';
+import 'package:air_camel/providers/companies_provider.dart';
 import 'package:air_camel/resources/app_theme.dart';
 import 'package:air_camel/widgets/home/app_bar.dart';
 import 'package:air_camel/widgets/new_shipment/filter_bar.dart';
@@ -6,6 +7,7 @@ import 'package:air_camel/widgets/new_shipment/list_view.dart';
 import 'package:air_camel/widgets/new_shipment/search_bar.dart';
 import 'package:air_camel/widgets/new_shipment/time_date.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class NewShipmentMenu extends StatefulWidget {
   @override
@@ -17,11 +19,14 @@ class NewShipmentMenu extends StatefulWidget {
 class _NewShipmentMenuState extends State<NewShipmentMenu>
     with TickerProviderStateMixin {
   AnimationController? animationController;
-  List<CompanyDataList> companyList = CompanyDataList.companyList;
+  late List<Account> companyList;
   final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
+    final companiesData =
+        Provider.of<CompaniesProvider>(context, listen: false);
+    companyList = companiesData.companiesList;
     animationController = AnimationController(
         duration: const Duration(milliseconds: 1000), vsync: this);
     super.initState();
@@ -65,7 +70,7 @@ class _NewShipmentMenuState extends State<NewShipmentMenu>
                                   children: <Widget>[
                                     HomeSearchBar('Type pickup location here'),
                                     HomeSearchBar('Type destination here'),
-                                    HomeTimeDate(),
+                                    // HomeTimeDate(),
                                   ],
                                 );
                               }, childCount: 1),
