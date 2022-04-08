@@ -26,8 +26,7 @@ class MainController extends StatelessWidget {
         builder: (_, userSanpshot) {
           if (userSanpshot.hasData) {
             final user = FirebaseAuth.instance.currentUser;
-            CollectionReference usersData =
-                FirebaseFirestore.instance.collection('users');
+            CollectionReference usersData =FirebaseFirestore.instance.collection('users');
             return StreamBuilder<DocumentSnapshot>(
                 stream: usersData.doc(user!.uid).snapshots(),
                 builder: (ctx, usersSnapshot) {
@@ -54,130 +53,147 @@ class MainController extends StatelessWidget {
                           role: role);
 
                   //------------------------------------------------------------------------
-                  return StreamBuilder<QuerySnapshot>(
-                      stream: usersData
-                          .doc(user.uid)
-                          .collection('notifications')
-                          .snapshots(),
-                      builder: (ctx, notificationsSnapshot) {
-                        if (notificationsSnapshot.data == null) {
-                          return SplashScreen();
-                        }
-                        List<NotificationModel> notificationList =
-                            notificationsSnapshot.data!.docs.map((item) {
-                          Timestamp stamp = item['dateTime'];
-                          return NotificationModel(
-                              message: item["message"],
-                              subject: item["subject"],
-                              idFrom: item["idFrom"],
-                              idTo: item["idTo"],
-                              dateTime:
-                                  DateTime.parse(stamp.toDate().toString()),
-                              isOpen: item["isOpen"]);
-                        }).toList();
-                        Provider.of<NotificationsProvider>(ctx)
-                            .setNotifications(notificationList);
-                        //---------------------------------------------------------------------------
-                        return StreamBuilder<QuerySnapshot>(
-                            stream: usersData
-                                .doc(user.uid)
-                                .collection('payments')
-                                .snapshots(),
-                            builder: (ctx, paymentsSnapshot) {
-                              if (paymentsSnapshot.data == null) {
-                                return SplashScreen();
-                              }
-                              List<PaymentModel> paymentsList =
-                                  paymentsSnapshot.data!.docs.map((item) {
-                                Timestamp stamp = item['dateTime'];
-                                return PaymentModel(
-                                    amount:
-                                        double.parse(item["amount"].toString()),
-                                    dateTime: DateTime.parse(
-                                        stamp.toDate().toString()),
-                                    idClient: item["idClient"],
-                                    idCompany: item["idCompany"],
-                                    companyName: item["companyName"]);
-                              }).toList();
-                              Provider.of<CreditPaymentsProvider>(ctx)
-                                  .setPayments(paymentsList);
-                              //------------------------------------------------------------------------------
-                              return StreamBuilder<QuerySnapshot>(
-                                  stream: usersData
-                                      .doc(user.uid)
-                                      .collection('credit_transactions')
-                                      .snapshots(),
-                                  builder: (ctx, creditTransactionsSnapshot) {
-                                    if (creditTransactionsSnapshot.data ==
-                                        null) {
-                                      return SplashScreen();
-                                    }
-                                    List<CreditTransactionsModel>
-                                        creditTransactionsList =
-                                        creditTransactionsSnapshot.data!.docs
-                                            .map((item) {
-                                      Timestamp stamp = item['dateTime'];
-                                      return CreditTransactionsModel(
-                                          amount: double.parse(
-                                              item["amount"].toString()),
-                                          dateTime: DateTime.parse(
-                                              stamp.toDate().toString()),
-                                          reason: item['reason']);
-                                    }).toList();
-                                    Provider.of<CreditPaymentsProvider>(ctx)
-                                        .setCreditTransactions(
-                                            creditTransactionsList);
-                                    //------------------------------------------------------------------
-                                    if (role == 'client') {
-                                      return ClientNavigationScreen();
-                                    } else if (role == 'company') {
-                                      return StreamBuilder<QuerySnapshot>(
-                                          stream: usersData
-                                              .doc(user.uid)
-                                              .collection('categories')
-                                              .snapshots(),
-                                          builder: (ctx, categoriesSnapshot) {
-                                            if (categoriesSnapshot.data ==
-                                                null) {
-                                              return SplashScreen();
-                                            }
-                                            List<CategoriesModel> data =
-                                                categoriesSnapshot.data!.docs
-                                                    .map((item) {
-                                              return CategoriesModel(
-                                                  isRegular: item["isRegular"],
-                                                  isFragile: item["isFragile"],
-                                                  isLarge: item["isLarge"],
-                                                  isMedecine:
-                                                      item["isMedecine"],
-                                                  isFood: item["isFood"]);
-                                            }).toList();
+                  return StreamBuilder(
+                    stream:  usersData
+                            .doc(user.uid)
+                            .collection('address')
+                            .snapshots(),
+                    builder:(ctx, addressSnapshot){
+                         if (addressSnapshot.data == null) {
+                            return SplashScreen();
+                          }
+                        
 
-                                            print(data.first.isRegular
-                                                    .toString() +
-                                                " 1111");
-                                            print(data.first.isRegular
-                                                    .toString() +
-                                                " 22222");
-                                            Provider.of<CategoriesProvider>(ctx,
-                                                    listen: false)
-                                                .setCategories(
-                                                    isRegular:
-                                                        data.first.isRegular,
-                                                    isFragile:
-                                                        data.first.isFragile,
-                                                    isLarge: data.first.isLarge,
+
+
+
+
+
+                     return StreamBuilder<QuerySnapshot>(
+                        stream: usersData
+                            .doc(user.uid)
+                            .collection('notifications')
+                            .snapshots(),
+                        builder: (ctx, notificationsSnapshot) {
+                          if (notificationsSnapshot.data == null) {
+                            return SplashScreen();
+                          }
+                          List<NotificationModel> notificationList =
+                              notificationsSnapshot.data!.docs.map((item) {
+                            Timestamp stamp = item['dateTime'];
+                            return NotificationModel(
+                                message: item["message"],
+                                subject: item["subject"],
+                                idFrom: item["idFrom"],
+                                idTo: item["idTo"],
+                                dateTime:
+                                    DateTime.parse(stamp.toDate().toString()),
+                                isOpen: item["isOpen"]);
+                          }).toList();
+                          Provider.of<NotificationsProvider>(ctx)
+                              .setNotifications(notificationList);
+                          //---------------------------------------------------------------------------
+                          return StreamBuilder<QuerySnapshot>(
+                              stream: usersData
+                                  .doc(user.uid)
+                                  .collection('payments')
+                                  .snapshots(),
+                              builder: (ctx, paymentsSnapshot) {
+                                if (paymentsSnapshot.data == null) {
+                                  return SplashScreen();
+                                }
+                                List<PaymentModel> paymentsList =
+                                    paymentsSnapshot.data!.docs.map((item) {
+                                  Timestamp stamp = item['dateTime'];
+                                  return PaymentModel(
+                                      amount:
+                                          double.parse(item["amount"].toString()),
+                                      dateTime: DateTime.parse(
+                                          stamp.toDate().toString()),
+                                      idClient: item["idClient"],
+                                      idCompany: item["idCompany"],
+                                      companyName: item["companyName"]);
+                                }).toList();
+                                Provider.of<CreditPaymentsProvider>(ctx)
+                                    .setPayments(paymentsList);
+                                //------------------------------------------------------------------------------
+                                return StreamBuilder<QuerySnapshot>(
+                                    stream: usersData
+                                        .doc(user.uid)
+                                        .collection('credit_transactions')
+                                        .snapshots(),
+                                    builder: (ctx, creditTransactionsSnapshot) {
+                                      if (creditTransactionsSnapshot.data ==
+                                          null) {
+                                        return SplashScreen();
+                                      }
+                                      List<CreditTransactionsModel>
+                                          creditTransactionsList =
+                                          creditTransactionsSnapshot.data!.docs
+                                              .map((item) {
+                                        Timestamp stamp = item['dateTime'];
+                                        return CreditTransactionsModel(
+                                            amount: double.parse(
+                                                item["amount"].toString()),
+                                            dateTime: DateTime.parse(
+                                                stamp.toDate().toString()),
+                                            reason: item['reason']);
+                                      }).toList();
+                                      Provider.of<CreditPaymentsProvider>(ctx)
+                                          .setCreditTransactions(
+                                              creditTransactionsList);
+                                      //------------------------------------------------------------------
+                                      if (role == 'client') {
+                                        return ClientNavigationScreen();
+                                      } else if (role == 'company') {
+                                        return StreamBuilder<QuerySnapshot>(
+                                            stream: usersData
+                                                .doc(user.uid)
+                                                .collection('categories')
+                                                .snapshots(),
+                                            builder: (ctx, categoriesSnapshot) {
+                                              if (categoriesSnapshot.data ==
+                                                  null) {
+                                                return SplashScreen();
+                                              }
+                                              List<CategoriesModel> data =
+                                                  categoriesSnapshot.data!.docs
+                                                      .map((item) {
+                                                return CategoriesModel(
+                                                    isRegular: item["isRegular"],
+                                                    isFragile: item["isFragile"],
+                                                    isLarge: item["isLarge"],
                                                     isMedecine:
-                                                        data.first.isMedecine,
-                                                    isFood: data.first.isFood);
-
-                                            return CompanyNavigationScreen();
-                                          });
-                                    } else
-                                      return Container();
-                                  });
-                            });
-                      });
+                                                        item["isMedecine"],
+                                                    isFood: item["isFood"]);
+                                              }).toList();
+                  
+                                              print(data.first.isRegular
+                                                      .toString() +
+                                                  " 1111");
+                                              print(data.first.isRegular
+                                                      .toString() +
+                                                  " 22222");
+                                              Provider.of<CategoriesProvider>(ctx,
+                                                      listen: false)
+                                                  .setCategories(
+                                                      isRegular:
+                                                          data.first.isRegular,
+                                                      isFragile:
+                                                          data.first.isFragile,
+                                                      isLarge: data.first.isLarge,
+                                                      isMedecine:
+                                                          data.first.isMedecine,
+                                                      isFood: data.first.isFood);
+                  
+                                              return CompanyNavigationScreen();
+                                            });
+                                      } else
+                                        return Container();
+                                    });
+                              });
+                }); 
+                });
                 });
           } else {
             return AuthScreen();
