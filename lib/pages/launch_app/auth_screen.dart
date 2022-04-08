@@ -91,19 +91,19 @@ class _AuthScreenState extends State<AuthScreen> {
         });
 
         // creating Address Collection 
-         await FirebaseFirestore.instance
-            .collection('users/$theUser/address')
-            .doc(randomId)
-            .set({
-          'id': randomId,
-          'message': 'Hello ' + firstName + '! Welcome to AirCamel',
-          'subject': 'welcome',
-          'idFrom': 'Admin',
-          'idTo': theUser,
-          'dateTime': DateTime.now(),
-          'isOpen': false
+        //  await FirebaseFirestore.instance
+        //     .collection('users/$theUser/address')
+        //     .doc(randomId)
+        //     .set({
+        //   'id': randomId,
+        //   'idAccount': 'Hello ' + firstName + '! Welcome to AirCamel',
+        //   'city': 'welcome',
+        //   'street': 'Admin',
+        //   'building': theUser,
+        //   'floor': DateTime.now(),
+        //   'apt': false
 
-        });
+        // });
 
         // Creating Notifications Collection with welcome notifiation
 
@@ -119,7 +119,7 @@ class _AuthScreenState extends State<AuthScreen> {
           'dateTime': DateTime.now(),
           'isOpen': false
         });
-        // Creating Categories Collection with welcome notifiation
+        // Creating Categories Collection 
 
         await FirebaseFirestore.instance
             .collection('users/$theUser/categories')
