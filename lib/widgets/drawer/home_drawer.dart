@@ -2,7 +2,6 @@ import 'package:air_camel/constants.dart';
 import 'package:air_camel/models/account.dart';
 import 'package:air_camel/models/drawer/drawer_list.dart';
 import 'package:air_camel/resources/app_theme.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -34,50 +33,45 @@ class _HomeDrawerState extends State<HomeDrawer> {
 
   void setDrawerListArray() {
     drawerList = <DrawerList>[
+    
       DrawerList(
         index: DrawerIndex.Credit,
         labelName: 'Credit & Payments',
-        icon: Icon(Icons.credit_card_rounded),
+        icon: const Icon(Icons.credit_card_rounded),
       ),
       DrawerList(
         index: DrawerIndex.Offers,
         labelName: 'Offers',
-        icon: Icon(Icons.wallet_giftcard),
+        icon: const Icon(Icons.wallet_giftcard),
       ),
       DrawerList(
         index: DrawerIndex.Invite,
         labelName: 'Invite Friend',
-        icon: Icon(Icons.group),
+        icon: const Icon(Icons.group),
       ),
       DrawerList(
         index: DrawerIndex.Help,
         labelName: 'Help',
-        icon: Icon(Icons.help),
+        icon: const Icon(Icons.help),
       ),
       DrawerList(
         index: DrawerIndex.About,
         labelName: 'About Us',
-        icon: Icon(Icons.info),
+        icon: const Icon(Icons.info),
       ),
     ];
   }
 
   @override
   Widget build(BuildContext context) {
-    // Receiving the arguments
-    final accountID = ModalRoute.of(context)!.settings.arguments as String;
-    print(accountID);
 
-    // LISTENER
-    //AccountProvider account = Provider.of<AccountsProvider>(context, listen: false).findById(accountID);
-
-    //print(account);
 
     Account? account = Provider.of<AccountsProvider>(context).account;
 
     String firstName = account!.firstName;
     String lastName = account.lastName;
     String image = account.image;
+    String role = account.role;
 
     return Scaffold(
       backgroundColor: AppTheme.notWhite.withOpacity(0.5),
@@ -111,12 +105,12 @@ class _HomeDrawerState extends State<HomeDrawer> {
                           child: Container(
                             height: MediaQuery.of(context).size.width * 0.3,
                             width: MediaQuery.of(context).size.height * 0.16,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               shape: BoxShape.circle,
                               boxShadow: <BoxShadow>[
                                 BoxShadow(
                                     color: Colors.transparent,
-                                    offset: const Offset(2.0, 4.0),
+                                    offset: Offset(2.0, 4.0),
                                     blurRadius: 8),
                               ],
                             ),
@@ -177,7 +171,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                   style: defaultFont1,
                   textAlign: TextAlign.left,
                 ),
-                trailing: Icon(
+                trailing: const Icon(
                   Icons.power_settings_new,
                   color: Colors.red,
                 ),

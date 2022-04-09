@@ -4,6 +4,7 @@
 import 'dart:io';
 import 'package:air_camel/main_controller.dart';
 import 'package:air_camel/pages/company/new_offer_screen.dart';
+import 'package:air_camel/providers/address_provider.dart';
 import 'package:air_camel/providers/categories_provider.dart';
 import 'package:air_camel/providers/companies_provider.dart';
 import 'package:air_camel/providers/credit_payments_provider.dart';
@@ -56,7 +57,8 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (ctx) => NotificationsProvider()),
           ChangeNotifierProvider(create: (ctx) => CreditPaymentsProvider()),
           ChangeNotifierProvider(create: (ctx) => CategoriesProvider()),
-          ChangeNotifierProvider(create: (ctx) => CompaniesProvider())
+          ChangeNotifierProvider(create: (ctx) => CompaniesProvider()),
+          ChangeNotifierProvider(create: (ctx) => AddressProvider())
         ],
         child: MaterialApp(
           title: 'AirCamel',

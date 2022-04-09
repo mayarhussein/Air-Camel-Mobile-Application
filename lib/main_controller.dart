@@ -83,7 +83,7 @@ class MainController extends StatelessWidget {
                         }).toList();
                         Provider.of<AddressProvider>(ctx)
                             .setAddress(addressList);
-
+  //---------------------------------------------------------------------
                         return StreamBuilder<QuerySnapshot>(
                             stream: usersData
                                 .doc(user.uid)
@@ -179,18 +179,13 @@ class MainController extends StatelessWidget {
                                                             .toString() ==
                                                         "company") {
                                                       return Account(
-                                                          firstName:
-                                                              item["firstName"],
-                                                          lastName:
-                                                              item["lastName"],
+                                                        firstName: item["firstName"],
+                                                          lastName: item["lastName"],
                                                           email: item["email"],
-                                                          password:
-                                                              item["password"],
-                                                          phoneNumber: item[
-                                                              "phoneNumber"],
+                                                          password: item["password"],
+                                                          phoneNumber: item["phoneNumber"],
                                                           role: item["role"],
-                                                          image: item[
-                                                              "image_url"]);
+                                                          image: item["image_url"]);
                                                     }
                                                   }).toList();
                                                   list = list

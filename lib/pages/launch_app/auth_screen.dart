@@ -25,6 +25,11 @@ class _AuthScreenState extends State<AuthScreen> {
       String firstName,
       String lastName,
       String phoneNumber,
+      String city,
+      String street,
+      String building,
+      String floor,
+      String apt,
       Role? role,
       File image,
       bool isLogin,
@@ -90,20 +95,21 @@ class _AuthScreenState extends State<AuthScreen> {
           'image_url': image_url
         });
 
-        // creating Address Collection 
-        //  await FirebaseFirestore.instance
-        //     .collection('users/$theUser/address')
-        //     .doc(randomId)
-        //     .set({
-        //   'id': randomId,
-        //   'idAccount': 'Hello ' + firstName + '! Welcome to AirCamel',
-        //   'city': 'welcome',
-        //   'street': 'Admin',
-        //   'building': theUser,
-        //   'floor': DateTime.now(),
-        //   'apt': false
+        //creating Address Collection 
 
-        // });
+         await FirebaseFirestore.instance
+            .collection('users/$theUser/address')
+            .doc(randomId)
+            .set({
+          'id': randomId,
+          'idAccount': theUser,
+          'city': city,
+          'street': street,
+          'building': building,
+          'floor': floor,
+          'apt': apt
+
+        });
 
         // Creating Notifications Collection with welcome notifiation
 

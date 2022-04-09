@@ -8,7 +8,7 @@ class AddressProvider with ChangeNotifier {
     _addressList = List.from(list);
   }
 
-List<AddressModel> get addressList{
+List<AddressModel> get address{
   return [...?_addressList];
 
 }

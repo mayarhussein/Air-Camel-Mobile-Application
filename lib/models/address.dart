@@ -1,6 +1,6 @@
 class AddressModel {
-  String? id;
-  int idAccount;
+  String id;
+  String idAccount;
   String city;
   String street;
   String building;
@@ -8,12 +8,14 @@ class AddressModel {
   String apt;
 
   AddressModel({
-    this.id,
+    required this.id,
     required this.idAccount,
     required this.city,
-    required this.apt,
-    required this.floor,
     required this.street,
     required this.building,
+    required this.floor,
+    required this.apt,
+
+    
   });
 }

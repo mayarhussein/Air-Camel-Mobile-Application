@@ -1,12 +1,14 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:air_camel/models/account.dart';
+import 'package:air_camel/models/address.dart';
 import 'package:air_camel/pages/client/bottom_bar_screens/account/edit_email.dart';
 
 import 'package:air_camel/pages/client/bottom_bar_screens/account/edit_name.dart';
 import 'package:air_camel/pages/client/bottom_bar_screens/account/edit_password.dart';
 import 'package:air_camel/pages/client/bottom_bar_screens/account/edit_phone.dart';
 import 'package:air_camel/providers/accounts_provider.dart';
+import 'package:air_camel/providers/address_provider.dart';
 import 'package:air_camel/widgets/display_image_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -26,12 +28,15 @@ class EditProfileScreen extends StatefulWidget {
 class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   Widget build(BuildContext context) {
-    Account? account = Provider.of<AccountsProvider>(context).account;
+    Account? account = Provider.of<AccountsProvider>(context, listen: false).account;
 
     String firstName = account!.firstName;
     String lastName = account.lastName;
     String email = account.email;
     String phoneNumber = account.phoneNumber;
+    
+
+
     String image = account.image;
     String formattedPhoneNumber = "(+" +
         phoneNumber.substring(0, 2) +
@@ -39,7 +44,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         phoneNumber.substring(2, 7) +
         "-" +
         phoneNumber.substring(7, phoneNumber.length);
- 
 
     return Scaffold(
       appBar: AppBar(
@@ -72,11 +76,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             imagePath: image,
             onPressed: _pickImage,
           )),
-          buildUserInfoDisplay(firstName + ' ' + lastName, ' Name', EditNameScreen()),
-          buildUserInfoDisplay(email, 'Email',  EditEmailScreen()),
+          buildUserInfoDisplay(
+              firstName + ' ' + lastName, ' Name', EditNameScreen()),
+          buildUserInfoDisplay(email, 'Email', EditEmailScreen()),
           buildUserInfoDisplay('', 'Password', EditPasswordScreen()),
           buildUserInfoDisplay(formattedPhoneNumber, 'Phone Number', EditPhoneScreen()),
-
         ],
       ),
     );
