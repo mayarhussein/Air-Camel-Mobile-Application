@@ -2,7 +2,13 @@ import 'package:air_camel/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:string_validator/string_validator.dart';
+import 'package:uuid/uuid.dart';
+
+import '../../../../models/address.dart';
+import '../../../../providers/address_provider.dart';
+import '../../../launch_app/splash_screen.dart';
 
 class AddressBook extends StatefulWidget {
   @override
@@ -30,42 +36,80 @@ class _AddressBookState extends State<AddressBook> {
     FocusScope.of(context).unfocus();
 
     final user = FirebaseAuth.instance.currentUser!;
-    final userData = FirebaseFirestore.instance.collection('users');
-  }
+    final addressData = FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .collection('address');
+    var randomId = const Uuid().v4();
 
-  //   await userData.doc(user.uid).update({
-  //     'firstName': firstName,
-  //     'lastName': lastName,
-  //   }).then((value) {
-  //     print("User Updated");
-  //     Provider.of<AccountsProvider>(context, listen: false)
-  //         .editName(firstName, lastName);
-  //     Navigator.pop(context);
-  //   }).catchError((error) => print("Failed to update user: $error"));
-  // }
+    await addressData.doc(randomId).set({
+      'id': randomId,
+      'idAccount': user.uid,
+      'dateTime': DateTime.now(),
+      'city': city,
+      'street': street,
+      'building': building,
+      'floor': floor,
+      'apt': apt,
+      'description': other
+    }).then((value) {
+      Navigator.pop(context);
+      print("success");
+    }).catchError((error) => print("Failed to add address: $error"));
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          "Address Book",
-          style: headFont1,
-        ),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        backgroundColor: bgColor,
-        elevation: 0,
-        shadowColor: Colors.white,
-        actions: [IconButton(onPressed: showMenu, icon: Icon(Icons.add))],
-      ),
-      body: Container(),
-    );
+    final user = FirebaseAuth.instance.currentUser!;
+    CollectionReference addressData = FirebaseFirestore.instance.collection('users').doc(user.uid).collection('address');
+    return ChangeNotifierProvider(
+        create: (_) => AddressProvider(),
+        child: StreamBuilder<QuerySnapshot>(
+            stream: addressData.snapshots(),
+            builder: (ctx, addressSanpshot) {
+              if (addressSanpshot.data == null) {
+                return SplashScreen();
+              }
+              List<AddressModel> addressList =
+                  addressSanpshot.data!.docs.map((item) {
+                Timestamp stamp = item['dateTime'];
+                return AddressModel(
+                    id: item['id'],
+                    idAccount: item['idAccount'],
+                    dateTime: DateTime.parse(stamp.toDate().toString()),
+                    city: item['city'],
+                    street: item['street'],
+                    building: item['building'],
+                    floor:item['floor'],
+                    apt:item['apt'],
+                    other:item['description']);
+              }).toList();
+              Provider.of<AddressProvider>(ctx).setAddress(addressList);
+              final addressData = Provider.of<AddressProvider>(ctx);
+
+              return Scaffold(
+                appBar: AppBar(
+                  centerTitle: true,
+                  title: Text(
+                    "Address Book",
+                    style: headFont1,
+                  ),
+                  leading: IconButton(
+                    icon: const Icon(Icons.arrow_back_ios_new),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  backgroundColor: bgColor,
+                  elevation: 0,
+                  shadowColor: Colors.white,
+                  actions: [
+                    IconButton(onPressed: showMenu, icon: const Icon(Icons.add))
+                  ],
+                ),
+                body: Container(),
+              );
+            }));
   }
 
   showMenu() {
@@ -88,130 +132,157 @@ class _AddressBookState extends State<AddressBook> {
                         style: headFont1,
                       ),
                     ),
-                    Form(
-                        key: _formKey,
-                        child:
-                            Column(mainAxisSize: MainAxisSize.min, children: <
-                                Widget>[
-                          TextFormField(
-                            key: const ValueKey('City'),
-                            decoration:
-                                const InputDecoration(labelText: "City *"),
-                            focusNode: _cityFocusNode,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter city';
-                              } else if (!isAlpha(value)) {
-                                return 'Only Letters Please';
-                              }
-                              return null;
-                            },
-                            controller: cityController,
-                            onFieldSubmitted: (_) {
-                              FocusScope.of(context)
-                                  .requestFocus(_streetFocusNode);
-                            },
-                          ),
-                          TextFormField(
-                            key: const ValueKey('Street'),
-                            decoration:
-                                const InputDecoration(labelText: "Street *"),
-                            focusNode: _streetFocusNode,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter street';
-                              }
-                              return null;
-                            },
-                            controller: streetController,
-                            onFieldSubmitted: (_) {
-                              FocusScope.of(context)
-                                  .requestFocus(_buildingFocusNode);
-                            },
-                          ),
-                          TextFormField(
-                            key: const ValueKey('Building'),
-                            decoration:
-                                const InputDecoration(labelText: "Building *"),
-                            focusNode: _buildingFocusNode,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter building';
-                              }
-                              return null;
-                            },
-                            controller: buildingController,
-                            onFieldSubmitted: (_) {
-                              FocusScope.of(context)
-                                  .requestFocus(_floorFocusNode);
-                            },
-                          ),
-                          Row(children: <Widget>[
-                            SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.45,
-                                child: TextFormField(
-                                  key: const ValueKey('Floor'),
-                                  decoration:
-                                      const InputDecoration(labelText: "Floor"),
-                                  focusNode: _floorFocusNode,
-                                  controller: floorController,
-                                  onFieldSubmitted: (_) {
-                                    FocusScope.of(context)
-                                        .requestFocus(_aptFocusNode);
-                                  },
-                                )),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.45,
-                              child: TextFormField(
-                                key: const ValueKey('Apartment'),
-                                decoration: const InputDecoration(
-                                    labelText: "Apartment"),
-                                focusNode: _aptFocusNode,
-                                controller: aptController,
-                                onFieldSubmitted: (_) {
-                                  FocusScope.of(context)
-                                      .requestFocus(_otherFocusNode);
-                                },
-                              ),
-                            )
-                          ]),
-                          TextFormField(
-                            keyboardType: TextInputType.multiline,
-                            minLines: 2,
-                            maxLines: 3,
-                            key: const ValueKey('Other'),
-                            decoration: const InputDecoration(
-                                labelText: "Add any additional description"),
-                            focusNode: _otherFocusNode,
-                            controller: otherController,
-                            onFieldSubmitted: (_) {
-                              AddAddress(
-                                  cityController.text,
-                                  streetController.text,
-                                  buildingController.text,
-                                  floorController.text,
-                                  aptController.text,
-                                  otherController.text);
-                            },
-                          ),
-                          Container(
-                            height: MediaQuery.of(context).size.height * 0.15,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Text(
-                                  "Fields marked as * are REQUIRED",
-                                  style: hintFont,
-                                ),
-                                Center(
-                                  child: ElevatedButton(
-                                      onPressed: () {},
-                                      child: const Text("Add Address")),
-                                ),
-                              ],
-                            ),
-                          )
-                        ])),
+                    SingleChildScrollView(
+                      child: Card(
+                        child: SingleChildScrollView(
+                          child: Form(
+                              key: _formKey,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  TextFormField(
+                                    key: const ValueKey('City'),
+                                    decoration: const InputDecoration(
+                                        labelText: "City *"),
+                                    focusNode: _cityFocusNode,
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter city';
+                                      } else if (!isAlpha(value)) {
+                                        return 'Only Letters Please';
+                                      }
+                                      return null;
+                                    },
+                                    controller: cityController,
+                                    onFieldSubmitted: (_) {
+                                      FocusScope.of(context)
+                                          .requestFocus(_streetFocusNode);
+                                    },
+                                  ),
+                                  TextFormField(
+                                    key: const ValueKey('Street'),
+                                    decoration: const InputDecoration(
+                                        labelText: "Street *"),
+                                    focusNode: _streetFocusNode,
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter street';
+                                      }
+                                      return null;
+                                    },
+                                    controller: streetController,
+                                    onFieldSubmitted: (_) {
+                                      FocusScope.of(context)
+                                          .requestFocus(_buildingFocusNode);
+                                    },
+                                  ),
+                                  TextFormField(
+                                    key: const ValueKey('Building'),
+                                    decoration: const InputDecoration(
+                                        labelText: "Building *"),
+                                    focusNode: _buildingFocusNode,
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter building';
+                                      }
+                                      return null;
+                                    },
+                                    controller: buildingController,
+                                    onFieldSubmitted: (_) {
+                                      FocusScope.of(context)
+                                          .requestFocus(_floorFocusNode);
+                                    },
+                                  ),
+                                  Row(children: <Widget>[
+                                    SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.45,
+                                        child: TextFormField(
+                                          key: const ValueKey('Floor'),
+                                          decoration: const InputDecoration(
+                                              labelText: "Floor"),
+                                          focusNode: _floorFocusNode,
+                                          controller: floorController,
+                                          onFieldSubmitted: (_) {
+                                            FocusScope.of(context)
+                                                .requestFocus(_aptFocusNode);
+                                          },
+                                        )),
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.45,
+                                      child: TextFormField(
+                                        key: const ValueKey('Apartment'),
+                                        decoration: const InputDecoration(
+                                            labelText: "Apartment"),
+                                        focusNode: _aptFocusNode,
+                                        controller: aptController,
+                                        onFieldSubmitted: (_) {
+                                          FocusScope.of(context)
+                                              .requestFocus(_otherFocusNode);
+                                        },
+                                      ),
+                                    )
+                                  ]),
+                                  TextFormField(
+                                    keyboardType: TextInputType.multiline,
+                                    key: const ValueKey('Other'),
+                                    decoration: const InputDecoration(
+                                        labelText:
+                                            "Add any additional description"),
+                                    focusNode: _otherFocusNode,
+                                    controller: otherController,
+                                    onFieldSubmitted: (_) {
+                                      if (_formKey.currentState!.validate()) {
+                                        AddAddress(
+                                            cityController.text.trim(),
+                                            streetController.text.trim(),
+                                            buildingController.text.trim(),
+                                            floorController.text.trim(),
+                                            aptController.text.trim(),
+                                            otherController.text.trim());
+                                      }
+                                    },
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text("Fields marked as * are REQUIRED",
+                                      style: hintFont),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Center(
+                                    child: ElevatedButton(
+                                        child: const Text('Add Address',
+                                            style:
+                                                TextStyle(color: Colors.white)),
+                                        onPressed: () {
+                                          AddAddress(
+                                              cityController.text.trim(),
+                                              streetController.text.trim(),
+                                              buildingController.text.trim(),
+                                              floorController.text.trim(),
+                                              aptController.text.trim(),
+                                              otherController.text.trim());
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                            side: const BorderSide(
+                                                width: 3, color: Colors.amber),
+                                            elevation: 3,
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(50)),
+                                            padding: const EdgeInsets.all(
+                                                20) //content padding inside button
+                                            )),
+                                  )
+                                ],
+                              )),
+                        ),
+                      ),
+                    ),
                   ],
                 )),
           );

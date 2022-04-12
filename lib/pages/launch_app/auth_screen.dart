@@ -117,6 +117,12 @@ class _AuthScreenState extends State<AuthScreen> {
           'isMedecine': false,
           'isFood': false
         });
+ 
+  
+
+
+
+
       }
     } on PlatformException catch (error) {
       var errorMessage = 'Authentication failed';

@@ -122,8 +122,8 @@ class EditNameScreenState extends State<EditNameScreen> {
                             if (_formKey.currentState!.validate() &&
                                 isAlpha(firstNameController.text.trim()) &&
                                 isAlpha(lastNameController.text.trim())) {
-                              updateUserValue(firstNameController.text,
-                                  lastNameController.text);
+                              updateUserValue(firstNameController.text.trim(),
+                                  lastNameController.text.trim());
                             }
                           },
                           style: ElevatedButton.styleFrom(
