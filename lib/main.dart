@@ -3,6 +3,7 @@
 
 import 'dart:io';
 import 'package:air_camel/main_controller.dart';
+import 'package:air_camel/pages/client/bottom_bar_screens/account/address_book_screen.dart';
 import 'package:air_camel/pages/company/new_offer_screen.dart';
 import 'package:air_camel/providers/address_provider.dart';
 import 'package:air_camel/providers/categories_provider.dart';
@@ -84,7 +85,8 @@ class MyApp extends StatelessWidget {
             ComplaintsScreen.routeName: (ctx) => ComplaintsScreen(),
             PayementsHistory.routeName: (ctx) => PayementsHistory(),
             EditProfileScreen.routeName: (ctx) => EditProfileScreen(),
-            NewOfferScreen.routeName: (ctx) => NewOfferScreen()
+            NewOfferScreen.routeName: (ctx) => NewOfferScreen(),
+            AddressBook.routeName: (ctx) => AddressBook()
           },
         ));
   }

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:air_camel/constants.dart';
 import 'package:air_camel/models/account.dart';
+import 'package:air_camel/pages/client/bottom_bar_screens/account/address_book_screen.dart';
 import 'package:air_camel/pages/client/bottom_bar_screens/account/edit_profile.dart';
 import 'package:air_camel/providers/accounts_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -98,24 +99,20 @@ class _AccountScreenState extends State<AccountScreen> {
                         clipBehavior: Clip.antiAliasWithSaveLayer,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10)),
-                        child: SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.2,
-                          width: double.infinity,
-                          child: Container(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Text(
-                                  "Edit Profile",
-                                  style: headFontBig1,
-                                ),
-                                const Image(
-                                  image: AssetImage("assets/images/profile.png"),
-                                  fit: BoxFit.scaleDown,
-                                ),
-                              ],
-                            ),
+                        child: Container(
+                          // padding: const EdgeInsets.all(4.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Text(
+                                "Edit Profile",
+                                style: headFontBig1,
+                              ),
+                              const Image(
+                                image: AssetImage("assets/images/profile.png"),
+                                fit: BoxFit.scaleDown,
+                              ),
+                            ],
                           ),
                         ),
                       ),
@@ -126,6 +123,8 @@ class _AccountScreenState extends State<AccountScreen> {
                     children: [
                       Expanded(
                         child: InkWell(
+                          onTap: () => Navigator.of(context)
+                              .pushNamed(AddressBook.routeName),
                           child: Card(
                             elevation: 5,
                             clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -141,12 +140,12 @@ class _AccountScreenState extends State<AccountScreen> {
                                       MainAxisAlignment.spaceAround,
                                   children: [
                                     Text(
-                                      "History",
+                                      "Address",
                                       style: headFontBig1,
                                     ),
                                     const Image(
-                                      image:
-                                          AssetImage("assets/images/history.png"),
+                                      image: AssetImage(
+                                          "assets/images/history.png"),
                                     ),
                                   ],
                                 ),

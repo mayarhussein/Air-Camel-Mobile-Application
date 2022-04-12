@@ -1,5 +1,4 @@
 import 'package:air_camel/models/account.dart';
-import 'package:air_camel/models/address.dart';
 import 'package:air_camel/models/categories.dart';
 import 'package:air_camel/models/drawer/credit_transactions.dart';
 import 'package:air_camel/models/drawer/payments.dart';
@@ -18,7 +17,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'providers/address_provider.dart';
 import 'providers/categories_provider.dart';
 
 class MainController extends StatelessWidget {
@@ -29,6 +27,7 @@ class MainController extends StatelessWidget {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (_, userSanpshot) {
           if (userSanpshot.hasData) {
+            // if (false) {
             final user = FirebaseAuth.instance.currentUser;
             CollectionReference usersData =
                 FirebaseFirestore.instance.collection('users');
@@ -40,7 +39,7 @@ class MainController extends StatelessWidget {
                     return SplashScreen();
                   }
                   Map<String, dynamic> data =
-                      usersSnapshot.data!.data() as Map<String, dynamic>;
+                      usersSnapshot.data?.data() as Map<String, dynamic>;
                   if (data == null) {
                     return SplashScreen();
                   }
@@ -58,196 +57,156 @@ class MainController extends StatelessWidget {
                           role: role);
 
                   //------------------------------------------------------------------------
+
                   return StreamBuilder<QuerySnapshot>(
                       stream: usersData
                           .doc(user.uid)
-                          .collection('address')
+                          .collection('notifications')
                           .snapshots(),
-                      builder: (ctx, addressSnapshot) {
-                        if (addressSnapshot.data == null) {
+                      builder: (ctx, notificationsSnapshot) {
+                        if (notificationsSnapshot.data == null) {
                           return SplashScreen();
                         }
-
-                        List<AddressModel> addressList =
-                            addressSnapshot.data!.docs.map((item) {
-                          return AddressModel(
-                            id: item["id"],
-                            idAccount: item["idAccount"],
-                            city: item["city"],
-                            street: item["street"],
-                            building: item['building'],
-                            floor: item['floor'],
-                            apt: item['apt']
-
-                          );
+                        List<NotificationModel> notificationList =
+                            notificationsSnapshot.data!.docs.map((item) {
+                          Timestamp stamp = item['dateTime'];
+                          return NotificationModel(
+                              id: item['id'],
+                              message: item["message"],
+                              subject: item["subject"],
+                              idFrom: item["idFrom"],
+                              idTo: item["idTo"],
+                              dateTime:
+                                  DateTime.parse(stamp.toDate().toString()),
+                              isOpen: item["isOpen"]);
                         }).toList();
-                        Provider.of<AddressProvider>(ctx)
-                            .setAddress(addressList);
-  //---------------------------------------------------------------------
+                        Provider.of<NotificationsProvider>(ctx)
+                            .setNotifications(notificationList);
+                        //---------------------------------------------------------------------------
                         return StreamBuilder<QuerySnapshot>(
                             stream: usersData
                                 .doc(user.uid)
-                                .collection('notifications')
+                                .collection('payments')
                                 .snapshots(),
-                            builder: (ctx, notificationsSnapshot) {
-                              if (notificationsSnapshot.data == null) {
+                            builder: (ctx, paymentsSnapshot) {
+                              if (paymentsSnapshot.data == null) {
                                 return SplashScreen();
                               }
-                              List<NotificationModel> notificationList =
-                                  notificationsSnapshot.data!.docs.map((item) {
+                              List<PaymentModel> paymentsList =
+                                  paymentsSnapshot.data!.docs.map((item) {
                                 Timestamp stamp = item['dateTime'];
-                                return NotificationModel(
-                                    id: item['id'],
-                                    message: item["message"],
-                                    subject: item["subject"],
-                                    idFrom: item["idFrom"],
-                                    idTo: item["idTo"],
+                                return PaymentModel(
+                                    amount:
+                                        double.parse(item["amount"].toString()),
                                     dateTime: DateTime.parse(
                                         stamp.toDate().toString()),
-                                    isOpen: item["isOpen"]);
+                                    idClient: item["idClient"],
+                                    idCompany: item["idCompany"],
+                                    companyName: item["companyName"]);
                               }).toList();
-                              Provider.of<NotificationsProvider>(ctx)
-                                  .setNotifications(notificationList);
-                              //---------------------------------------------------------------------------
+                              Provider.of<CreditPaymentsProvider>(ctx)
+                                  .setPayments(paymentsList);
+                              //------------------------------------------------------------------------------
                               return StreamBuilder<QuerySnapshot>(
                                   stream: usersData
                                       .doc(user.uid)
-                                      .collection('payments')
+                                      .collection('credit_transactions')
                                       .snapshots(),
-                                  builder: (ctx, paymentsSnapshot) {
-                                    if (paymentsSnapshot.data == null) {
+                                  builder: (ctx, creditTransactionsSnapshot) {
+                                    if (creditTransactionsSnapshot.data ==
+                                        null) {
                                       return SplashScreen();
                                     }
-                                    List<PaymentModel> paymentsList =
-                                        paymentsSnapshot.data!.docs.map((item) {
+                                    List<CreditTransactionsModel>
+                                        creditTransactionsList =
+                                        creditTransactionsSnapshot.data!.docs
+                                            .map((item) {
                                       Timestamp stamp = item['dateTime'];
-                                      return PaymentModel(
+                                      return CreditTransactionsModel(
                                           amount: double.parse(
                                               item["amount"].toString()),
                                           dateTime: DateTime.parse(
                                               stamp.toDate().toString()),
-                                          idClient: item["idClient"],
-                                          idCompany: item["idCompany"],
-                                          companyName: item["companyName"]);
+                                          reason: item['reason']);
                                     }).toList();
                                     Provider.of<CreditPaymentsProvider>(ctx)
-                                        .setPayments(paymentsList);
-                                    //------------------------------------------------------------------------------
-                                    return StreamBuilder<QuerySnapshot>(
-                                        stream: usersData
-                                            .doc(user.uid)
-                                            .collection('credit_transactions')
-                                            .snapshots(),
-                                        builder:
-                                            (ctx, creditTransactionsSnapshot) {
-                                          if (creditTransactionsSnapshot.data ==
-                                              null) {
-                                            return SplashScreen();
-                                          }
-                                          List<CreditTransactionsModel>
-                                              creditTransactionsList =
-                                              creditTransactionsSnapshot
-                                                  .data!.docs
-                                                  .map((item) {
-                                            Timestamp stamp = item['dateTime'];
-                                            return CreditTransactionsModel(
-                                                amount: double.parse(
-                                                    item["amount"].toString()),
-                                                dateTime: DateTime.parse(
-                                                    stamp.toDate().toString()),
-                                                reason: item['reason']);
-                                          }).toList();
-                                          Provider.of<CreditPaymentsProvider>(
-                                                  ctx)
-                                              .setCreditTransactions(
-                                                  creditTransactionsList);
-                                          //------------------------------------------------------------------
-                                          if (role == 'client') {
-                                            return StreamBuilder<QuerySnapshot>(
-                                                stream: usersData.snapshots(),
-                                                builder:
-                                                    (ctx, allUsersSnapshot) {
-                                                  if (allUsersSnapshot.data ==
-                                                      null) {
-                                                    return SplashScreen();
-                                                  }
-                                                  List<Account?> list =
-                                                      allUsersSnapshot
-                                                          .data!.docs
-                                                          .map((item) {
-                                                    if (item["role"]
-                                                            .toString() ==
-                                                        "company") {
-                                                      return Account(
-                                                        firstName: item["firstName"],
-                                                          lastName: item["lastName"],
-                                                          email: item["email"],
-                                                          password: item["password"],
-                                                          phoneNumber: item["phoneNumber"],
-                                                          role: item["role"],
-                                                          image: item["image_url"]);
-                                                    }
-                                                  }).toList();
-                                                  list = list
-                                                      .whereType<Account>()
-                                                      .toList();
-                                                  Provider.of<CompaniesProvider>(
-                                                          ctx,
-                                                          listen: false)
-                                                      .setCompanies(list
-                                                          as List<Account>);
-                                                  return ClientNavigationScreen();
-                                                });
-                                          } else if (role == 'company') {
-                                            return StreamBuilder<QuerySnapshot>(
-                                                stream: usersData
-                                                    .doc(user.uid)
-                                                    .collection('categories')
-                                                    .snapshots(),
-                                                builder:
-                                                    (ctx, categoriesSnapshot) {
-                                                  if (categoriesSnapshot.data ==
-                                                      null) {
-                                                    return SplashScreen();
-                                                  }
-                                                  List<CategoriesModel> data =
-                                                      categoriesSnapshot
-                                                          .data!.docs
-                                                          .map((item) {
-                                                    return CategoriesModel(
-                                                        id: item["id"],
-                                                        isRegular:
-                                                            item["isRegular"],
-                                                        isFragile:
-                                                            item["isFragile"],
-                                                        isLarge:
-                                                            item["isLarge"],
-                                                        isMedecine:
-                                                            item["isMedecine"],
-                                                        isFood: item["isFood"]);
-                                                  }).toList();
+                                        .setCreditTransactions(
+                                            creditTransactionsList);
+                                    //------------------------------------------------------------------
+                                    if (role == 'client') {
+                                      return StreamBuilder<QuerySnapshot>(
+                                          stream: usersData.snapshots(),
+                                          builder: (ctx, allUsersSnapshot) {
+                                            if (allUsersSnapshot.data == null) {
+                                              return SplashScreen();
+                                            }
+                                            List<Account?> list =
+                                                allUsersSnapshot.data!.docs
+                                                    .map((item) {
+                                              if (item["role"].toString() ==
+                                                  "company") {
+                                                return Account(
+                                                    firstName:
+                                                        item["firstName"],
+                                                    lastName: item["lastName"],
+                                                    email: item["email"],
+                                                    password: item["password"],
+                                                    phoneNumber:
+                                                        item["phoneNumber"],
+                                                    role: item["role"],
+                                                    image: item["image_url"]);
+                                              }
+                                            }).toList();
+                                            list = list
+                                                .whereType<Account>()
+                                                .toList();
+                                            Provider.of<CompaniesProvider>(ctx,
+                                                    listen: false)
+                                                .setCompanies(
+                                                    list as List<Account>);
+                                            return ClientNavigationScreen();
+                                          });
+                                    } else if (role == 'company') {
+                                      return StreamBuilder<QuerySnapshot>(
+                                          stream: usersData
+                                              .doc(user.uid)
+                                              .collection('categories')
+                                              .snapshots(),
+                                          builder: (ctx, categoriesSnapshot) {
+                                            if (categoriesSnapshot.data ==
+                                                null) {
+                                              return SplashScreen();
+                                            }
+                                            List<CategoriesModel> data =
+                                                categoriesSnapshot.data!.docs
+                                                    .map((item) {
+                                              return CategoriesModel(
+                                                  id: item["id"],
+                                                  isRegular: item["isRegular"],
+                                                  isFragile: item["isFragile"],
+                                                  isLarge: item["isLarge"],
+                                                  isMedecine:
+                                                      item["isMedecine"],
+                                                  isFood: item["isFood"]);
+                                            }).toList();
 
-                                                  Provider.of<CategoriesProvider>(
-                                                          ctx,
-                                                          listen: false)
-                                                      .setCategories(
-                                                          id: data.first.id,
-                                                          isRegular: data
-                                                              .first.isRegular,
-                                                          isFragile: data
-                                                              .first.isFragile,
-                                                          isLarge: data
-                                                              .first.isLarge,
-                                                          isMedecine: data
-                                                              .first.isMedecine,
-                                                          isFood: data
-                                                              .first.isFood);
+                                            Provider.of<CategoriesProvider>(ctx,
+                                                    listen: false)
+                                                .setCategories(
+                                                    id: data.first.id,
+                                                    isRegular:
+                                                        data.first.isRegular,
+                                                    isFragile:
+                                                        data.first.isFragile,
+                                                    isLarge: data.first.isLarge,
+                                                    isMedecine:
+                                                        data.first.isMedecine,
+                                                    isFood: data.first.isFood);
 
-                                                  return CompanyNavigationScreen();
-                                                });
-                                          } else
-                                            return Container();
-                                        });
+                                            return CompanyNavigationScreen();
+                                          });
+                                    } else
+                                      return Container();
                                   });
                             });
                       });

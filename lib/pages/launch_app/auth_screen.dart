@@ -25,11 +25,6 @@ class _AuthScreenState extends State<AuthScreen> {
       String firstName,
       String lastName,
       String phoneNumber,
-      String city,
-      String street,
-      String building,
-      String floor,
-      String apt,
       Role? role,
       File image,
       bool isLogin,
@@ -95,22 +90,6 @@ class _AuthScreenState extends State<AuthScreen> {
           'image_url': image_url
         });
 
-        //creating Address Collection 
-
-         await FirebaseFirestore.instance
-            .collection('users/$theUser/address')
-            .doc(randomId)
-            .set({
-          'id': randomId,
-          'idAccount': theUser,
-          'city': city,
-          'street': street,
-          'building': building,
-          'floor': floor,
-          'apt': apt
-
-        });
-
         // Creating Notifications Collection with welcome notifiation
 
         await FirebaseFirestore.instance
@@ -125,7 +104,7 @@ class _AuthScreenState extends State<AuthScreen> {
           'dateTime': DateTime.now(),
           'isOpen': false
         });
-        // Creating Categories Collection 
+        // Creating Categories Collection
 
         await FirebaseFirestore.instance
             .collection('users/$theUser/categories')

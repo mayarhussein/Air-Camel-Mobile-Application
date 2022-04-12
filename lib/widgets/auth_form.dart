@@ -15,11 +15,6 @@ class AuthForm extends StatefulWidget {
       String firstName,
       String lastName,
       String phoneNumber,
-      String city,
-      String street,
-      String building,
-      String floor,
-      String apt,
       Role? role,
       File imageURL,
       bool isLogin,
@@ -45,11 +40,7 @@ class _AuthFormState extends State<AuthForm> {
   String _userLastName = '';
   String _userPhoneNumber = '';
   String _userPassword = '';
-  String _userCity = '';
-  String _userStreet = '';
-  String _userBuilding = '';
-  String _userFloor = '';
-  String _userApt = '';
+
   File? _userImageFile;
 
   final _firstNameFocusNode = FocusNode();
@@ -57,11 +48,6 @@ class _AuthFormState extends State<AuthForm> {
   final _phoneNumberFocusNode = FocusNode();
   final _emailFocusNode = FocusNode();
   final _passwordFocusNode = FocusNode();
-  final _cityFocusNode = FocusNode();
-  final _streetFocusNode = FocusNode();
-  final _buildingFocusNode = FocusNode();
-  final _floorFocusNode = FocusNode();
-  final _aptFocusNode = FocusNode();
 
   @override
   void dispose() {
@@ -69,11 +55,6 @@ class _AuthFormState extends State<AuthForm> {
     _lastNameFocusNode.dispose();
     _phoneNumberFocusNode.dispose();
     _passwordFocusNode.dispose();
-    _cityFocusNode.dispose();
-    _streetFocusNode.dispose();
-    _buildingFocusNode.dispose();
-    _floorFocusNode.dispose();
-
 
     super.dispose();
   }
@@ -105,11 +86,6 @@ class _AuthFormState extends State<AuthForm> {
           _userFirstName.trim(),
           _role == Role.client ? _userLastName.trim() : 'Company',
           _userPhoneNumber.trim(),
-          _userCity.trim(),
-          _userStreet.trim(),
-          _userBuilding.trim(),
-          _userFloor.trim(),
-          _userApt.trim(),
           _role,
           _userImageFile as File,
           _isLogin,
@@ -245,116 +221,13 @@ class _AuthFormState extends State<AuthForm> {
                           _trySubmit();
                         } else {
                           FocusScope.of(context)
-                              .requestFocus(_cityFocusNode);
+                              .requestFocus(_phoneNumberFocusNode);
                         }
                       },
                     ),
-                    if (!_isLogin)
-                      TextFormField(
-                        key: const ValueKey('city'),
-                        decoration: const InputDecoration(labelText: 'City'),
-                        focusNode: _cityFocusNode,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter a city';
-                          } else if (!isAlpha(value)) {
-                            return 'Only Letters Please';
-                          }
-                          return null;
-                        },
-                        onSaved: (value) {
-                          _userCity = value.toString();
-                        },
-                        onFieldSubmitted: (_) {
-                          FocusScope.of(context).requestFocus(_streetFocusNode);
-                        },
-                      ),
-                       if (!_isLogin)
-                      TextFormField(
-                        key: const ValueKey('street'),
-                        decoration: const InputDecoration(labelText: 'Street'),
-                        focusNode: _streetFocusNode,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter a street';
-                          } 
-                          return null;
-                        },
-                        onSaved: (value) {
-                          _userStreet = value.toString();
-                        },
-                        onFieldSubmitted: (_) {
-                          FocusScope.of(context).requestFocus(_buildingFocusNode);
-                        },
-                      ),
-                      Row(
-                        
-                        children: <Widget>[
-                            if (!_isLogin) 
-                       SizedBox(
-                          width: 150,
-                          child: TextFormField(
-                  
-                        key: const ValueKey('building'),
-                        decoration: const InputDecoration(labelText: 'Building'),
-                        focusNode: _buildingFocusNode,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter a building';
-                          } 
-                          return null;
-                        },
-                        onSaved: (value) {
-                          _userBuilding = value.toString();
-                        },
-                        onFieldSubmitted: (_) {
-                          FocusScope.of(context).requestFocus(_floorFocusNode);
-                        },
-                      )),
-                      if (!_isLogin)
-                         SizedBox(
-                          width: 150,
-                          child: TextFormField(
-                        key: const ValueKey('floor'),
-                        decoration: const InputDecoration(labelText: 'Floor'),
-                        focusNode: _floorFocusNode,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter a floor';
-                          } 
-                          return null;
-                        },
-                        onSaved: (value) {
-                          _userFloor = value.toString();
-                        },
-                        onFieldSubmitted: (_) {
-                          FocusScope.of(context).requestFocus(_aptFocusNode);
-                        },
-                      ),)
-                        ],
-                      ),
-                       
-                      if (!_isLogin)
-                      TextFormField(
-                        key: const ValueKey('apt'),
-                        decoration: const InputDecoration(labelText: 'Apt'),
-                        focusNode: _aptFocusNode,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter an apartment';
-                          } 
-                          return null;
-                        },
-                        onSaved: (value) {
-                          _userApt = value.toString();
-                        },
-                        onFieldSubmitted: (_) {
-                          FocusScope.of(context).requestFocus(_phoneNumberFocusNode);
-                        },
-                      ),
-
-
-
+                    Row(
+                      children: <Widget>[],
+                    ),
                     if (!_isLogin)
                       TextFormField(
                         key: const ValueKey('phoneNumber'),
