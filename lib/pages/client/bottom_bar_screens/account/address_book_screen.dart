@@ -2,15 +2,19 @@ import 'package:air_camel/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 import 'package:string_validator/string_validator.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../../models/address.dart';
 import '../../../../providers/address_provider.dart';
+import '../../../../widgets/address_item.dart';
 import '../../../launch_app/splash_screen.dart';
 
 class AddressBook extends StatefulWidget {
+  AddressBook({Key? key}) : super(key: key);
+
   @override
   State<AddressBook> createState() => _AddressBookState();
   static const routeName = '/address_book';
@@ -31,7 +35,7 @@ class _AddressBookState extends State<AddressBook> {
   final _aptFocusNode = FocusNode();
   final _otherFocusNode = FocusNode();
 
-  Future<void> AddAddress(String city, String street, String building,
+  Future<void> _AddAddress(String city, String street, String building,
       String floor, String apt, String other) async {
     FocusScope.of(context).unfocus();
 
@@ -58,10 +62,26 @@ class _AddressBookState extends State<AddressBook> {
     }).catchError((error) => print("Failed to add address: $error"));
   }
 
+  Future<void> _deleteAddress(String userId, String docId) async {
+    final addressData = FirebaseFirestore.instance
+        .collection('users')
+        .doc(userId)
+        .collection('address');
+
+    await addressData
+        .doc(docId)
+        .delete()
+        .then((value) => print("User Deleted"))
+        .catchError((error) => print("Failed to delete user: $error"));
+  }
+
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser!;
-    CollectionReference addressData = FirebaseFirestore.instance.collection('users').doc(user.uid).collection('address');
+    CollectionReference addressData = FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .collection('address');
     return ChangeNotifierProvider(
         create: (_) => AddressProvider(),
         child: StreamBuilder<QuerySnapshot>(
@@ -80,9 +100,9 @@ class _AddressBookState extends State<AddressBook> {
                     city: item['city'],
                     street: item['street'],
                     building: item['building'],
-                    floor:item['floor'],
-                    apt:item['apt'],
-                    other:item['description']);
+                    floor: item['floor'],
+                    apt: item['apt'],
+                    other: item['description']);
               }).toList();
               Provider.of<AddressProvider>(ctx).setAddress(addressList);
               final addressData = Provider.of<AddressProvider>(ctx);
@@ -107,7 +127,37 @@ class _AddressBookState extends State<AddressBook> {
                     IconButton(onPressed: showMenu, icon: const Icon(Icons.add))
                   ],
                 ),
-                body: Container(),
+                body: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: ListView.builder(
+                      itemCount: addressData.address.length,
+                      itemBuilder: (context, i) {
+                        return Slidable(
+                          child: AddressItem(
+                              showMenu,
+                              addressData.address[i].city,
+                              addressData.address[i].street,
+                              addressData.address[i].building,
+                              addressData.address[i].floor,
+                              addressData.address[i].apt),
+                          //key: const ValueKey(0),
+                          endActionPane: ActionPane(
+                              motion: const ScrollMotion(),
+                              children: [
+                                SlidableAction(
+                                  onPressed: (context) {
+                                    _deleteAddress(
+                                        user.uid, addressData.address[i].id);
+                                  },
+                                  backgroundColor: Colors.red,
+                                  foregroundColor: Colors.white,
+                                  icon: Icons.delete,
+                                  label: 'Delete',
+                                ),
+                              ]),
+                        );
+                      }),
+                ),
               );
             }));
   }
@@ -142,8 +192,7 @@ class _AddressBookState extends State<AddressBook> {
                                 children: <Widget>[
                                   TextFormField(
                                     key: const ValueKey('City'),
-                                    decoration: const InputDecoration(
-                                        labelText: "City *"),
+                                    decoration: const InputDecoration(labelText: "City *"),
                                     focusNode: _cityFocusNode,
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
@@ -235,7 +284,7 @@ class _AddressBookState extends State<AddressBook> {
                                     controller: otherController,
                                     onFieldSubmitted: (_) {
                                       if (_formKey.currentState!.validate()) {
-                                        AddAddress(
+                                        _AddAddress(
                                             cityController.text.trim(),
                                             streetController.text.trim(),
                                             buildingController.text.trim(),
@@ -259,7 +308,7 @@ class _AddressBookState extends State<AddressBook> {
                                             style:
                                                 TextStyle(color: Colors.white)),
                                         onPressed: () {
-                                          AddAddress(
+                                          _AddAddress(
                                               cityController.text.trim(),
                                               streetController.text.trim(),
                                               buildingController.text.trim(),
