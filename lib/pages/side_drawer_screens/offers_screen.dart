@@ -61,9 +61,9 @@ class OffersScreen extends StatelessWidget {
                     child: ListView.builder(
                       itemCount: offersData.offers.length,
                       itemBuilder: (context, index) {
-                    // final theCompany = Provider.of<CompaniesProvider>(ctx)
-                                             //   .companiesList.firstWhere(
-                                               // (company) => company.id == offersData.offers[index].idCompany);
+                     //final theCompany = Provider.of<CompaniesProvider>(ctx)
+                                             // .companiesList.firstWhere(
+                                              // (company) => company.id == offersData.offers[index].idCompany);
 
 
 
@@ -92,17 +92,12 @@ class OffersScreen extends StatelessWidget {
                                                   MainAxisAlignment.spaceEvenly,
                                               children: [
                                                 const Icon(Icons.card_giftcard),
-                                                Text(
-                                                  DateFormat.yMd().format(
-                                                      offersData.offers[index]
-                                                          .dateTime) + '\n\t\tthru\n' + 
-                                                          DateFormat.yMd().format(
-                                                      offersData.offers[index]
-                                                          .expireTime)
-                                                          ,
-                                                  style: GoogleFonts.righteous(
-                                                      fontSize: 14),
-                                                )
+                                                // Text(
+                                                //   )
+                                                //           ,
+                                                //   style: GoogleFonts.righteous(
+                                                //       fontSize: 14),
+                                                //)
                                               ],
                                             ),
                                           ),

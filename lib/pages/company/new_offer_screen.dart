@@ -23,7 +23,6 @@ class _NewOfferScreenState extends State<NewOfferScreen> {
   final descriptionController = TextEditingController();
 
   Future<void> _submit(String description) async {
-
     final user = FirebaseAuth.instance.currentUser!;
     final offersData = FirebaseFirestore.instance.collection('offers');
     var randomId = const Uuid().v4();
@@ -36,6 +35,11 @@ class _NewOfferScreenState extends State<NewOfferScreen> {
       'offerMsg': description
     }).then((value) {
       print("Success");
+      descriptionController.clear();
+      Scaffold.of(context).showSnackBar(SnackBar(
+        content: const Text('offer added'),
+        backgroundColor: Theme.of(context).errorColor,
+      ));
     }).catchError((error) => print("Failed : $error"));
   }
 
@@ -78,19 +82,20 @@ class _NewOfferScreenState extends State<NewOfferScreen> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: <Widget>[
                                   Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
                                     children: <Widget>[
-                                    ElevatedButton(
-                                    onPressed: () {
-                                      _selectDate(context);
-                                    },
-                                    child: const Text("Pick Expire Date"),
+                                      ElevatedButton(
+                                        onPressed: () {
+                                          _selectDate(context);
+                                        },
+                                        child: const Text("Pick Expire Date"),
+                                      ),
+                                      const Icon(Icons.date_range),
+                                      Text(
+                                          "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}"),
+                                    ],
                                   ),
-                                  const Icon(Icons.date_range),
-                                  Text("${selectedDate.day}/${selectedDate.month}/${selectedDate.year}"),
-                                  ],)
-                                  ,
-                                  
                                   TextFormField(
                                     key: const ValueKey('Description'),
                                     keyboardType: TextInputType.multiline,
@@ -104,9 +109,10 @@ class _NewOfferScreenState extends State<NewOfferScreen> {
                                       return null;
                                     },
                                     controller: descriptionController,
-                                    
                                     onFieldSubmitted: (_) {
-                                      _submit(descriptionController.text);
+                                      if (_formKey.currentState!.validate()) {
+                                        _submit(descriptionController.text);
+                                      }
                                     },
                                   ),
                                   const SizedBox(height: 20),
