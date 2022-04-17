@@ -20,6 +20,7 @@ class AddressBottomSheet {
     final _floorFocusNode = FocusNode();
     final _aptFocusNode = FocusNode();
     final _otherFocusNode = FocusNode();
+
     Future<void> _AddAddress(String city, String street, String building,
         String floor, String apt, String other) async {
       FocusScope.of(context).unfocus();
@@ -42,6 +43,13 @@ class AddressBottomSheet {
         'apt': apt,
         'description': other
       }).then((value) {
+        cityController.clear();
+        streetController.clear();
+        buildingController.clear();
+        floorController.clear();
+        aptController.clear();
+        otherController.clear();
+
         Navigator.pop(context);
         print("success");
       }).catchError((error) => print("Failed to add address: $error"));
