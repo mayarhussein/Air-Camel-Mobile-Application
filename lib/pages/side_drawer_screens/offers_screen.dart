@@ -8,13 +8,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+import '../../providers/companies_provider.dart';
+
 class OffersScreen extends StatelessWidget {
   static const routeName = '/offers';
 
   @override
   Widget build(BuildContext context) {
-    CollectionReference offersData =
-        FirebaseFirestore.instance.collection('offers');
+    CollectionReference offersData =FirebaseFirestore.instance.collection('offers');
     return ChangeNotifierProvider(
       create: (_) => OffersProvider(),
       child: StreamBuilder<QuerySnapshot>(
@@ -44,7 +45,7 @@ class OffersScreen extends StatelessWidget {
                   ),
                   centerTitle: true,
                   leading: IconButton(
-                    icon: Icon(Icons.arrow_back_ios_new),
+                    icon: const Icon(Icons.arrow_back_ios_new),
                     onPressed: () {
                       Navigator.pop(context);
                     },
@@ -56,10 +57,16 @@ class OffersScreen extends StatelessWidget {
                 body: Container(
                   decoration: BoxDecoration(color: bgColor),
                   child: Container(
-                    padding: EdgeInsets.all(20),
+                    padding:const EdgeInsets.all(20),
                     child: ListView.builder(
                       itemCount: offersData.offers.length,
                       itemBuilder: (context, index) {
+                    // final theCompany = Provider.of<CompaniesProvider>(ctx)
+                                             //   .companiesList.firstWhere(
+                                               // (company) => company.id == offersData.offers[index].idCompany);
+
+
+
                         return Column(
                           children: [
                             Container(
@@ -84,11 +91,15 @@ class OffersScreen extends StatelessWidget {
                                               mainAxisAlignment:
                                                   MainAxisAlignment.spaceEvenly,
                                               children: [
-                                                Icon(Icons.card_giftcard),
+                                                const Icon(Icons.card_giftcard),
                                                 Text(
                                                   DateFormat.yMd().format(
                                                       offersData.offers[index]
-                                                          .dateTime),
+                                                          .dateTime) + '\n\t\tthru\n' + 
+                                                          DateFormat.yMd().format(
+                                                      offersData.offers[index]
+                                                          .expireTime)
+                                                          ,
                                                   style: GoogleFonts.righteous(
                                                       fontSize: 14),
                                                 )
@@ -110,7 +121,15 @@ class OffersScreen extends StatelessWidget {
                                                       .offers[index].offerMsg,
                                                   style: GoogleFonts.fredokaOne(
                                                       fontSize: 15),
-                                                )
+                                                ),
+                                                const SizedBox(height: 20),
+                                                Text( DateFormat.yMd().format(
+                                                      offersData.offers[index]
+                                                          .dateTime) + ' thru ' + 
+                                                          DateFormat.yMd().format(
+                                                      offersData.offers[index]
+                                                          .expireTime))
+                                               
                                               ],
                                             ))
                                       ],

@@ -57,6 +57,13 @@ class _AddressBookState extends State<AddressBook> {
       'apt': apt,
       'description': other
     }).then((value) {
+      cityController.clear();
+      streetController.clear();
+      buildingController.clear();
+      floorController.clear();
+      aptController.clear();
+      otherController.clear();
+
       Navigator.pop(context);
       print("success");
     }).catchError((error) => print("Failed to add address: $error"));
@@ -192,7 +199,8 @@ class _AddressBookState extends State<AddressBook> {
                                 children: <Widget>[
                                   TextFormField(
                                     key: const ValueKey('City'),
-                                    decoration: const InputDecoration(labelText: "City *"),
+                                    decoration: const InputDecoration(
+                                        labelText: "City *"),
                                     focusNode: _cityFocusNode,
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {

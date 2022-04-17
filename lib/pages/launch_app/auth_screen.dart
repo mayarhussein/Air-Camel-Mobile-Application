@@ -104,9 +104,13 @@ class _AuthScreenState extends State<AuthScreen> {
           'dateTime': DateTime.now(),
           'isOpen': false
         });
+
+
         // Creating Categories Collection
 
-        await FirebaseFirestore.instance
+        if(role.toString().substring(5) =='company'){
+
+      await FirebaseFirestore.instance
             .collection('users/$theUser/categories')
             .doc(randomId)
             .set({
@@ -118,6 +122,11 @@ class _AuthScreenState extends State<AuthScreen> {
           'isFood': false
         });
  
+
+
+        }
+
+  
   
 
 
