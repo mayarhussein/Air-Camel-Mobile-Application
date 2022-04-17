@@ -21,9 +21,11 @@ class OffersScreen extends StatefulWidget {
 class _OffersScreenState extends State<OffersScreen> {
   @override
   Widget build(BuildContext context) {
-    CollectionReference offersData =FirebaseFirestore.instance.collection('offers');
+    CollectionReference offersData =
+        FirebaseFirestore.instance.collection('offers');
 
-    List<Account> companyList =Provider.of<CompaniesProvider>(context, listen: false).companiesList;
+    List<Account> companyList =
+        Provider.of<CompaniesProvider>(context, listen: false).companiesList;
 
     return ChangeNotifierProvider(
       create: (_) => OffersProvider(),
@@ -70,17 +72,12 @@ class _OffersScreenState extends State<OffersScreen> {
                     child: ListView.builder(
                       itemCount: offersData.offers.length,
                       itemBuilder: (context, index) {
-                        // print(offersData.offers[index].idCompany);
-                        // final theCompany =
-                        //     Provider.of<CompaniesProvider>(context)
-                        //         .companiesList;
-                        // print(theCompany[1].id);
-                        // final theCompany = companyList.where((item) =>
-                        //     item.id == offersData.offers[index].idCompany);
-                        // print(companyList.first.id);
-                        // print(companyList.first.firstName);
-                        // companyList.forEach(print);
+                        //final theCompany = companyList.firstWhere((item) =>
+                            //item.id == offersData.offers[index].idCompany);
 
+                        // print(companyList.first.id);
+                        // print(companyList.last.id);
+                        // print(theCompany);
 
                         return Column(
                           children: [
@@ -107,8 +104,8 @@ class _OffersScreenState extends State<OffersScreen> {
                                                   MainAxisAlignment.spaceEvenly,
                                               children: [
                                                 const Icon(Icons.card_giftcard),
-                                                Text(''
-                                                 ,
+                                                Text(
+                                                  '',
                                                   style: GoogleFonts.righteous(
                                                       fontSize: 14),
                                                 )

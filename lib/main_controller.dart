@@ -147,6 +147,7 @@ class MainController extends StatelessWidget {
                                               if (item["role"].toString() ==
                                                   "company") {
                                                 return Account(
+                                                   id: item['id'],
                                                     firstName:item["firstName"],
                                                     lastName: item["lastName"],
                                                     email: item["email"],
