@@ -55,6 +55,7 @@ class MainController extends StatelessWidget {
                           phoneNumber: data['phoneNumber'],
                           image: data['image_url'],
                           role: role);
+                          
 
                   //------------------------------------------------------------------------
 
@@ -146,13 +147,11 @@ class MainController extends StatelessWidget {
                                               if (item["role"].toString() ==
                                                   "company") {
                                                 return Account(
-                                                    firstName:
-                                                        item["firstName"],
+                                                    firstName:item["firstName"],
                                                     lastName: item["lastName"],
                                                     email: item["email"],
                                                     password: item["password"],
-                                                    phoneNumber:
-                                                        item["phoneNumber"],
+                                                    phoneNumber:item["phoneNumber"],
                                                     role: item["role"],
                                                     image: item["image_url"]);
                                               }
@@ -185,8 +184,7 @@ class MainController extends StatelessWidget {
                                                   isRegular: item["isRegular"],
                                                   isFragile: item["isFragile"],
                                                   isLarge: item["isLarge"],
-                                                  isMedecine:
-                                                      item["isMedecine"],
+                                                  isMedecine:item["isMedecine"],
                                                   isFood: item["isFood"]);
                                             }).toList();
 

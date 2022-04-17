@@ -81,6 +81,7 @@ class _AuthScreenState extends State<AuthScreen> {
         // Creating a new user
         // Users Collection is created on the fly and 2 fields are created
         await FirebaseFirestore.instance.collection('users').doc(theUser).set({
+          'id': theUser,
           'email': email,
           'password': password,
           'firstName': firstName,

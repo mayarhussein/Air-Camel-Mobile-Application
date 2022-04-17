@@ -8,14 +8,23 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+import '../../models/account.dart';
 import '../../providers/companies_provider.dart';
 
-class OffersScreen extends StatelessWidget {
+class OffersScreen extends StatefulWidget {
   static const routeName = '/offers';
 
   @override
+  State<OffersScreen> createState() => _OffersScreenState();
+}
+
+class _OffersScreenState extends State<OffersScreen> {
+  @override
   Widget build(BuildContext context) {
     CollectionReference offersData =FirebaseFirestore.instance.collection('offers');
+
+    List<Account> companyList =Provider.of<CompaniesProvider>(context, listen: false).companiesList;
+
     return ChangeNotifierProvider(
       create: (_) => OffersProvider(),
       child: StreamBuilder<QuerySnapshot>(
@@ -57,14 +66,20 @@ class OffersScreen extends StatelessWidget {
                 body: Container(
                   decoration: BoxDecoration(color: bgColor),
                   child: Container(
-                    padding:const EdgeInsets.all(20),
+                    padding: const EdgeInsets.all(20),
                     child: ListView.builder(
                       itemCount: offersData.offers.length,
                       itemBuilder: (context, index) {
-                     //final theCompany = Provider.of<CompaniesProvider>(ctx)
-                                             // .companiesList.firstWhere(
-                                              // (company) => company.id == offersData.offers[index].idCompany);
-
+                        // print(offersData.offers[index].idCompany);
+                        // final theCompany =
+                        //     Provider.of<CompaniesProvider>(context)
+                        //         .companiesList;
+                        // print(theCompany[1].id);
+                        // final theCompany = companyList.where((item) =>
+                        //     item.id == offersData.offers[index].idCompany);
+                        // print(companyList.first.id);
+                        // print(companyList.first.firstName);
+                        // companyList.forEach(print);
 
 
                         return Column(
@@ -92,12 +107,11 @@ class OffersScreen extends StatelessWidget {
                                                   MainAxisAlignment.spaceEvenly,
                                               children: [
                                                 const Icon(Icons.card_giftcard),
-                                                // Text(
-                                                //   )
-                                                //           ,
-                                                //   style: GoogleFonts.righteous(
-                                                //       fontSize: 14),
-                                                //)
+                                                Text(''
+                                                 ,
+                                                  style: GoogleFonts.righteous(
+                                                      fontSize: 14),
+                                                )
                                               ],
                                             ),
                                           ),
@@ -118,13 +132,14 @@ class OffersScreen extends StatelessWidget {
                                                       fontSize: 15),
                                                 ),
                                                 const SizedBox(height: 20),
-                                                Text( DateFormat.yMd().format(
-                                                      offersData.offers[index]
-                                                          .dateTime) + ' thru ' + 
-                                                          DateFormat.yMd().format(
-                                                      offersData.offers[index]
-                                                          .expireTime))
-                                               
+                                                Text('valid from ' +
+                                                    DateFormat.yMd().format(
+                                                        offersData.offers[index]
+                                                            .dateTime) +
+                                                    ' thru ' +
+                                                    DateFormat.yMd().format(
+                                                        offersData.offers[index]
+                                                            .expireTime))
                                               ],
                                             ))
                                       ],
