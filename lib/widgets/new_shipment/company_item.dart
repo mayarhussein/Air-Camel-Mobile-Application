@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:air_camel/widgets/new_shipment/list_view.dart';
 
-class HomeTripItem extends StatelessWidget {
+class CompanyLabelItem extends StatelessWidget {
   Account companyData;
 
-  HomeTripItem(this.companyData);
+  CompanyLabelItem(this.companyData);
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class HomeTripItem extends StatelessWidget {
                       Text(
                         companyData.firstName,
                         textAlign: TextAlign.left,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.w600,
                           fontSize: 22,
                         ),

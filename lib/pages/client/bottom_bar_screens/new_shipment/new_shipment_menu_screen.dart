@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:air_camel/models/account.dart';
 import 'package:air_camel/providers/companies_provider.dart';
 import 'package:air_camel/resources/app_theme.dart';
@@ -8,6 +10,8 @@ import 'package:air_camel/widgets/new_shipment/search_bar.dart';
 import 'package:air_camel/widgets/new_shipment/time_date.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../../../widgets/new_shipment/package_image_picker.dart';
+import 'filters_screen.dart';
 
 class NewShipmentMenu extends StatefulWidget {
   @override
@@ -21,6 +25,10 @@ class _NewShipmentMenuState extends State<NewShipmentMenu>
   AnimationController? animationController;
   late List<Account> companyList;
   final ScrollController _scrollController = ScrollController();
+  String date = "";
+  DateTime selectedDate = DateTime.now();
+
+  File? _packageImageFile;
 
   @override
   void initState() {
@@ -34,8 +42,38 @@ class _NewShipmentMenuState extends State<NewShipmentMenu>
 
   @override
   void dispose() {
-    animationController?.dispose();
+    animationController!.dispose();
     super.dispose();
+  }
+
+  void _pickedImage(File image) {
+    _packageImageFile = image;
+  }
+
+  _selectDate(BuildContext context) async {
+    final DateTime? selected = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2025),
+    );
+    if (selected != null && selected != selectedDate) {
+      setState(() {
+        selectedDate = selected;
+      });
+    }
+  }
+
+
+// A method that launches the FiltersScreen and awaits the result from  Navigator.pop.
+  
+  void _navigateAndDisplayFilters(BuildContext context) async {
+    // Navigator.push returns a Future that completes after calling
+    // Navigator.pop on the Filters Screen.
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => FiltersScreen()),
+    );
   }
 
   @override
@@ -68,9 +106,29 @@ class _NewShipmentMenuState extends State<NewShipmentMenu>
                                   (BuildContext context, int index) {
                                 return Column(
                                   children: <Widget>[
-                                    HomeSearchBar('Type pickup location here'),
-                                    HomeSearchBar('Type destination here'),
-                                    // HomeTimeDate(),
+                                    PackageImagePicker(_pickedImage),
+                                    HomeSearchBar('Choose pickup location '),
+                                    HomeSearchBar(
+                                        'Choose destination location'),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: <Widget>[
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            _selectDate(context);
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                              primary: Colors.amber),
+                                          child: const Text("Pick Date"),
+                                        ),
+                                        const Icon(Icons.date_range),
+                                        Text(
+                                            "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}"),
+                                      ],
+                                    ),
+                                    const Divider(),
+                                    //HomeTimeDate(),
                                   ],
                                 );
                               }, childCount: 1),
@@ -79,7 +137,7 @@ class _NewShipmentMenuState extends State<NewShipmentMenu>
                               pinned: true,
                               floating: true,
                               delegate: ContestTabHeader(
-                                HomeFilterBar(),
+                                FilterBar(companyList.length),
                               ),
                             ),
                           ];
@@ -122,6 +180,8 @@ class _NewShipmentMenuState extends State<NewShipmentMenu>
       ),
     );
   }
+
+  
 
   Widget getCompanyViewList() {
     final List<Widget> companyListViews = <Widget>[];

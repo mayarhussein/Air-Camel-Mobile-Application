@@ -2,7 +2,10 @@ import 'package:air_camel/pages/client/bottom_bar_screens/new_shipment/filters_s
 import 'package:air_camel/resources/app_theme.dart';
 import 'package:flutter/material.dart';
 
-class HomeFilterBar extends StatelessWidget {
+class FilterBar extends StatelessWidget {
+  int companiesCount;
+  FilterBar(this.companiesCount);
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -35,8 +38,8 @@ class HomeFilterBar extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      'xxx companies found',
-                      style: TextStyle(
+                      ' $companiesCount companies found',
+                      style: const TextStyle(
                         fontWeight: FontWeight.w100,
                         fontSize: 16,
                       ),
@@ -53,20 +56,25 @@ class HomeFilterBar extends StatelessWidget {
                     borderRadius: const BorderRadius.all(
                       Radius.circular(4.0),
                     ),
-                    onTap: () {
+                    onTap: () async {
                       FocusScope.of(context).requestFocus(FocusNode());
-                      Navigator.push<dynamic>(
+                      final result = await Navigator.push(
                         context,
-                        MaterialPageRoute<dynamic>(
+                        MaterialPageRoute(
                             builder: (BuildContext context) => FiltersScreen(),
                             fullscreenDialog: true),
                       );
+                      print('--------------');
+                      print(result.length);
+                      result.forEach((element) => {print(element.titleTxt)});
+                      result.forEach((element) => {print(element.isSelected)});
+                      print('*********');
                     },
                     child: Padding(
                       padding: const EdgeInsets.only(left: 8),
                       child: Row(
                         children: <Widget>[
-                          Text(
+                          const Text(
                             'Filter',
                             style: TextStyle(
                               fontWeight: FontWeight.w100,

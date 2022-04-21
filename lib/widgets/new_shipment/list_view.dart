@@ -58,7 +58,7 @@ class HomeListView extends StatelessWidget {
                                 fit: BoxFit.cover,
                               ),
                             ),
-                            HomeTripItem(companyData!),
+                            CompanyLabelItem(companyData!),
                           ],
                         ),
                         Positioned(

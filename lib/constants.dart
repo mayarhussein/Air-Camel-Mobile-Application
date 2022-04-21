@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-const primaryColor = Color(0xFF2697FF);
+const primaryColor = Color.fromARGB(255, 250, 216, 27);
 const secondaryColor = Color(0xFF2A2D3E);
 final bgColor = Colors.amber.shade100;
 final subTitle1 =

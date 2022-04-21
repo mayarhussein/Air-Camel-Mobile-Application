@@ -1,5 +1,6 @@
 import 'package:air_camel/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 
 class InviteScreen extends StatelessWidget {
   static const routeName = '/invite';
@@ -18,7 +19,7 @@ class InviteScreen extends StatelessWidget {
               style: headFont1,
             ),
             leading: IconButton(
-              icon: Icon(Icons.arrow_back_ios_new),
+              icon: const Icon(Icons.arrow_back_ios_new),
               onPressed: () {
                 Navigator.pop(context);
               },
@@ -70,8 +71,11 @@ class InviteScreen extends StatelessWidget {
                           color: Colors.blue,
                           child: InkWell(
                             onTap: () {
-                              //method here for functionality
-                              print('Share Action.');
+
+                              Share.share(
+                                'check out this great app for shipping any package anywhere https://aircamel.com',
+                                subject: 'Download right now ',
+                              );
                             },
                             child: Center(
                               child: Row(

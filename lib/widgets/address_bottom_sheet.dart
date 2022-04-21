@@ -2,12 +2,16 @@ import 'package:air_camel/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:string_validator/string_validator.dart';
 import 'package:uuid/uuid.dart';
 
+import '../models/address.dart';
+import '../providers/address_provider.dart';
+
 class AddressBottomSheet {
-  static void showAddressBottomSheet(context) {
-    final cityController = TextEditingController();
+  static void showAddressBottomSheet(context, bool isEdit, String Addressid) {
+    var cityController = TextEditingController();
     final streetController = TextEditingController();
     final buildingController = TextEditingController();
     final floorController = TextEditingController();
@@ -20,6 +24,13 @@ class AddressBottomSheet {
     final _floorFocusNode = FocusNode();
     final _aptFocusNode = FocusNode();
     final _otherFocusNode = FocusNode();
+
+ 
+
+    List<AddressModel> addressList =
+        Provider.of<AddressProvider>(context, listen: false).address;
+    final theAddress = addressList.firstWhere((item) => item.id == Addressid);
+
 
     Future<void> _AddAddress(String city, String street, String building,
         String floor, String apt, String other) async {
@@ -51,11 +62,12 @@ class AddressBottomSheet {
         otherController.clear();
 
         Navigator.pop(context);
-        print("success");
+        print("Add success");
       }).catchError((error) => print("Failed to add address: $error"));
     }
 
     Size size = MediaQuery.of(context).size;
+
     showModalBottomSheet(
         context: context,
         isScrollControlled: true,
@@ -198,13 +210,19 @@ class AddressBottomSheet {
                                     child: const Text('Add Address',
                                         style: TextStyle(color: Colors.white)),
                                     onPressed: () {
-                                      _AddAddress(
-                                          cityController.text.trim(),
-                                          streetController.text.trim(),
-                                          buildingController.text.trim(),
-                                          floorController.text.trim(),
-                                          aptController.text.trim(),
-                                          otherController.text.trim());
+                                      if (isEdit) {
+                                        print('Edit will be done here');
+                                      } else {
+                                        if (_formKey.currentState!.validate()) {
+                                          _AddAddress(
+                                              cityController.text.trim(),
+                                              streetController.text.trim(),
+                                              buildingController.text.trim(),
+                                              floorController.text.trim(),
+                                              aptController.text.trim(),
+                                              otherController.text.trim());
+                                        }
+                                      }
                                     },
                                     style: ElevatedButton.styleFrom(
                                         side: const BorderSide(
