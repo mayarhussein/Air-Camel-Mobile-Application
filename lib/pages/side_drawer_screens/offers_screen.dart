@@ -24,29 +24,35 @@ class _OffersScreenState extends State<OffersScreen> {
     CollectionReference offersData =
         FirebaseFirestore.instance.collection('offers');
 
-    List<Account> companyList =
-        Provider.of<CompaniesProvider>(context, listen: false).companiesList;
+    
 
     return ChangeNotifierProvider(
       create: (_) => OffersProvider(),
       child: StreamBuilder<QuerySnapshot>(
           stream: offersData.snapshots(),
           builder: (ctx, offersSanpshot) {
+
             if (offersSanpshot.data == null) {
-              return SplashScreen();
-            }
+              return SplashScreen();}
+            
             List<OfferModel> offersList = offersSanpshot.data!.docs.map((item) {
               Timestamp stamp1 = item['dateTime'];
               Timestamp stamp2 = item['expireTime'];
+             
               return OfferModel(
                   id: item['id'],
                   idCompany: item['idCompany'],
                   dateTime: DateTime.parse(stamp1.toDate().toString()),
                   expireTime: DateTime.parse(stamp2.toDate().toString()),
-                  offerMsg: item['offerMsg']);
+                  offerMsg: item['offerMsg'],
+                  isExpired:DateTime.parse(stamp2.toDate().toString()).isBefore(DateTime.now()));
             }).toList();
+
             Provider.of<OffersProvider>(ctx).setOffers(offersList);
-            final offersData = Provider.of<OffersProvider>(ctx);
+            final offersData = Provider.of<OffersProvider>(ctx).offers.where((item) => !item.isExpired).toList();
+            List<Account> companyList = Provider.of<CompaniesProvider>(context, listen: false).companiesList;
+    
+
 
             return Scaffold(
                 appBar: AppBar(
@@ -70,14 +76,10 @@ class _OffersScreenState extends State<OffersScreen> {
                   child: Container(
                     padding: const EdgeInsets.all(20),
                     child: ListView.builder(
-                      itemCount: offersData.offers.length,
+                      itemCount: offersData.length,
                       itemBuilder: (context, index) {
-                        //final theCompany = companyList.firstWhere((item) =>
-                            //item.id == offersData.offers[index].idCompany);
-
-                        // print(companyList.first.id);
-                        // print(companyList.last.id);
-                        // print(theCompany);
+                        final theCompany = companyList.firstWhere((item) =>
+                            item.id == offersData[index].idCompany);
 
                         return Column(
                           children: [
@@ -104,8 +106,7 @@ class _OffersScreenState extends State<OffersScreen> {
                                                   MainAxisAlignment.spaceEvenly,
                                               children: [
                                                 const Icon(Icons.card_giftcard),
-                                                Text(
-                                                  '',
+                                                Text(theCompany.firstName,
                                                   style: GoogleFonts.righteous(
                                                       fontSize: 14),
                                                 )
@@ -123,19 +124,14 @@ class _OffersScreenState extends State<OffersScreen> {
                                             child: Column(
                                               children: [
                                                 Text(
-                                                  offersData
-                                                      .offers[index].offerMsg,
+                                                  offersData[index].offerMsg,
                                                   style: GoogleFonts.fredokaOne(
                                                       fontSize: 15),
                                                 ),
                                                 const SizedBox(height: 20),
-                                                Text('valid from ' +
+                                                Text('valid thru ' +
                                                     DateFormat.yMd().format(
-                                                        offersData.offers[index]
-                                                            .dateTime) +
-                                                    ' thru ' +
-                                                    DateFormat.yMd().format(
-                                                        offersData.offers[index]
+                                                        offersData[index]
                                                             .expireTime))
                                               ],
                                             ))

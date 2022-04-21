@@ -4,6 +4,7 @@ class OfferModel {
   DateTime dateTime;
   DateTime expireTime;
   String offerMsg;
+  bool isExpired;
 
   OfferModel({
     required this.id,
@@ -11,5 +12,6 @@ class OfferModel {
     required this.dateTime,
     required this.expireTime,
     required this.offerMsg,
+    required this.isExpired
   });
 }

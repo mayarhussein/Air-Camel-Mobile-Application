@@ -32,7 +32,7 @@ class _NewOfferScreenState extends State<NewOfferScreen> {
       'dateTime': DateTime.now(),
       'expireTime': selectedDate,
       'idCompany': user.uid,
-      'offerMsg': description
+      'offerMsg': description,
     }).then((value) {
       print("Success");
       descriptionController.clear();
