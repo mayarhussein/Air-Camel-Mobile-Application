@@ -12,11 +12,25 @@ import '../providers/address_provider.dart';
 class AddressBottomSheet {
   static void showAddressBottomSheet(context, bool isEdit, String Addressid) {
     var cityController = TextEditingController();
-    final streetController = TextEditingController();
-    final buildingController = TextEditingController();
-    final floorController = TextEditingController();
-    final aptController = TextEditingController();
-    final otherController = TextEditingController();
+    var streetController = TextEditingController();
+    var buildingController = TextEditingController();
+    var floorController = TextEditingController();
+    var aptController = TextEditingController();
+    var otherController = TextEditingController();
+
+    if (isEdit) {
+      List<AddressModel> addressList =
+          Provider.of<AddressProvider>(context, listen: false).address;
+      final theAddress = addressList.firstWhere((item) => item.id == Addressid);
+
+      cityController.text = theAddress.city;
+      streetController.text = theAddress.street;
+      buildingController.text = theAddress.building;
+      floorController.text = theAddress.floor;
+      aptController.text = theAddress.apt;
+      otherController.text = theAddress.other.toString();
+    }
+
     final _formKey = GlobalKey<FormState>();
     final _cityFocusNode = FocusNode();
     final _streetFocusNode = FocusNode();
@@ -24,13 +38,6 @@ class AddressBottomSheet {
     final _floorFocusNode = FocusNode();
     final _aptFocusNode = FocusNode();
     final _otherFocusNode = FocusNode();
-
- 
-
-    List<AddressModel> addressList =
-        Provider.of<AddressProvider>(context, listen: false).address;
-    final theAddress = addressList.firstWhere((item) => item.id == Addressid);
-
 
     Future<void> _AddAddress(String city, String street, String building,
         String floor, String apt, String other) async {
@@ -52,7 +59,7 @@ class AddressBottomSheet {
         'building': building,
         'floor': floor,
         'apt': apt,
-        'description': other
+        'other': other
       }).then((value) {
         cityController.clear();
         streetController.clear();
@@ -64,6 +71,37 @@ class AddressBottomSheet {
         Navigator.pop(context);
         print("Add success");
       }).catchError((error) => print("Failed to add address: $error"));
+    }
+
+    void _editAddress(String city, String street, String building, String floor,
+        String apt, String other) async {
+      FocusScope.of(context).unfocus();
+
+      final user = FirebaseAuth.instance.currentUser!;
+      final addressData = FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .collection('address');
+
+    await addressData.doc(Addressid).update({
+      'city': city,
+      'street': street,
+      'building': building,
+      'floor': floor,
+      'apt': apt,
+      'other': other
+    }).then((value) {
+           // Provider Fn 
+       cityController.clear();
+        streetController.clear();
+        buildingController.clear();
+        floorController.clear();
+        aptController.clear();
+        otherController.clear();
+      
+      Navigator.pop(context);
+      print("Address Updated");
+    }).catchError((error) => print("Failed to update user: $error"));
     }
 
     Size size = MediaQuery.of(context).size;
@@ -83,7 +121,7 @@ class AddressBottomSheet {
                   children: [
                     Center(
                       child: Text(
-                        "New Address",
+                        isEdit ? 'Edit Address' : "New Address",
                         style: headFont1,
                       ),
                     ),
@@ -101,8 +139,6 @@ class AddressBottomSheet {
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
                                     return 'Please enter city';
-                                  } else if (!isAlpha(value)) {
-                                    return 'Only Letters Please';
                                   }
                                   return null;
                                 },
@@ -179,6 +215,7 @@ class AddressBottomSheet {
                               ]),
                               TextFormField(
                                 keyboardType: TextInputType.multiline,
+                                minLines: 1,
                                 key: const ValueKey('Other'),
                                 decoration: const InputDecoration(
                                     labelText:
@@ -207,11 +244,23 @@ class AddressBottomSheet {
                               ),
                               Center(
                                 child: ElevatedButton(
-                                    child: const Text('Add Address',
-                                        style: TextStyle(color: Colors.white)),
+                                    child: Text(
+                                        isEdit ? 'Edit Address' : 'Add Address',
+                                        style: const TextStyle(
+                                            color: Colors.white)),
                                     onPressed: () {
                                       if (isEdit) {
                                         print('Edit will be done here');
+                                          if (_formKey.currentState!.validate()) {
+                                          _editAddress(
+                                              cityController.text.trim(),
+                                              streetController.text.trim(),
+                                              buildingController.text.trim(),
+                                              floorController.text.trim(),
+                                              aptController.text.trim(),
+                                              otherController.text.trim());
+                                        }
+                                      
                                       } else {
                                         if (_formKey.currentState!.validate()) {
                                           _AddAddress(

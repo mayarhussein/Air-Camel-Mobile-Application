@@ -22,7 +22,7 @@ class AddressBook extends StatefulWidget {
 }
 
 class _AddressBookState extends State<AddressBook> {
- //final _isEdit = true;
+  //final _isEdit = true;
 
   Future<void> _deleteAddress(String userId, String docId) async {
     final addressData = FirebaseFirestore.instance
@@ -64,7 +64,7 @@ class _AddressBookState extends State<AddressBook> {
                     building: item['building'],
                     floor: item['floor'],
                     apt: item['apt'],
-                    other: item['description']);
+                    other: item['other']);
               }).toList();
               Provider.of<AddressProvider>(ctx).setAddress(addressList);
               final addressData = Provider.of<AddressProvider>(ctx);
@@ -88,7 +88,9 @@ class _AddressBookState extends State<AddressBook> {
                   actions: [
                     IconButton(
                         onPressed: () {
-                            AddressBottomSheet.showAddressBottomSheet(context,false, ''); },
+                          AddressBottomSheet.showAddressBottomSheet(
+                              context, false, '');
+                        },
                         icon: const Icon(Icons.add))
                   ],
                 ),
@@ -97,6 +99,9 @@ class _AddressBookState extends State<AddressBook> {
                   child: ListView.builder(
                       itemCount: addressData.address.length,
                       itemBuilder: (context, i) {
+                        /////////////// test here
+              print(addressData.address[i].other);
+
                         return Slidable(
                           child: AddressItem(
                               addressData.address[i].id,
