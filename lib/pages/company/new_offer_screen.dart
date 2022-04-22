@@ -7,7 +7,6 @@ import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../providers/offers_provider.dart';
-import '../../widgets/new_shipment/time_date.dart';
 
 class NewOfferScreen extends StatefulWidget {
   static const routeName = '/new-offer';
