@@ -26,6 +26,7 @@ class _NewShipmentMenuState extends State<NewShipmentMenu>
   final ScrollController _scrollController = ScrollController();
   String date = "";
   DateTime selectedDate = DateTime.now();
+  var result;
 
   File? _packageImageFile;
 
@@ -61,18 +62,6 @@ class _NewShipmentMenuState extends State<NewShipmentMenu>
         selectedDate = selected;
       });
     }
-  }
-
-
-// A method that launches the FiltersScreen and awaits the result from  Navigator.pop.
-  
-  void _navigateAndDisplayFilters(BuildContext context) async {
-    // Navigator.push returns a Future that completes after calling
-    // Navigator.pop on the Filters Screen.
-    final result = await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => FiltersScreen()),
-    );
   }
 
   @override
@@ -136,8 +125,8 @@ class _NewShipmentMenuState extends State<NewShipmentMenu>
                               pinned: true,
                               floating: true,
                               delegate: ContestTabHeader(
-                                FilterBar(companyList.length),
-                              ),
+                                  //FilterBar(companyList.length),
+                                  filterBar()),
                             ),
                           ];
                         },
@@ -159,6 +148,7 @@ class _NewShipmentMenuState extends State<NewShipmentMenu>
                                               (1 / count) * index, 1.0,
                                               curve: Curves.fastOutSlowIn)));
                               animationController?.forward();
+                             
                               return HomeListView(
                                 callback: () {},
                                 companyData: companyList[index],
@@ -180,7 +170,108 @@ class _NewShipmentMenuState extends State<NewShipmentMenu>
     );
   }
 
-  
+  Widget filterBar() {
+    return Stack(
+      children: <Widget>[
+        Positioned(
+          top: 0,
+          left: 0,
+          right: 0,
+          child: Container(
+            height: 24,
+            decoration: BoxDecoration(
+              color: AppTheme.buildLightTheme().backgroundColor,
+              boxShadow: <BoxShadow>[
+                BoxShadow(
+                    color: Colors.grey.withOpacity(0.2),
+                    offset: const Offset(0, -2),
+                    blurRadius: 8.0),
+              ],
+            ),
+          ),
+        ),
+        Container(
+          color: AppTheme.buildLightTheme().backgroundColor,
+          child: Padding(
+            padding:
+                const EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 4),
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      ' ${companyList.length} companies found',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w100,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                ),
+                Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    focusColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    hoverColor: Colors.transparent,
+                    splashColor: Colors.grey.withOpacity(0.2),
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(4.0),
+                    ),
+                    onTap: () async {
+                      // Navigator.push returns a Future that completes after calling Navigator.pop on the Filters Screen.
+                      FocusScope.of(context).requestFocus(FocusNode());
+                      result = await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  FiltersScreen(),
+                              fullscreenDialog: true));
+                      print('--------------');
+                      print(result.length);
+                      result.forEach((element) => {print(element.titleTxt)});
+                      result.forEach((element) => {print(element.isSelected)});
+                      print('*********');
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 8),
+                      child: Row(
+                        children: <Widget>[
+                          const Text(
+                            'Filter',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w100,
+                              fontSize: 16,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Icon(
+                              Icons.sort,
+                              color: Colors.amber.shade300,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        const Positioned(
+          top: 0,
+          left: 0,
+          right: 0,
+          child: Divider(
+            height: 1,
+          ),
+        )
+      ],
+    );
+  }
 
   Widget getCompanyViewList() {
     final List<Widget> companyListViews = <Widget>[];

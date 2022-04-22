@@ -3,6 +3,7 @@ import 'package:air_camel/pages/company/edit_categories.dart';
 import 'package:air_camel/resources/app_theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:rxdart/rxdart.dart';
 
 class FiltersScreen extends StatefulWidget {
   static const routeName = "/filters";
@@ -15,8 +16,6 @@ class _FiltersScreenState extends State<FiltersScreen> {
   List<FilterListData> filtersList = FilterListData.filtersList;
   //final isRegular = filtersList.firstWhere((item) => item.titleTxt =='Regular');
   List<FilterListData> chosenFilters = FilterListData.filtersList;
-
-
 
   //RangeValues _values = const RangeValues(100, 600);
   double distValue = 50.0;
@@ -73,8 +72,10 @@ class _FiltersScreenState extends State<FiltersScreen> {
                   child: InkWell(
                     borderRadius: const BorderRadius.all(Radius.circular(24.0)),
                     highlightColor: Colors.transparent,
-                    onTap: ()  {
-                      Navigator.pop(context, chosenFilters);
+                    onTap: () {
+                      Navigator.pop(
+                        context, chosenFilters
+                      );
                     },
                     child: const Center(
                       child: Text(
@@ -280,12 +281,19 @@ class _FiltersScreenState extends State<FiltersScreen> {
           final FilterListData category = filtersList[count];
           // To Do  ///////////////////////////////////////////
           //chosenFilters.add(category);
-          print(chosenFilters.length);
+       
+          chosenFilters.map((item) {
+            if (item.titleTxt == category.titleTxt) {
+              item.isSelected == category.isSelected;
+            }
+          });
+             print(chosenFilters.length);
           print('start');
           chosenFilters.forEach((element) => {print(element.titleTxt)});
           chosenFilters.forEach((element) => {print(element.isSelected)});
           print('end');
-          
+
+
           /////////////////////////////////////////////////////////
           listUI.add(Expanded(
             child: Row(
