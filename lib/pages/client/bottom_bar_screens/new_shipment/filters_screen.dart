@@ -13,7 +13,8 @@ class FiltersScreen extends StatefulWidget {
 
 class _FiltersScreenState extends State<FiltersScreen> {
   List<FilterListData> filtersList = FilterListData.filtersList;
-  List<FilterListData> chosenFilters = [];
+  //final isRegular = filtersList.firstWhere((item) => item.titleTxt =='Regular');
+  List<FilterListData> chosenFilters = FilterListData.filtersList;
 
 
 
@@ -278,12 +279,13 @@ class _FiltersScreenState extends State<FiltersScreen> {
         try {
           final FilterListData category = filtersList[count];
           // To Do  ///////////////////////////////////////////
-          chosenFilters.add(category);
+          //chosenFilters.add(category);
           print(chosenFilters.length);
           print('start');
           chosenFilters.forEach((element) => {print(element.titleTxt)});
           chosenFilters.forEach((element) => {print(element.isSelected)});
           print('end');
+          
           /////////////////////////////////////////////////////////
           listUI.add(Expanded(
             child: Row(
