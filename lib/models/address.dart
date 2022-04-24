@@ -20,5 +20,5 @@ class AddressModel {
       required this.building,
       required this.floor,
       required this.apt,
-      other});
+      this.other=''});
 }

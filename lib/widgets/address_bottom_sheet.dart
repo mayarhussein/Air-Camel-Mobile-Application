@@ -39,6 +39,24 @@ class AddressBottomSheet {
     final _aptFocusNode = FocusNode();
     final _otherFocusNode = FocusNode();
 
+    void clearTexts() {
+      cityController.clear();
+      streetController.clear();
+      buildingController.clear();
+      floorController.clear();
+      aptController.clear();
+      otherController.clear();
+    }
+
+    // void disposeNodes() {
+    //   _cityFocusNode.dispose();
+    //   _streetFocusNode.dispose();
+    //   _buildingFocusNode.dispose();
+    //   _floorFocusNode.dispose();
+    //   _aptFocusNode.dispose();
+    //   _otherFocusNode.dispose();
+    // }
+
     Future<void> _AddAddress(String city, String street, String building,
         String floor, String apt, String other) async {
       FocusScope.of(context).unfocus();
@@ -61,13 +79,8 @@ class AddressBottomSheet {
         'apt': apt,
         'other': other
       }).then((value) {
-        cityController.clear();
-        streetController.clear();
-        buildingController.clear();
-        floorController.clear();
-        aptController.clear();
-        otherController.clear();
-
+        // TO CHECK STH HERE: Provider Fn
+        clearTexts();
         Navigator.pop(context);
         print("Add success");
       }).catchError((error) => print("Failed to add address: $error"));
@@ -83,25 +96,20 @@ class AddressBottomSheet {
           .doc(user.uid)
           .collection('address');
 
-    await addressData.doc(Addressid).update({
-      'city': city,
-      'street': street,
-      'building': building,
-      'floor': floor,
-      'apt': apt,
-      'other': other
-    }).then((value) {
-           // Provider Fn 
-       cityController.clear();
-        streetController.clear();
-        buildingController.clear();
-        floorController.clear();
-        aptController.clear();
-        otherController.clear();
-      
-      Navigator.pop(context);
-      print("Address Updated");
-    }).catchError((error) => print("Failed to update user: $error"));
+      await addressData.doc(Addressid).update({
+        'city': city,
+        'street': street,
+        'building': building,
+        'floor': floor,
+        'apt': apt,
+        'other': other
+      }).then((value) {
+        // TO CHECK STH HERE: Provider Fn
+        clearTexts();
+
+        Navigator.pop(context);
+        print("Address Updated");
+      }).catchError((error) => print("Failed to update user: $error"));
     }
 
     Size size = MediaQuery.of(context).size;
@@ -251,7 +259,7 @@ class AddressBottomSheet {
                                     onPressed: () {
                                       if (isEdit) {
                                         print('Edit will be done here');
-                                          if (_formKey.currentState!.validate()) {
+                                        if (_formKey.currentState!.validate()) {
                                           _editAddress(
                                               cityController.text.trim(),
                                               streetController.text.trim(),
@@ -260,7 +268,6 @@ class AddressBottomSheet {
                                               aptController.text.trim(),
                                               otherController.text.trim());
                                         }
-                                      
                                       } else {
                                         if (_formKey.currentState!.validate()) {
                                           _AddAddress(

@@ -5,8 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
-import 'package:string_validator/string_validator.dart';
-import 'package:uuid/uuid.dart';
 
 import '../../../../models/address.dart';
 import '../../../../providers/address_provider.dart';
@@ -22,7 +20,6 @@ class AddressBook extends StatefulWidget {
 }
 
 class _AddressBookState extends State<AddressBook> {
-  //final _isEdit = true;
 
   Future<void> _deleteAddress(String userId, String docId) async {
     final addressData = FirebaseFirestore.instance
@@ -55,6 +52,7 @@ class _AddressBookState extends State<AddressBook> {
               List<AddressModel> addressList =
                   addressSanpshot.data!.docs.map((item) {
                 Timestamp stamp = item['dateTime'];
+
                 return AddressModel(
                     id: item['id'],
                     idAccount: item['idAccount'],
@@ -67,7 +65,8 @@ class _AddressBookState extends State<AddressBook> {
                     other: item['other']);
               }).toList();
               Provider.of<AddressProvider>(ctx).setAddress(addressList);
-              final addressData = Provider.of<AddressProvider>(ctx);
+              final addressData = Provider.of<AddressProvider>(ctx).address;
+         
 
               return Scaffold(
                 appBar: AppBar(
@@ -97,19 +96,18 @@ class _AddressBookState extends State<AddressBook> {
                 body: Padding(
                   padding: const EdgeInsets.all(8),
                   child: ListView.builder(
-                      itemCount: addressData.address.length,
+                      itemCount: addressData.length,
                       itemBuilder: (context, i) {
-                        /////////////// test here
-              print(addressData.address[i].other);
+                
 
                         return Slidable(
                           child: AddressItem(
-                              addressData.address[i].id,
-                              addressData.address[i].city,
-                              addressData.address[i].street,
-                              addressData.address[i].building,
-                              addressData.address[i].floor,
-                              addressData.address[i].apt),
+                              addressData[i].id,
+                              addressData[i].city,
+                              addressData[i].street,
+                              addressData[i].building,
+                              addressData[i].floor,
+                              addressData[i].apt),
                           //key: const ValueKey(0),
                           endActionPane: ActionPane(
                               motion: const ScrollMotion(),
@@ -117,7 +115,7 @@ class _AddressBookState extends State<AddressBook> {
                                 SlidableAction(
                                   onPressed: (context) {
                                     _deleteAddress(
-                                        user.uid, addressData.address[i].id);
+                                        user.uid, addressData[i].id);
                                   },
                                   backgroundColor: Colors.red,
                                   foregroundColor: Colors.white,
