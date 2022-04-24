@@ -148,9 +148,11 @@ class _NewShipmentMenuState extends State<NewShipmentMenu>
                                               (1 / count) * index, 1.0,
                                               curve: Curves.fastOutSlowIn)));
                               animationController?.forward();
-                             
+
                               return HomeListView(
-                                callback: () {},
+                                callback: () {
+                                  print(companyList[index].firstName);
+                                },
                                 companyData: companyList[index],
                                 animation: animation,
                                 animationController: animationController!,

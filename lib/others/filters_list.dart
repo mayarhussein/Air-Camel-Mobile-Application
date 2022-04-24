@@ -1,13 +1,11 @@
 class FilterListData {
   String titleTxt;
   bool isSelected;
-  
+
   FilterListData({
     this.titleTxt = '',
     this.isSelected = false,
   });
-
- 
 
   static List<FilterListData> filtersList = <FilterListData>[
     FilterListData(
@@ -20,7 +18,7 @@ class FilterListData {
     ),
     FilterListData(
       titleTxt: 'Large',
-      isSelected: true,
+      isSelected: false,
     ),
     FilterListData(
       titleTxt: 'Medecine',
@@ -31,6 +29,4 @@ class FilterListData {
       isSelected: false,
     ),
   ];
-
- 
 }

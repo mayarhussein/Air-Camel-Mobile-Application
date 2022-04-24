@@ -24,35 +24,34 @@ class _OffersScreenState extends State<OffersScreen> {
     CollectionReference offersData =
         FirebaseFirestore.instance.collection('offers');
 
-    
-
     return ChangeNotifierProvider(
       create: (_) => OffersProvider(),
       child: StreamBuilder<QuerySnapshot>(
           stream: offersData.snapshots(),
           builder: (ctx, offersSanpshot) {
-
             if (offersSanpshot.data == null) {
-              return SplashScreen();}
-            
+              return SplashScreen();
+            }
+
             List<OfferModel> offersList = offersSanpshot.data!.docs.map((item) {
               Timestamp stamp1 = item['dateTime'];
               Timestamp stamp2 = item['expireTime'];
-             
+
               return OfferModel(
                   id: item['id'],
                   idCompany: item['idCompany'],
                   dateTime: DateTime.parse(stamp1.toDate().toString()),
                   expireTime: DateTime.parse(stamp2.toDate().toString()),
                   offerMsg: item['offerMsg'],
-                  isExpired:DateTime.parse(stamp2.toDate().toString()).isBefore(DateTime.now()));
+                  isExpired: DateTime.parse(stamp2.toDate().toString())
+                      .isBefore(DateTime.now()));
             }).toList();
 
             Provider.of<OffersProvider>(ctx).setOffers(offersList);
-            final offersData = Provider.of<OffersProvider>(ctx).offers.where((item) => !item.isExpired).toList();
-            List<Account> companyList = Provider.of<CompaniesProvider>(context, listen: false).companiesList;
-    
-
+            final offersData = Provider.of<OffersProvider>(ctx).validOffers();
+            List<Account> companyList =
+                Provider.of<CompaniesProvider>(context, listen: false)
+                    .companiesList;
 
             return Scaffold(
                 appBar: AppBar(
@@ -78,8 +77,8 @@ class _OffersScreenState extends State<OffersScreen> {
                     child: ListView.builder(
                       itemCount: offersData.length,
                       itemBuilder: (context, index) {
-                        final theCompany = companyList.firstWhere((item) =>
-                            item.id == offersData[index].idCompany);
+                        final theCompany = companyList.firstWhere(
+                            (item) => item.id == offersData[index].idCompany);
 
                         return Column(
                           children: [
@@ -99,14 +98,18 @@ class _OffersScreenState extends State<OffersScreen> {
                                     child: Row(
                                       children: [
                                         Flexible(
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
+                                          child: Container(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.2,
                                             child: Column(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.spaceEvenly,
                                               children: [
                                                 const Icon(Icons.card_giftcard),
-                                                Text(theCompany.firstName,
+                                                Text(
+                                                  theCompany.firstName,
                                                   style: GoogleFonts.righteous(
                                                       fontSize: 14),
                                                 )

@@ -106,33 +106,21 @@ class _AuthScreenState extends State<AuthScreen> {
           'isOpen': false
         });
 
-
         // Creating Categories Collection
 
-        if(role.toString().substring(5) =='company'){
-
-      await FirebaseFirestore.instance
-            .collection('users/$theUser/categories')
-            .doc(randomId)
-            .set({
-          'id': randomId,
-          'isRegular': false,
-          'isFragile': false,
-          'isLarge': false,
-          'isMedecine': false,
-          'isFood': false
-        });
- 
-
-
+        if (role.toString().substring(5) == 'company') {
+          await FirebaseFirestore.instance
+              .collection('users/$theUser/categories')
+              .doc(theUser)
+              .set({
+            'id': theUser,
+            'isRegular': false,
+            'isFragile': false,
+            'isLarge': false,
+            'isMedecine': false,
+            'isFood': false
+          });
         }
-
-  
-  
-
-
-
-
       }
     } on PlatformException catch (error) {
       var errorMessage = 'Authentication failed';

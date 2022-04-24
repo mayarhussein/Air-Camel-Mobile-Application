@@ -12,6 +12,7 @@ class OffersProvider with ChangeNotifier {
     return [...?_offers];
   }
 
-
-  
+  List<OfferModel> validOffers() {
+    return [...?_offers].where((element) => !element.isExpired).toList();
+  }
 }

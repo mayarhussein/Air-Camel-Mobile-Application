@@ -20,7 +20,6 @@ class AddressBook extends StatefulWidget {
 }
 
 class _AddressBookState extends State<AddressBook> {
-
   Future<void> _deleteAddress(String userId, String docId) async {
     final addressData = FirebaseFirestore.instance
         .collection('users')
@@ -66,7 +65,6 @@ class _AddressBookState extends State<AddressBook> {
               }).toList();
               Provider.of<AddressProvider>(ctx).setAddress(addressList);
               final addressData = Provider.of<AddressProvider>(ctx).address;
-         
 
               return Scaffold(
                 appBar: AppBar(
@@ -98,8 +96,6 @@ class _AddressBookState extends State<AddressBook> {
                   child: ListView.builder(
                       itemCount: addressData.length,
                       itemBuilder: (context, i) {
-                
-
                         return Slidable(
                           child: AddressItem(
                               addressData[i].id,
@@ -114,8 +110,7 @@ class _AddressBookState extends State<AddressBook> {
                               children: [
                                 SlidableAction(
                                   onPressed: (context) {
-                                    _deleteAddress(
-                                        user.uid, addressData[i].id);
+                                    _deleteAddress(user.uid, addressData[i].id);
                                   },
                                   backgroundColor: Colors.red,
                                   foregroundColor: Colors.white,
