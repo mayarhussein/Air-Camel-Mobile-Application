@@ -39,11 +39,10 @@ class EditNameScreenState extends State<EditNameScreen> {
       'firstName': firstName,
       'lastName': lastName,
     }).then((value) {
-      print("User Updated");
       Provider.of<AccountsProvider>(context, listen: false)
           .editName(firstName, lastName);
       Navigator.pop(context);
-    }).catchError((error) => print("Failed to update user: $error"));
+    });
   }
 
   @override

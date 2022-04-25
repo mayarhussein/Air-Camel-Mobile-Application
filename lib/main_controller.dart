@@ -55,7 +55,6 @@ class MainController extends StatelessWidget {
                           phoneNumber: data['phoneNumber'],
                           image: data['image_url'],
                           role: role);
-                          
 
                   //------------------------------------------------------------------------
 
@@ -147,12 +146,14 @@ class MainController extends StatelessWidget {
                                               if (item["role"].toString() ==
                                                   "company") {
                                                 return Account(
-                                                   id: item['id'],
-                                                    firstName:item["firstName"],
+                                                    id: item['id'],
+                                                    firstName:
+                                                        item["firstName"],
                                                     lastName: item["lastName"],
                                                     email: item["email"],
                                                     password: item["password"],
-                                                    phoneNumber:item["phoneNumber"],
+                                                    phoneNumber:
+                                                        item["phoneNumber"],
                                                     role: item["role"],
                                                     image: item["image_url"]);
                                               }
@@ -164,43 +165,70 @@ class MainController extends StatelessWidget {
                                                     listen: false)
                                                 .setCompanies(
                                                     list as List<Account>);
-                                            return ClientNavigationScreen();
+
+                                            return StreamBuilder<QuerySnapshot>(
+                                                stream: FirebaseFirestore
+                                                    .instance
+                                                    .collection('categories')
+                                                    .snapshots(),
+                                                builder:
+                                                    (ctx, categoriesSnapshot) {
+                                                  if (categoriesSnapshot.data ==
+                                                      null) {
+                                                    return SplashScreen();
+                                                  }
+                                                  List<CategoriesModel?> list =
+                                                      categoriesSnapshot
+                                                          .data!.docs
+                                                          .map((item) {
+                                                    return CategoriesModel(
+                                                      id: item['id'],
+                                                      isFood: item["isFood"],
+                                                      isFragile:
+                                                          item["isFragile"],
+                                                      isLarge: item["isLarge"],
+                                                      isMedecine:
+                                                          item["isMedecine"],
+                                                      isRegular:
+                                                          item["isRegular"],
+                                                    );
+                                                  }).toList();
+                                                  Provider.of<CompaniesProvider>(
+                                                          ctx,
+                                                          listen: false)
+                                                      .setCategories(list
+                                                          as List<
+                                                              CategoriesModel>);
+                                                  return ClientNavigationScreen();
+                                                });
                                           });
                                     } else if (role == 'company') {
-                                      return StreamBuilder<QuerySnapshot>(
-                                          stream: usersData
-                                              .doc(user.uid)
+                                      return StreamBuilder<DocumentSnapshot>(
+                                          stream: FirebaseFirestore.instance
                                               .collection('categories')
+                                              .doc(user.uid)
                                               .snapshots(),
                                           builder: (ctx, categoriesSnapshot) {
                                             if (categoriesSnapshot.data ==
                                                 null) {
                                               return SplashScreen();
                                             }
-                                            List<CategoriesModel> data =
-                                                categoriesSnapshot.data!.docs
-                                                    .map((item) {
-                                              return CategoriesModel(
-                                                  id: item["id"],
-                                                  isRegular: item["isRegular"],
-                                                  isFragile: item["isFragile"],
-                                                  isLarge: item["isLarge"],
-                                                  isMedecine:item["isMedecine"],
-                                                  isFood: item["isFood"]);
-                                            }).toList();
+                                            Map<String, dynamic> data =
+                                                categoriesSnapshot.data?.data()
+                                                    as Map<String, dynamic>;
 
                                             Provider.of<CategoriesProvider>(ctx,
                                                     listen: false)
                                                 .setCategories(
-                                                    id: data.first.id,
+                                                    id: data['id'],
                                                     isRegular:
-                                                        data.first.isRegular,
+                                                        data['isRegular'],
                                                     isFragile:
-                                                        data.first.isFragile,
-                                                    isLarge: data.first.isLarge,
+                                                        data['isFragile'],
+                                                    isLarge: data['isLarge'],
                                                     isMedecine:
-                                                        data.first.isMedecine,
-                                                    isFood: data.first.isFood);
+                                                        data['isMedecine'],
+                                                    isFood: data['isFood']);
 
                                             return CompanyNavigationScreen();
                                           });

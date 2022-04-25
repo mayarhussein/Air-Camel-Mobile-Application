@@ -68,7 +68,9 @@ class MyApp extends StatelessWidget {
             primaryColor: Colors.amber.shade600,
             primarySwatch: Colors.amber,
           ),
-          home: MainController(),
+          home: GestureDetector(
+              onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+              child: MainController()),
           routes: {
             FiltersScreen.routeName: (ctx) => FiltersScreen(),
             ClientNavigationScreen.routeName: (ctx) => ClientNavigationScreen(),

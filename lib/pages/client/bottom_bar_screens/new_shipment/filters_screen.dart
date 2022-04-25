@@ -131,11 +131,6 @@ class _FiltersScreenState extends State<FiltersScreen> {
               item.isSelected == category.isSelected;
             }
           });
-          print(chosenFilters.length);
-          print('start');
-          chosenFilters.forEach((element) => {print(element.titleTxt)});
-          chosenFilters.forEach((element) => {print(element.isSelected)});
-          print('end');
 
           /////////////////////////////////////////////////////////
           listUI.add(Expanded(

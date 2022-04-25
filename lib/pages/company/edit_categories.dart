@@ -46,8 +46,7 @@ class _EditCategoriesState extends State<EditCategories> {
     required bool isFood,
   }) async {
     final user = FirebaseAuth.instance.currentUser!;
-    final data =
-        FirebaseFirestore.instance.collection('users/${user.uid}/categories');
+    final data = FirebaseFirestore.instance.collection('categories');
     await data.doc(id).update({
       'isRegular': isRegular,
       'isFragile': isFragile,

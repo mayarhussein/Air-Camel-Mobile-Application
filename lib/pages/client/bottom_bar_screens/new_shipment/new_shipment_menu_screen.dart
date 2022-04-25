@@ -230,11 +230,11 @@ class _NewShipmentMenuState extends State<NewShipmentMenu>
                               builder: (BuildContext context) =>
                                   FiltersScreen(),
                               fullscreenDialog: true));
-                      print('--------------');
-                      print(result.length);
-                      result.forEach((element) => {print(element.titleTxt)});
-                      result.forEach((element) => {print(element.isSelected)});
-                      print('*********');
+                      setState(() {
+                        companyList = Provider.of<CompaniesProvider>(context,
+                                listen: false)
+                            .setFilter(result);
+                      });
                     },
                     child: Padding(
                       padding: const EdgeInsets.only(left: 8),

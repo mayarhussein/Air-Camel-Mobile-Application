@@ -65,6 +65,7 @@ class _AuthScreenState extends State<AuthScreen> {
 
         final theUser = authResult.user!.uid;
         var randomId = const Uuid().v4();
+        var randomId2 = const Uuid().v4();
 
         //Future<String> uploadImage(var image ) async {
         FirebaseStorage storage = FirebaseStorage.instance;
@@ -110,7 +111,7 @@ class _AuthScreenState extends State<AuthScreen> {
 
         if (role.toString().substring(5) == 'company') {
           await FirebaseFirestore.instance
-              .collection('users/$theUser/categories')
+              .collection('categories')
               .doc(theUser)
               .set({
             'id': theUser,

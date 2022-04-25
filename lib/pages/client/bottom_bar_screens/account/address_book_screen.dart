@@ -26,11 +26,7 @@ class _AddressBookState extends State<AddressBook> {
         .doc(userId)
         .collection('address');
 
-    await addressData
-        .doc(docId)
-        .delete()
-        .then((value) => print("User Deleted"))
-        .catchError((error) => print("Failed to delete user: $error"));
+    await addressData.doc(docId).delete();
   }
 
   @override
