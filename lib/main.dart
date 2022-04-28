@@ -14,7 +14,7 @@ import 'package:air_camel/pages/company/company_navigation_home_screen.dart';
 import 'package:air_camel/pages/client/bottom_bar_screens/new_shipment/filters_screen.dart';
 import 'package:air_camel/pages/client/bottom_bar_screens/new_shipment/new_shipment_menu_screen.dart';
 import 'package:air_camel/pages/client/client_navigation_screen.dart';
-import 'package:air_camel/pages/client/bottom_bar_screens/new_shipment/trip_detail_screen.dart';
+import 'package:air_camel/pages/client/bottom_bar_screens/new_shipment/place_shipment_screen.dart';
 import 'package:air_camel/pages/company/complaints_screen.dart';
 import 'package:air_camel/pages/company/edit_categories.dart';
 import 'package:air_camel/pages/company/payment_history.dart';
@@ -75,7 +75,7 @@ class MyApp extends StatelessWidget {
             FiltersScreen.routeName: (ctx) => FiltersScreen(),
             ClientNavigationScreen.routeName: (ctx) => ClientNavigationScreen(),
             NewShipmentMenu.routeName: (ctx) => NewShipmentMenu(),
-            TripDetailsScreen.routeName: (ctx) => TripDetailsScreen(),
+            PlaceShipmentScreen.routeName: (ctx) => PlaceShipmentScreen(),
             CompanyNavigationScreen.routeName: (ctx) =>
                 CompanyNavigationScreen(),
             HelpScreen.routeName: (ctx) => HelpScreen(),

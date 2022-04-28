@@ -13,6 +13,8 @@ final headFont1 =
 final headFontBig1 =
     GoogleFonts.vollkorn(fontSize: 32, fontWeight: FontWeight.bold);
 
+final headFont1Small =
+    GoogleFonts.vollkorn(fontSize: 22, fontWeight: FontWeight.bold);
 final defaultFont1 = GoogleFonts.openSans(
     fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black);
 

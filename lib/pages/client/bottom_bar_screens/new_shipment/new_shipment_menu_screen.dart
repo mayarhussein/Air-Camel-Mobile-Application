@@ -1,15 +1,14 @@
 import 'dart:io';
 
 import 'package:air_camel/models/account.dart';
+import 'package:air_camel/pages/client/bottom_bar_screens/new_shipment/place_shipment_screen.dart';
 import 'package:air_camel/providers/companies_provider.dart';
 import 'package:air_camel/resources/app_theme.dart';
 import 'package:air_camel/widgets/home/app_bar.dart';
-import 'package:air_camel/widgets/new_shipment/filter_bar.dart';
 import 'package:air_camel/widgets/new_shipment/list_view.dart';
 import 'package:air_camel/widgets/new_shipment/search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../../widgets/new_shipment/package_image_picker.dart';
 import 'filters_screen.dart';
 
 class NewShipmentMenu extends StatefulWidget {
@@ -68,105 +67,105 @@ class _NewShipmentMenuState extends State<NewShipmentMenu>
   Widget build(BuildContext context) {
     return Theme(
       data: AppTheme.buildLightTheme(),
-      child: Container(
-        child: Scaffold(
-          body: Stack(
-            children: <Widget>[
-              InkWell(
-                splashColor: Colors.transparent,
-                focusColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                hoverColor: Colors.transparent,
-                onTap: () {
-                  FocusScope.of(context).requestFocus(FocusNode());
-                },
-                child: Column(
-                  children: <Widget>[
-                    HomeAppBar(),
-                    Expanded(
-                      child: NestedScrollView(
-                        controller: _scrollController,
-                        headerSliverBuilder:
-                            (BuildContext context, bool innerBoxIsScrolled) {
-                          return <Widget>[
-                            SliverList(
-                              delegate: SliverChildBuilderDelegate(
-                                  (BuildContext context, int index) {
-                                return Column(
-                                  children: <Widget>[
-                                    PackageImagePicker(_pickedImage),
-                                    HomeSearchBar('Choose pickup location '),
-                                    HomeSearchBar(
-                                        'Choose destination location'),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: <Widget>[
-                                        ElevatedButton(
-                                          onPressed: () {
-                                            _selectDate(context);
-                                          },
-                                          style: ElevatedButton.styleFrom(
-                                              primary: Colors.amber),
-                                          child: const Text("Pick Date"),
-                                        ),
-                                        const Icon(Icons.date_range),
-                                        Text(
-                                            "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}"),
-                                      ],
-                                    ),
-                                    const Divider(),
-                                    //HomeTimeDate(),
-                                  ],
-                                );
-                              }, childCount: 1),
-                            ),
-                            SliverPersistentHeader(
-                              pinned: true,
-                              floating: true,
-                              delegate: ContestTabHeader(
-                                  //FilterBar(companyList.length),
-                                  filterBar()),
-                            ),
-                          ];
-                        },
-                        body: Container(
-                          color: AppTheme.buildLightTheme().backgroundColor,
-                          child: ListView.builder(
-                            itemCount: companyList.length,
-                            padding: const EdgeInsets.only(top: 8),
-                            scrollDirection: Axis.vertical,
-                            itemBuilder: (BuildContext context, int index) {
-                              final int count = companyList.length > 10
-                                  ? 10
-                                  : companyList.length;
-                              final Animation<double> animation =
-                                  Tween<double>(begin: 0.0, end: 1.0).animate(
-                                      CurvedAnimation(
-                                          parent: animationController!,
-                                          curve: Interval(
-                                              (1 / count) * index, 1.0,
-                                              curve: Curves.fastOutSlowIn)));
-                              animationController?.forward();
-
-                              return HomeListView(
-                                callback: () {
-                                  print(companyList[index].firstName);
-                                },
-                                companyData: companyList[index],
-                                animation: animation,
-                                animationController: animationController!,
+      child: Scaffold(
+        body: Stack(
+          children: <Widget>[
+            InkWell(
+              splashColor: Colors.transparent,
+              focusColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              hoverColor: Colors.transparent,
+              onTap: () {
+                FocusScope.of(context).requestFocus(FocusNode());
+              },
+              child: Column(
+                children: <Widget>[
+                  HomeAppBar(),
+                  Expanded(
+                    child: NestedScrollView(
+                      controller: _scrollController,
+                      headerSliverBuilder:
+                          (BuildContext context, bool innerBoxIsScrolled) {
+                        return <Widget>[
+                          SliverList(
+                            delegate: SliverChildBuilderDelegate(
+                                (BuildContext context, int index) {
+                              return Column(
+                                children: <Widget>[
+                                  // PackageImagePicker(_pickedImage),
+                                  HomeSearchBar('Choose pickup location '),
+                                  HomeSearchBar('Choose destination location'),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: <Widget>[
+                                      ElevatedButton(
+                                        onPressed: () {
+                                          _selectDate(context);
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                            primary: Colors.amber),
+                                        child: const Text("Pick Date"),
+                                      ),
+                                      const Icon(Icons.date_range),
+                                      Text(
+                                          "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}"),
+                                    ],
+                                  ),
+                                  const Divider(),
+                                  //HomeTimeDate(),
+                                ],
                               );
-                            },
+                            }, childCount: 1),
                           ),
+                          SliverPersistentHeader(
+                            pinned: true,
+                            floating: true,
+                            delegate: ContestTabHeader(
+                                //FilterBar(companyList.length),
+                                filterBar()),
+                          ),
+                        ];
+                      },
+                      body: Container(
+                        color: AppTheme.buildLightTheme().backgroundColor,
+                        child: ListView.builder(
+                          itemCount: companyList.length,
+                          padding: const EdgeInsets.only(top: 8),
+                          scrollDirection: Axis.vertical,
+                          itemBuilder: (BuildContext context, int index) {
+                            final int count = companyList.length > 10
+                                ? 10
+                                : companyList.length;
+                            final Animation<double> animation =
+                                Tween<double>(begin: 0.0, end: 1.0).animate(
+                                    CurvedAnimation(
+                                        parent: animationController!,
+                                        curve: Interval(
+                                            (1 / count) * index, 1.0,
+                                            curve: Curves.fastOutSlowIn)));
+                            animationController?.forward();
+
+                            return HomeListView(
+                              callback: () => Navigator.of(context).pushNamed(
+                                  PlaceShipmentScreen.routeName,
+                                  arguments: {
+                                    "account": companyList[index],
+                                    "date": selectedDate
+                                  }),
+                              companyData: companyList[index],
+                              animation: animation,
+                              animationController: animationController!,
+                            );
+                          },
                         ),
                       ),
-                    )
-                  ],
-                ),
+                    ),
+                  )
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -203,7 +202,7 @@ class _NewShipmentMenuState extends State<NewShipmentMenu>
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      ' ${companyList.length} companies found',
+                      companyList.length.toString() + '  companies found',
                       style: const TextStyle(
                         fontWeight: FontWeight.w100,
                         fontSize: 16,
@@ -272,32 +271,6 @@ class _NewShipmentMenuState extends State<NewShipmentMenu>
           ),
         )
       ],
-    );
-  }
-
-  Widget getCompanyViewList() {
-    final List<Widget> companyListViews = <Widget>[];
-    for (int i = 0; i < companyList.length; i++) {
-      final int count = companyList.length;
-      final Animation<double> animation =
-          Tween<double>(begin: 0.0, end: 1.0).animate(
-        CurvedAnimation(
-          parent: animationController!,
-          curve: Interval((1 / count) * i, 1.0, curve: Curves.fastOutSlowIn),
-        ),
-      );
-      companyListViews.add(
-        HomeListView(
-          callback: () {},
-          companyData: companyList[i],
-          animation: animation,
-          animationController: animationController!,
-        ),
-      );
-    }
-    animationController?.forward();
-    return Column(
-      children: companyListViews,
     );
   }
 }

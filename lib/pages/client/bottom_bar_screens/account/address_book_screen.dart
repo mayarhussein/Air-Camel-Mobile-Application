@@ -20,6 +20,8 @@ class AddressBook extends StatefulWidget {
 }
 
 class _AddressBookState extends State<AddressBook> {
+  List<AddressModel>? addressData;
+
   Future<void> _deleteAddress(String userId, String docId) async {
     final addressData = FirebaseFirestore.instance
         .collection('users')
@@ -32,92 +34,61 @@ class _AddressBookState extends State<AddressBook> {
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser!;
-    CollectionReference addressData = FirebaseFirestore.instance
-        .collection('users')
-        .doc(user.uid)
-        .collection('address');
-    return ChangeNotifierProvider(
-        create: (_) => AddressProvider(),
-        child: StreamBuilder<QuerySnapshot>(
-            stream: addressData.snapshots(),
-            builder: (ctx, addressSanpshot) {
-              if (addressSanpshot.data == null) {
-                return SplashScreen();
-              }
-              List<AddressModel> addressList =
-                  addressSanpshot.data!.docs.map((item) {
-                Timestamp stamp = item['dateTime'];
+    addressData = Provider.of<AddressProvider>(context).address;
 
-                return AddressModel(
-                    id: item['id'],
-                    idAccount: item['idAccount'],
-                    dateTime: DateTime.parse(stamp.toDate().toString()),
-                    city: item['city'],
-                    street: item['street'],
-                    building: item['building'],
-                    floor: item['floor'],
-                    apt: item['apt'],
-                    other: item['other']);
-              }).toList();
-              Provider.of<AddressProvider>(ctx).setAddress(addressList);
-              final addressData = Provider.of<AddressProvider>(ctx).address;
-
-              return Scaffold(
-                appBar: AppBar(
-                  centerTitle: true,
-                  title: Text(
-                    "Address Book",
-                    style: headFont1,
-                  ),
-                  leading: IconButton(
-                    icon: const Icon(Icons.arrow_back_ios_new),
-                    onPressed: () {
-                      Navigator.pop(context);
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          "Address Book",
+          style: headFont1,
+        ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        backgroundColor: bgColor,
+        elevation: 0,
+        shadowColor: Colors.white,
+        actions: [
+          IconButton(
+              onPressed: () {
+                AddressBottomSheet.showAddressBottomSheet(context, false, '');
+              },
+              icon: const Icon(Icons.add))
+        ],
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(8),
+        child: ListView.builder(
+            itemCount: addressData!.length,
+            itemBuilder: (context, i) {
+              return Slidable(
+                child: AddressItem(
+                    addressData![i].id,
+                    addressData![i].city,
+                    addressData![i].street,
+                    addressData![i].building,
+                    addressData![i].floor,
+                    addressData![i].apt),
+                //key: const ValueKey(0),
+                endActionPane:
+                    ActionPane(motion: const ScrollMotion(), children: [
+                  SlidableAction(
+                    onPressed: (context) {
+                      _deleteAddress(user.uid, addressData![i].id);
                     },
+                    backgroundColor: Colors.red,
+                    foregroundColor: Colors.white,
+                    icon: Icons.delete,
+                    label: 'Delete',
                   ),
-                  backgroundColor: bgColor,
-                  elevation: 0,
-                  shadowColor: Colors.white,
-                  actions: [
-                    IconButton(
-                        onPressed: () {
-                          AddressBottomSheet.showAddressBottomSheet(
-                              context, false, '');
-                        },
-                        icon: const Icon(Icons.add))
-                  ],
-                ),
-                body: Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: ListView.builder(
-                      itemCount: addressData.length,
-                      itemBuilder: (context, i) {
-                        return Slidable(
-                          child: AddressItem(
-                              addressData[i].id,
-                              addressData[i].city,
-                              addressData[i].street,
-                              addressData[i].building,
-                              addressData[i].floor,
-                              addressData[i].apt),
-                          //key: const ValueKey(0),
-                          endActionPane: ActionPane(
-                              motion: const ScrollMotion(),
-                              children: [
-                                SlidableAction(
-                                  onPressed: (context) {
-                                    _deleteAddress(user.uid, addressData[i].id);
-                                  },
-                                  backgroundColor: Colors.red,
-                                  foregroundColor: Colors.white,
-                                  icon: Icons.delete,
-                                  label: 'Delete',
-                                ),
-                              ]),
-                        );
-                      }),
-                ),
+                ]),
               );
-            }));
+            }),
+      ),
+    );
   }
 }

@@ -1,5 +1,5 @@
 import 'package:air_camel/models/account.dart';
-import 'package:air_camel/pages/client/bottom_bar_screens/new_shipment/trip_detail_screen.dart';
+import 'package:air_camel/pages/client/bottom_bar_screens/new_shipment/place_shipment_screen.dart';
 import 'package:air_camel/resources/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -7,13 +7,14 @@ import 'package:air_camel/widgets/new_shipment/list_view.dart';
 
 class CompanyLabelItem extends StatelessWidget {
   Account companyData;
+  final VoidCallback? callback;
 
-  CompanyLabelItem(this.companyData);
+  CompanyLabelItem(this.companyData, this.callback);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.of(context).pushNamed(TripDetailsScreen.routeName),
+      onTap: callback,
       splashColor: Colors.red,
       highlightColor: Colors.white.withOpacity(0.2),
       child: Container(
