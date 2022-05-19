@@ -28,10 +28,10 @@ class EditPhoneScreenState extends State<EditPhoneScreen> {
   Future<void> updateUserValue(String phoneNumber) async {
     FocusScope.of(context).unfocus();
 
-    final user = FirebaseAuth.instance.currentUser!;
+    final user = Provider.of<AccountsProvider>(context).account!;
     final userData = FirebaseFirestore.instance.collection('users');
 
-    await userData.doc(user.uid).update({
+    await userData.doc(user.id).update({
       'phoneNumber': phoneNumber,
     }).then((value) {
       print("User Updated");

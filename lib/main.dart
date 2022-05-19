@@ -24,6 +24,7 @@ import 'package:air_camel/pages/side_drawer_screens/help_screen.dart';
 import 'package:air_camel/pages/side_drawer_screens/invite_screen.dart';
 import 'package:air_camel/pages/side_drawer_screens/offers_screen.dart';
 import 'package:air_camel/providers/notifications_provider.dart';
+import 'package:air_camel/providers/orders_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
@@ -54,6 +55,7 @@ class MyApp extends StatelessWidget {
     ));
     return MultiProvider(
         providers: [
+          ChangeNotifierProvider(create: (ctx) => OrdersProvider()),
           ChangeNotifierProvider(create: (ctx) => AccountsProvider()),
           ChangeNotifierProvider(create: (ctx) => NotificationsProvider()),
           ChangeNotifierProvider(create: (ctx) => CreditPaymentsProvider()),

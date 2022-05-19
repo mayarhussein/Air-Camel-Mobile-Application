@@ -1,4 +1,5 @@
 import 'package:air_camel/constants.dart';
+import 'package:air_camel/providers/accounts_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +9,7 @@ import 'package:provider/provider.dart';
 import '../../models/categories.dart';
 import '../../providers/categories_provider.dart';
 
-enum Category { regular, fragile, medecine, food, large }
+enum Category { regular, fragile, medicine, food, large }
 
 class EditCategories extends StatefulWidget {
   static const routeName = '/edit-categories';
@@ -22,7 +23,7 @@ class _EditCategoriesState extends State<EditCategories> {
   late bool isRegular;
   late bool isFragile;
   late bool isLarge;
-  late bool isMedecine;
+  late bool isMedicine;
   late bool isFood;
 
   @override
@@ -34,7 +35,7 @@ class _EditCategoriesState extends State<EditCategories> {
     isRegular = categories.isRegular;
     isFragile = categories.isFragile;
     isLarge = categories.isLarge;
-    isMedecine = categories.isMedecine;
+    isMedicine = categories.isMedicine;
     isFood = categories.isFood;
   }
 
@@ -42,20 +43,19 @@ class _EditCategoriesState extends State<EditCategories> {
     required bool isRegular,
     required bool isFragile,
     required bool isLarge,
-    required bool isMedecine,
+    required bool isMedicine,
     required bool isFood,
   }) async {
-    final user = FirebaseAuth.instance.currentUser!;
     final data = FirebaseFirestore.instance.collection('categories');
     await data.doc(id).update({
       'isRegular': isRegular,
       'isFragile': isFragile,
       'isLarge': isLarge,
-      'isMedecine': isMedecine,
+      'isMedicine': isMedicine,
       'isFood': isFood
     }).then((value) {
       Provider.of<CategoriesProvider>(context, listen: false)
-          .EditCategories(isRegular, isFragile, isLarge, isMedecine, isFood);
+          .EditCategories(isRegular, isFragile, isLarge, isMedicine, isFood);
     }).catchError((error) => print("Failed to update categories: $error"));
   }
 
@@ -96,7 +96,7 @@ class _EditCategoriesState extends State<EditCategories> {
                   isFood: isFood,
                   isFragile: isFragile,
                   isLarge: isLarge,
-                  isMedecine: isMedecine,
+                  isMedicine: isMedicine,
                   isRegular: isRegular),
             ),
           ],
@@ -151,13 +151,13 @@ class _EditCategoriesState extends State<EditCategories> {
                     },
                   ),
                   _buildSwitchListTile(
-                    'Medecine',
-                    'Accepts medecine.',
-                    isMedecine,
+                    'medicine',
+                    'Accepts medicine.',
+                    isMedicine,
                     (newValue) {
                       setState(
                         () {
-                          isMedecine = newValue;
+                          isMedicine = newValue;
                         },
                       );
                     },
@@ -259,10 +259,10 @@ class _EditCategoriesState extends State<EditCategories> {
         //               border: Border.all(color: Colors.amber, width: 5),
         //                borderRadius: const BorderRadius.all(Radius.circular(20))),     
         //         child: ListTile(
-        //             title:  Text('Medecine',
+        //             title:  Text('medicine',
         //                 style:subTitle1),
         //             leading: Radio<Category>(
-        //               value: Category.medecine,
+        //               value: Category.medicine,
         //               groupValue: _category,
         //               onChanged: (Category? value) {
         //                 setState(() {

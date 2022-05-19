@@ -235,8 +235,8 @@ class MainController extends StatelessWidget {
                                                                 "isFragile"],
                                                             isLarge:
                                                                 item["isLarge"],
-                                                            isMedecine: item[
-                                                                "isMedecine"],
+                                                            isMedicine: item[
+                                                                "isMedicine"],
                                                             isRegular: item[
                                                                 "isRegular"],
                                                           );
@@ -275,8 +275,8 @@ class MainController extends StatelessWidget {
                                                     isFragile:
                                                         data['isFragile'],
                                                     isLarge: data['isLarge'],
-                                                    isMedecine:
-                                                        data['isMedecine'],
+                                                    isMedicine:
+                                                        data['isMedicine'],
                                                     isFood: data['isFood']);
 
                                             return CompanyNavigationScreen();

@@ -3,7 +3,7 @@ class CategoriesModel {
   bool isRegular;
   bool isFragile;
   bool isLarge;
-  bool isMedecine;
+  bool isMedicine;
   bool isFood;
 
   CategoriesModel(
@@ -11,6 +11,6 @@ class CategoriesModel {
       required this.isRegular,
       required this.isFragile,
       required this.isLarge,
-      required this.isMedecine,
+      required this.isMedicine,
       required this.isFood});
 }

@@ -32,11 +32,11 @@ class CompaniesProvider with ChangeNotifier {
                         .firstWhere((element) => element.titleTxt == "Large")
                         .isSelected ||
                     element.isLarge) &&
-            element.isMedecine ==
+            element.isMedicine ==
                 (list
-                        .firstWhere((element) => element.titleTxt == "Medecine")
+                        .firstWhere((element) => element.titleTxt == "medicine")
                         .isSelected ||
-                    element.isMedecine) &&
+                    element.isMedicine) &&
             element.isRegular ==
                 (list
                         .firstWhere((element) => element.titleTxt == "Regular")

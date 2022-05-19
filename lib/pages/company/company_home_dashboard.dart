@@ -3,16 +3,25 @@ import 'package:air_camel/models/orders.dart';
 import 'package:air_camel/pages/company/edit_categories.dart';
 import 'package:air_camel/pages/company/new_offer_screen.dart';
 import 'package:air_camel/pages/company/payment_history.dart';
+import 'package:air_camel/pages/launch_app/splash_screen.dart';
+import 'package:air_camel/providers/orders_provider.dart';
 import 'package:air_camel/widgets/company/company_home_btn.dart';
 import 'package:air_camel/widgets/company/shipments_list.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:air_camel/pages/company/complaints_screen.dart';
+import 'package:provider/provider.dart';
+
+final ordersCollection = FirebaseFirestore.instance.collection('orders');
 
 class CompanyHomeDashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final myOrders = Provider.of<OrdersProvider>(context);
+
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -83,8 +92,36 @@ class CompanyHomeDashboard extends StatelessWidget {
                   ),
                   Container(
                     height: 420,
-                    child: ShipmentsList(),
-                  ),
+                    child: StreamBuilder<QuerySnapshot>(
+                      stream: ordersCollection.snapshots(),
+                      builder: (ctx, ordersSnapshot) {
+                        if (ordersSnapshot.data == null) {
+                          return SplashScreen();
+                        }
+                        List<OrdersModel> ordersList =
+                            ordersSnapshot.data!.docs.map((item) {
+                          return OrdersModel(
+                              objType: item['objType'],
+                              bill: (item['bill'] as int).toDouble(),
+                              clientId: item['clientId'],
+                              companyId: item['companyId'],
+                              date: (item['date'] as Timestamp).toDate(),
+                              from: item['from'],
+                              paymentType: item['paymentType'],
+                              status: item['status'],
+                              to: item['to'],
+                              dimensions: item['dimensions'],
+                              id: item['id'],
+                              other: item['other'],
+                              rating: item['rating'],
+                              weight: item['weight']);
+                        }).toList();
+                        print(ordersList);
+                        myOrders.setOrder(ordersList);
+                        return ShipmentsList();
+                      },
+                    ),
+                  )
                 ],
               ),
             ),

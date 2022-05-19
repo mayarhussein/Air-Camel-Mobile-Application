@@ -1,4 +1,5 @@
 import 'package:air_camel/constants.dart';
+import 'package:air_camel/providers/accounts_provider.dart';
 import 'package:air_camel/widgets/address_bottom_sheet.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -33,7 +34,7 @@ class _AddressBookState extends State<AddressBook> {
 
   @override
   Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser!;
+    final user = Provider.of<AccountsProvider>(context).account!;
     addressData = Provider.of<AddressProvider>(context).address;
 
     return Scaffold(
@@ -78,7 +79,7 @@ class _AddressBookState extends State<AddressBook> {
                     ActionPane(motion: const ScrollMotion(), children: [
                   SlidableAction(
                     onPressed: (context) {
-                      _deleteAddress(user.uid, addressData![i].id);
+                      _deleteAddress(user.id!, addressData![i].id);
                     },
                     backgroundColor: Colors.red,
                     foregroundColor: Colors.white,

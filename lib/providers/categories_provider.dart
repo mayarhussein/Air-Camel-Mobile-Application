@@ -13,14 +13,14 @@ class CategoriesProvider with ChangeNotifier {
       required bool isRegular,
       required bool isFragile,
       required bool isLarge,
-      required bool isMedecine,
+      required bool isMedicine,
       required bool isFood}) {
     _categories = CategoriesModel(
         id: id,
         isRegular: isRegular,
         isFragile: isFragile,
         isLarge: isLarge,
-        isMedecine: isMedecine,
+        isMedicine: isMedicine,
         isFood: isFood);
   }
 
@@ -30,11 +30,11 @@ class CategoriesProvider with ChangeNotifier {
   }
 
   void EditCategories(bool isRegular, bool isFragile, bool isLarge,
-      bool isMedecine, bool isFood) {
+      bool isMedicine, bool isFood) {
     _categories!.isRegular = isRegular;
     _categories!.isFragile = isFragile;
     _categories!.isLarge = isLarge;
-    _categories!.isMedecine = isMedecine;
+    _categories!.isMedicine = isMedicine;
     _categories!.isFood = isFood;
 
     notifyListeners();

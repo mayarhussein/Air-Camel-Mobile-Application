@@ -21,7 +21,7 @@ class FilterListData {
       isSelected: false,
     ),
     FilterListData(
-      titleTxt: 'Medecine',
+      titleTxt: 'medicine',
       isSelected: false,
     ),
     FilterListData(

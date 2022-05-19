@@ -52,13 +52,13 @@ class EditPasswordScreenState extends State<EditPasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final theUser = FirebaseAuth.instance.currentUser!;
+    final theUser = Provider.of<AccountsProvider>(context).account!;
     CollectionReference usersData =
         FirebaseFirestore.instance.collection('users');
     return Scaffold(
         appBar: buildAppBar(context),
         body: StreamBuilder<DocumentSnapshot>(
-            stream: usersData.doc(theUser.uid).snapshots(),
+            stream: usersData.doc(theUser.id).snapshots(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(child: CircularProgressIndicator());

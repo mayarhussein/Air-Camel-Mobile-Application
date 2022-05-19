@@ -32,10 +32,10 @@ class EditNameScreenState extends State<EditNameScreen> {
   Future<void> updateUserValue(String firstName, String lastName) async {
     FocusScope.of(context).unfocus();
 
-    final user = FirebaseAuth.instance.currentUser!;
+    final user = Provider.of<AccountsProvider>(context).account!;
     final userData = FirebaseFirestore.instance.collection('users');
 
-    await userData.doc(user.uid).update({
+    await userData.doc(user.id).update({
       'firstName': firstName,
       'lastName': lastName,
     }).then((value) {

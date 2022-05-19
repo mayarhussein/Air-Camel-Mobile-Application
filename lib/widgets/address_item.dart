@@ -10,7 +10,8 @@ class AddressItem extends StatelessWidget {
   final String floor;
   final String apt;
 
-  AddressItem(this.id, this.city, this.street, this.building, this.floor, this.apt);
+  AddressItem(
+      this.id, this.city, this.street, this.building, this.floor, this.apt);
 
   @override
   Widget build(BuildContext context) {

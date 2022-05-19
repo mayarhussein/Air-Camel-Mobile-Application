@@ -54,13 +54,13 @@ class EditEmailScreenState extends State<EditEmailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final theUser = FirebaseAuth.instance.currentUser!;
+    final theUser = Provider.of<AccountsProvider>(context).account!;
     CollectionReference usersData =
         FirebaseFirestore.instance.collection('users');
     return Scaffold(
         appBar: buildAppBar(context),
         body: FutureBuilder<DocumentSnapshot>(
-            future: usersData.doc(theUser.uid).get(),
+            future: usersData.doc(theUser.id).get(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(child: CircularProgressIndicator());

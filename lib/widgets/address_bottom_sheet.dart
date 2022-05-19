@@ -1,4 +1,5 @@
 import 'package:air_camel/constants.dart';
+import 'package:air_camel/providers/accounts_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -61,16 +62,16 @@ class AddressBottomSheet {
         String floor, String apt, String other) async {
       FocusScope.of(context).unfocus();
 
-      final user = FirebaseAuth.instance.currentUser!;
+      final user = Provider.of<AccountsProvider>(context).account!;
       final addressData = FirebaseFirestore.instance
           .collection('users')
-          .doc(user.uid)
+          .doc(user.id)
           .collection('address');
       var randomId = const Uuid().v4();
 
       await addressData.doc(randomId).set({
         'id': randomId,
-        'idAccount': user.uid,
+        'idAccount': user.id,
         'dateTime': DateTime.now(),
         'city': city,
         'street': street,
@@ -90,10 +91,10 @@ class AddressBottomSheet {
         String apt, String other) async {
       FocusScope.of(context).unfocus();
 
-      final user = FirebaseAuth.instance.currentUser!;
+      final user = Provider.of<AccountsProvider>(context).account!;
       final addressData = FirebaseFirestore.instance
           .collection('users')
-          .doc(user.uid)
+          .doc(user.id)
           .collection('address');
 
       await addressData.doc(Addressid).update({

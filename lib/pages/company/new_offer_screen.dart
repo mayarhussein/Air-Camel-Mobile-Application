@@ -1,4 +1,5 @@
 import 'package:air_camel/constants.dart';
+import 'package:air_camel/providers/accounts_provider.dart';
 import 'package:air_camel/widgets/company/shipments_list.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -22,7 +23,7 @@ class _NewOfferScreenState extends State<NewOfferScreen> {
   final descriptionController = TextEditingController();
 
   Future<void> _submit(String description) async {
-    final user = FirebaseAuth.instance.currentUser!;
+    final user = Provider.of<AccountsProvider>(context).account!;
     final offersData = FirebaseFirestore.instance.collection('offers');
     var randomId = const Uuid().v4();
 
@@ -30,7 +31,7 @@ class _NewOfferScreenState extends State<NewOfferScreen> {
       'id': randomId,
       'dateTime': DateTime.now(),
       'expireTime': selectedDate,
-      'idCompany': user.uid,
+      'idCompany': user.id,
       'offerMsg': description,
     }).then((value) {
       print("Success");

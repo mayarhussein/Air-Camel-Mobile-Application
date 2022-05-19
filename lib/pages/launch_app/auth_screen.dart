@@ -118,7 +118,7 @@ class _AuthScreenState extends State<AuthScreen> {
             'isRegular': false,
             'isFragile': false,
             'isLarge': false,
-            'isMedecine': false,
+            'isMedicine': false,
             'isFood': false
           });
         }
