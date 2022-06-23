@@ -12,7 +12,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:air_camel/pages/company/complaints_screen.dart';
+import 'package:air_camel/pages/company/company_complaints_screen.dart';
 import 'package:provider/provider.dart';
 
 final ordersCollection = FirebaseFirestore.instance.collection('orders');
@@ -65,7 +65,7 @@ class CompanyHomeDashboard extends StatelessWidget {
               children: [
                 CompanyHomeBtn(
                     "Show Complanits",
-                    ComplaintsScreen.routeName,
+                    CompanyComplaintsScreen.routeName,
                     Colors.red.shade100,
                     Colors.red.shade900,
                     Icons.error_outline_outlined),
@@ -74,7 +74,7 @@ class CompanyHomeDashboard extends StatelessWidget {
               ],
             ),
           ),
-          // CompanyHomeBtn("Show Complanits", ComplaintsScreen.routeName),
+          // CompanyHomeBtn("Show Complanits", CompanyComplaintsScreen.routeName),
           Card(
             // color: bgColor,
             margin: EdgeInsets.all(10),

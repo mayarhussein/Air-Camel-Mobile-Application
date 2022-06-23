@@ -26,7 +26,7 @@ class ClientHomeExplore extends StatelessWidget {
                       decoration: BoxDecoration(
                           gradient: LinearGradient(colors: [
                         bgColor,
-                        Colors.lightBlue.shade800,
+                        Color.fromARGB(255, 255, 220, 0),
                       ], end: Alignment.topLeft, begin: Alignment.bottomRight)),
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
@@ -37,7 +37,8 @@ class ClientHomeExplore extends StatelessWidget {
                             ],
                           ),
                           Image(
-                            image: const AssetImage("assets/images/ship_airline.png"),
+                            image: const AssetImage(
+                                "assets/images/ship_airline.png"),
                             height: MediaQuery.of(context).size.height * 0.06,
                             width: MediaQuery.of(context).size.width * 0.12,
                           )
@@ -62,7 +63,7 @@ class ClientHomeExplore extends StatelessWidget {
                       decoration: BoxDecoration(
                           gradient: LinearGradient(colors: [
                         bgColor,
-                        Colors.lightGreen.shade800,
+                        Color.fromARGB(255, 255, 250, 0),
                       ], begin: Alignment.bottomLeft, end: Alignment.topRight)),
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
@@ -73,7 +74,8 @@ class ClientHomeExplore extends StatelessWidget {
                             ],
                           ),
                           Image(
-                            image: const AssetImage("assets/images/ship_overseas.png"),
+                            image: const AssetImage(
+                                "assets/images/ship_overseas.png"),
                             height: MediaQuery.of(context).size.height * 0.06,
                             width: MediaQuery.of(context).size.width * 0.12,
                           )
@@ -103,7 +105,7 @@ class ClientHomeExplore extends StatelessWidget {
                       decoration: BoxDecoration(
                           gradient: LinearGradient(colors: [
                         bgColor,
-                        Colors.red.shade400,
+                        Color.fromARGB(255, 255, 190, 0),
                       ], begin: Alignment.topRight, end: Alignment.bottomLeft)),
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
@@ -114,7 +116,8 @@ class ClientHomeExplore extends StatelessWidget {
                             ],
                           ),
                           Image(
-                            image: const AssetImage("assets/images/local_ship.png"),
+                            image: const AssetImage(
+                                "assets/images/local_ship.png"),
                             height: MediaQuery.of(context).size.height * 0.06,
                             width: MediaQuery.of(context).size.width * 0.12,
                           )
@@ -139,7 +142,7 @@ class ClientHomeExplore extends StatelessWidget {
                       decoration: BoxDecoration(
                           gradient: LinearGradient(colors: [
                         bgColor,
-                        Colors.purple.shade400,
+                        Color.fromARGB(255, 255, 170, 0),
                       ], begin: Alignment.topLeft, end: Alignment.bottomRight)),
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
@@ -150,7 +153,8 @@ class ClientHomeExplore extends StatelessWidget {
                             ],
                           ),
                           Image(
-                            image: const AssetImage("assets/images/global_ship.png"),
+                            image: const AssetImage(
+                                "assets/images/global_ship.png"),
                             height: MediaQuery.of(context).size.height * 0.06,
                             width: MediaQuery.of(context).size.width * 0.12,
                           )

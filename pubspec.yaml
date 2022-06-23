@@ -56,6 +56,7 @@ dependencies:
   share_plus: ^4.0.4
   country_state_city_picker: ^1.2.8
   flutter_awesome_buttons: ^1.1.0
+  dialog_flowtter: ^0.3.3
   
 
 dev_dependencies:
@@ -86,6 +87,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
+    - assets/
     
   #   - images/a_dot_ham.jpeg
 

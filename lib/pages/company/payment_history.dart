@@ -1,5 +1,6 @@
 import 'package:air_camel/constants.dart';
 import 'package:air_camel/models/orders.dart';
+import 'package:air_camel/widgets/company/shipments_history_list.dart';
 import 'package:air_camel/widgets/company/shipments_list.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -21,6 +22,6 @@ class PayementsHistory extends StatelessWidget {
           ),
           backgroundColor: bgColor,
         ),
-        body: Container(color: bgColor, child: ShipmentsList()));
+        body: Container(color: bgColor, child: ShipmentsHistoryList()));
   }
 }

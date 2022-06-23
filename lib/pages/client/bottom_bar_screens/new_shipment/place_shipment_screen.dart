@@ -44,6 +44,8 @@ class _PlaceShipmentScreenState extends State<PlaceShipmentScreen> {
   var otherController = TextEditingController();
   var weightController = TextEditingController();
   var dimensionsController = TextEditingController();
+
+  String _accuracy = "";
   Future<void> _AddShipment(
       AddressModel pickupAddress,
       AddressModel dropAddress,
@@ -54,7 +56,7 @@ class _PlaceShipmentScreenState extends State<PlaceShipmentScreen> {
       String dimensions,
       String other) async {
     FocusScope.of(context).unfocus();
-    final user = Provider.of<AccountsProvider>(context).account!;
+    final user = Provider.of<AccountsProvider>(context, listen: false).account!;
     final orderCollection = FirebaseFirestore.instance.collection("orders");
     var randomId = const Uuid().v4();
     await orderCollection.doc(randomId).set({
@@ -87,7 +89,7 @@ class _PlaceShipmentScreenState extends State<PlaceShipmentScreen> {
   void _pickedImage(File image) async {
     _packageImageFile = image;
     final request = http.MultipartRequest(
-        "POST", Uri.parse("https://e449-102-42-129-192.eu.ngrok.io/detect"));
+        "POST", Uri.parse("https://ad0e-102-45-11-103.eu.ngrok.io/detect"));
 
     final headers = {"Content-type": "multipart/form-data"};
     request.files.add(http.MultipartFile(
@@ -100,10 +102,13 @@ class _PlaceShipmentScreenState extends State<PlaceShipmentScreen> {
     http.Response res = await http.Response.fromStream(response);
     final resJson = jsonDecode(res.body);
     try {
-      final msg = resJson['detections']['labels'][0]['Label'];
+      final label = resJson['detections']['labels'][0]['Label'];
+      final accuracy = resJson['detections']['labels'][0]['confidence'];
 
       setState(() {
-        typeController.text = msg;
+        typeController.text = label;
+        _accuracy = (accuracy as double).toStringAsFixed(3);
+        print(accuracy);
       });
     } catch (e) {
       typeController.clear();
@@ -204,6 +209,12 @@ class _PlaceShipmentScreenState extends State<PlaceShipmentScreen> {
                                         .requestFocus(_dimensionsFocusNode);
                                   }),
                             ),
+                            Expanded(
+                                flex: 3,
+                                child: Text(
+                                  'Accuracy: ' + _accuracy,
+                                  style: hintFont,
+                                )),
                             Expanded(
                                 flex: 2,
                                 child: Text(

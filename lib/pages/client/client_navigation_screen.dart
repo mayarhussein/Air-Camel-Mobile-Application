@@ -1,4 +1,5 @@
 import 'package:air_camel/pages/client/bottom_bar_screens/account/account_screen.dart';
+import 'package:air_camel/pages/client/bottom_bar_screens/complaint/client_complaint_screen.dart';
 import 'package:air_camel/pages/client/bottom_bar_screens/notification/notification_screen.dart';
 import 'package:air_camel/pages/side_drawer_screens/about_us_screen.dart';
 import 'package:air_camel/pages/side_drawer_screens/credit_screen.dart';
@@ -74,9 +75,8 @@ class _ClientNavigationScreenState extends State<ClientNavigationScreen> {
         break;
       case 2:
         setState(() {
-          // screenView = ClientSettingsScreen();
+          screenView = ClientComplaintScreen();
         });
-        print("Settings");
         break;
       case 3:
         setState(() {

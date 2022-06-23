@@ -151,7 +151,7 @@ class _EditCategoriesState extends State<EditCategories> {
                     },
                   ),
                   _buildSwitchListTile(
-                    'medicine',
+                    'Medicine',
                     'Accepts medicine.',
                     isMedicine,
                     (newValue) {

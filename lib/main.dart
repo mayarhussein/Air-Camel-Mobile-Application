@@ -4,7 +4,9 @@
 import 'dart:io';
 import 'package:air_camel/main_controller.dart';
 import 'package:air_camel/pages/client/bottom_bar_screens/account/address_book_screen.dart';
+import 'package:air_camel/pages/client/bottom_bar_screens/complaint/client_complaint_screen.dart';
 import 'package:air_camel/pages/company/new_offer_screen.dart';
+import 'package:air_camel/pages/side_drawer_screens/chat_bot_screen.dart';
 import 'package:air_camel/providers/address_provider.dart';
 import 'package:air_camel/providers/categories_provider.dart';
 import 'package:air_camel/providers/companies_provider.dart';
@@ -15,7 +17,7 @@ import 'package:air_camel/pages/client/bottom_bar_screens/new_shipment/filters_s
 import 'package:air_camel/pages/client/bottom_bar_screens/new_shipment/new_shipment_menu_screen.dart';
 import 'package:air_camel/pages/client/client_navigation_screen.dart';
 import 'package:air_camel/pages/client/bottom_bar_screens/new_shipment/place_shipment_screen.dart';
-import 'package:air_camel/pages/company/complaints_screen.dart';
+import 'package:air_camel/pages/company/company_complaints_screen.dart';
 import 'package:air_camel/pages/company/edit_categories.dart';
 import 'package:air_camel/pages/company/payment_history.dart';
 import 'package:air_camel/pages/side_drawer_screens/about_us_screen.dart';
@@ -24,6 +26,7 @@ import 'package:air_camel/pages/side_drawer_screens/help_screen.dart';
 import 'package:air_camel/pages/side_drawer_screens/invite_screen.dart';
 import 'package:air_camel/pages/side_drawer_screens/offers_screen.dart';
 import 'package:air_camel/providers/notifications_provider.dart';
+import 'package:air_camel/providers/offers_provider.dart';
 import 'package:air_camel/providers/orders_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -61,7 +64,8 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (ctx) => CreditPaymentsProvider()),
           ChangeNotifierProvider(create: (ctx) => CategoriesProvider()),
           ChangeNotifierProvider(create: (ctx) => CompaniesProvider()),
-          ChangeNotifierProvider(create: (ctx) => AddressProvider())
+          ChangeNotifierProvider(create: (ctx) => AddressProvider()),
+          ChangeNotifierProvider(create: (ctx) => OffersProvider()),
         ],
         child: MaterialApp(
           title: 'AirCamel',
@@ -86,11 +90,13 @@ class MyApp extends StatelessWidget {
             OffersScreen.routeName: (ctx) => OffersScreen(),
             InviteScreen.routeName: (ctx) => InviteScreen(),
             EditCategories.routeName: (ctx) => EditCategories(),
-            ComplaintsScreen.routeName: (ctx) => ComplaintsScreen(),
+            CompanyComplaintsScreen.routeName: (ctx) =>
+                CompanyComplaintsScreen(),
             PayementsHistory.routeName: (ctx) => PayementsHistory(),
             EditProfileScreen.routeName: (ctx) => EditProfileScreen(),
             NewOfferScreen.routeName: (ctx) => NewOfferScreen(),
-            AddressBook.routeName: (ctx) => AddressBook()
+            AddressBook.routeName: (ctx) => AddressBook(),
+            ChatBotScreen.routeName: (ctx) => ChatBotScreen(),
           },
         ));
   }

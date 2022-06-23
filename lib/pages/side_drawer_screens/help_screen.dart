@@ -1,4 +1,5 @@
 import 'package:air_camel/constants.dart';
+import 'package:air_camel/pages/side_drawer_screens/chat_bot_screen.dart';
 import 'package:air_camel/resources/app_theme.dart';
 import 'package:flutter/material.dart';
 
@@ -72,7 +73,8 @@ class HelpScreen extends StatelessWidget {
                               borderRadius: BorderRadius.circular(20)),
                           color: Colors.red.shade400,
                           child: InkWell(
-                            onTap: () {},
+                            onTap: () => Navigator.of(context)
+                                .pushNamed(ChatBotScreen.routeName),
                             child: Center(
                               child: Padding(
                                 padding: const EdgeInsets.all(4.0),

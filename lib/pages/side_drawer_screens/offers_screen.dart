@@ -21,140 +21,107 @@ class OffersScreen extends StatefulWidget {
 class _OffersScreenState extends State<OffersScreen> {
   @override
   Widget build(BuildContext context) {
-    CollectionReference offersData =
-        FirebaseFirestore.instance.collection('offers');
+    final offersData = Provider.of<OffersProvider>(context).validOffers();
+    List<Account> companyList =
+        Provider.of<CompaniesProvider>(context, listen: false).companiesList;
 
-    return ChangeNotifierProvider(
-      create: (_) => OffersProvider(),
-      child: StreamBuilder<QuerySnapshot>(
-          stream: offersData.snapshots(),
-          builder: (ctx, offersSanpshot) {
-            if (offersSanpshot.data == null) {
-              return SplashScreen();
-            }
+    return Scaffold(
+        appBar: AppBar(
+          title: Text(
+            "Offers",
+            style: headFont1,
+          ),
+          centerTitle: true,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios_new),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+          backgroundColor: bgColor,
+          elevation: 0,
+          shadowColor: Colors.white,
+        ),
+        body: Container(
+          decoration: BoxDecoration(color: bgColor),
+          child: Container(
+            padding: const EdgeInsets.all(20),
+            child: ListView.builder(
+              itemCount: offersData.length,
+              itemBuilder: (context, index) {
+                final theCompany = companyList.firstWhere(
+                    (item) => item.id == offersData[index].idCompany);
 
-            List<OfferModel> offersList = offersSanpshot.data!.docs.map((item) {
-              Timestamp stamp1 = item['dateTime'];
-              Timestamp stamp2 = item['expireTime'];
-
-              return OfferModel(
-                  id: item['id'],
-                  idCompany: item['idCompany'],
-                  dateTime: DateTime.parse(stamp1.toDate().toString()),
-                  expireTime: DateTime.parse(stamp2.toDate().toString()),
-                  offerMsg: item['offerMsg'],
-                  isExpired: DateTime.parse(stamp2.toDate().toString())
-                      .isBefore(DateTime.now()));
-            }).toList();
-
-            Provider.of<OffersProvider>(ctx).setOffers(offersList);
-            final offersData = Provider.of<OffersProvider>(ctx).validOffers();
-            List<Account> companyList =
-                Provider.of<CompaniesProvider>(context, listen: false)
-                    .companiesList;
-
-            return Scaffold(
-                appBar: AppBar(
-                  title: Text(
-                    "Offers",
-                    style: headFont1,
-                  ),
-                  centerTitle: true,
-                  leading: IconButton(
-                    icon: const Icon(Icons.arrow_back_ios_new),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                  backgroundColor: bgColor,
-                  elevation: 0,
-                  shadowColor: Colors.white,
-                ),
-                body: Container(
-                  decoration: BoxDecoration(color: bgColor),
-                  child: Container(
-                    padding: const EdgeInsets.all(20),
-                    child: ListView.builder(
-                      itemCount: offersData.length,
-                      itemBuilder: (context, index) {
-                        final theCompany = companyList.firstWhere(
-                            (item) => item.id == offersData[index].idCompany);
-
-                        return Column(
-                          children: [
-                            Container(
-                              width: double.infinity,
-                              height: 100,
-                              child: InkWell(
-                                onTap: () {},
-                                child: Card(
-                                  shadowColor: Colors.white,
-                                  color: bgColor,
-                                  elevation: 5,
-                                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10)),
+                return Column(
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      height: 100,
+                      child: InkWell(
+                        onTap: () {},
+                        child: Card(
+                          shadowColor: Colors.white,
+                          color: bgColor,
+                          elevation: 5,
+                          clipBehavior: Clip.antiAliasWithSaveLayer,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Container(
+                            child: Row(
+                              children: [
+                                Flexible(
                                   child: Container(
-                                    child: Row(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.2,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
                                       children: [
-                                        Flexible(
-                                          child: Container(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.2,
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceEvenly,
-                                              children: [
-                                                const Icon(Icons.card_giftcard),
-                                                Text(
-                                                  theCompany.firstName,
-                                                  style: GoogleFonts.righteous(
-                                                      fontSize: 14),
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                          flex: 2,
-                                        ),
-                                        Flexible(
-                                          child: Container(),
-                                          flex: 1,
-                                        ),
-                                        Flexible(
-                                            flex: 3,
-                                            child: Column(
-                                              children: [
-                                                Text(
-                                                  offersData[index].offerMsg,
-                                                  style: GoogleFonts.fredokaOne(
-                                                      fontSize: 15),
-                                                ),
-                                                const SizedBox(height: 20),
-                                                Text('valid thru ' +
-                                                    DateFormat.yMd().format(
-                                                        offersData[index]
-                                                            .expireTime))
-                                              ],
-                                            ))
+                                        const Icon(Icons.card_giftcard),
+                                        Text(
+                                          theCompany.firstName,
+                                          style: GoogleFonts.righteous(
+                                              fontSize: 14),
+                                        )
                                       ],
                                     ),
                                   ),
+                                  flex: 2,
                                 ),
-                              ),
+                                Flexible(
+                                  child: Container(),
+                                  flex: 1,
+                                ),
+                                Flexible(
+                                    flex: 3,
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          offersData[index].offerMsg,
+                                          style: GoogleFonts.fredokaOne(
+                                              fontSize: 15),
+                                        ),
+                                        const SizedBox(height: 20),
+                                        Text('valid thru ' +
+                                            DateFormat.yMd().format(
+                                                offersData[index].expireTime))
+                                      ],
+                                    ))
+                              ],
                             ),
-                            Divider(
-                              color: Colors.grey.shade600,
-                              thickness: 1,
-                            )
-                          ],
-                        );
-                      },
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                ));
-          }),
-    );
+                    Divider(
+                      color: Colors.grey.shade600,
+                      thickness: 1,
+                    )
+                  ],
+                );
+              },
+            ),
+          ),
+        ));
   }
 }

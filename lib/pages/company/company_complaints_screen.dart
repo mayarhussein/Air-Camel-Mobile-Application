@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
-class ComplaintsScreen extends StatelessWidget {
-  static const routeName = '/complaints';
+class CompanyComplaintsScreen extends StatelessWidget {
+  static const routeName = '/companycomplaints';
 
   @override
   Widget build(BuildContext context) {

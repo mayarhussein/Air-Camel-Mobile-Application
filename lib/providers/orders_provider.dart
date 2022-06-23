@@ -8,6 +8,10 @@ class OrdersProvider with ChangeNotifier {
     _orderList = List.from(list);
   }
 
+  List<OrdersModel> getOrderList(String id) {
+    return [..._orderList!.where((element) => element.companyId == id)];
+  }
+
   List<OrdersModel> myPendingOrders(String id) {
     return [
       ..._orderList!.where(

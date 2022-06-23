@@ -21,9 +21,9 @@ class _NewOfferScreenState extends State<NewOfferScreen> {
   String date = "";
   DateTime selectedDate = DateTime.now();
   final descriptionController = TextEditingController();
-
+  bool _featuredOffer = false;
   Future<void> _submit(String description) async {
-    final user = Provider.of<AccountsProvider>(context).account!;
+    final user = Provider.of<AccountsProvider>(context, listen: false).account!;
     final offersData = FirebaseFirestore.instance.collection('offers');
     var randomId = const Uuid().v4();
 
@@ -33,6 +33,7 @@ class _NewOfferScreenState extends State<NewOfferScreen> {
       'expireTime': selectedDate,
       'idCompany': user.id,
       'offerMsg': description,
+      'isFeatured': _featuredOffer
     }).then((value) {
       print("Success");
       descriptionController.clear();
@@ -99,7 +100,8 @@ class _NewOfferScreenState extends State<NewOfferScreen> {
                                   TextFormField(
                                     key: const ValueKey('Description'),
                                     keyboardType: TextInputType.multiline,
-                                    maxLines: null,
+                                    minLines: 3,
+                                    maxLines: 3,
                                     decoration: const InputDecoration(
                                         labelText: 'Description'),
                                     validator: (value) {
@@ -115,6 +117,21 @@ class _NewOfferScreenState extends State<NewOfferScreen> {
                                       }
                                     },
                                   ),
+                                  const SizedBox(height: 20),
+                                  SwitchListTile(
+                                      value: _featuredOffer,
+                                      title: Text(
+                                        "Featured offer",
+                                        style: defaultFont1,
+                                      ),
+                                      subtitle: Text("Extra price: \$20\n"),
+                                      onChanged: (newValue) {
+                                        setState(
+                                          () {
+                                            _featuredOffer = newValue;
+                                          },
+                                        );
+                                      }),
                                   const SizedBox(height: 20),
                                   ElevatedButton(
                                       child: const Text('Submit',

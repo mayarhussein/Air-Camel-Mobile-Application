@@ -24,8 +24,8 @@ class ClientHomeScreen extends StatelessWidget {
               ),
             ),
           ),
-          ClientHomeOffers(),
           ClientHomeExplore(),
+          ClientHomeOffers(),
         ],
       ),
     );

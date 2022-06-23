@@ -19,7 +19,7 @@ final defaultFont1 = GoogleFonts.openSans(
     fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black);
 
 final btnFont1 = GoogleFonts.racingSansOne(fontSize: 16, color: Colors.white);
-final btnFont2 = GoogleFonts.pacifico(fontSize: 16);
+final btnFont2 = GoogleFonts.roboto(fontSize: 16, fontWeight: FontWeight.w800);
 
 final hintFont = TextStyle(color: Colors.grey, fontSize: 12);
 final listFont = GoogleFonts.fredokaOne(fontSize: 15);

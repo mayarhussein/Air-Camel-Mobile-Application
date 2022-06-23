@@ -1,17 +1,21 @@
 import 'package:air_camel/constants.dart';
 import 'package:air_camel/models/drawer/featured_offer.dart';
+import 'package:air_camel/providers/offers_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ClientHomeOffers extends StatelessWidget {
   const ClientHomeOffers({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final featuredOffersList =
+        Provider.of<OffersProvider>(context).getFeaturedOffers();
     return Container(
       height: MediaQuery.of(context).size.height * 0.32,
       padding: EdgeInsets.symmetric(vertical: 10),
       child: ListView.builder(
-        itemCount: FeaturedOfferModel.featuredOffersList.length,
+        itemCount: featuredOffersList.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
           return Card(
@@ -29,7 +33,7 @@ class ClientHomeOffers extends StatelessWidget {
               padding: mainPadding,
               width: MediaQuery.of(context).size.width * 0.65,
               child: Text(
-                FeaturedOfferModel.featuredOffersList[index].offerMsg,
+                featuredOffersList[index].offerMsg,
                 style: subTitle2,
               ),
             ),
