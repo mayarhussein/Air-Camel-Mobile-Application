@@ -62,7 +62,7 @@ class AddressBottomSheet {
         String floor, String apt, String other) async {
       FocusScope.of(context).unfocus();
 
-      final user = Provider.of<AccountsProvider>(context).account!;
+      final user = Provider.of<AccountsProvider>(context, listen: false).account!;
       final addressData = FirebaseFirestore.instance
           .collection('users')
           .doc(user.id)
@@ -91,7 +91,7 @@ class AddressBottomSheet {
         String apt, String other) async {
       FocusScope.of(context).unfocus();
 
-      final user = Provider.of<AccountsProvider>(context).account!;
+      final user = Provider.of<AccountsProvider>(context, listen: false).account!;
       final addressData = FirebaseFirestore.instance
           .collection('users')
           .doc(user.id)
