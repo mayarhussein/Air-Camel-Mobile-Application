@@ -64,7 +64,7 @@ class CompanyHomeDashboard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 CompanyHomeBtn(
-                    "Show Complanits",
+                    "Show Complaints",
                     CompanyComplaintsScreen.routeName,
                     Colors.red.shade100,
                     Colors.red.shade900,
@@ -116,7 +116,6 @@ class CompanyHomeDashboard extends StatelessWidget {
                               rating: item['rating'],
                               weight: item['weight']);
                         }).toList();
-                        print(ordersList);
                         myOrders.setOrder(ordersList);
                         return ShipmentsList();
                       },

@@ -33,7 +33,7 @@ class _AccountScreenState extends State<AccountScreen> {
           children: [
             SizedBox(
               width: double.maxFinite,
-              height: MediaQuery.of(context).size.height * 0.12,
+              height: MediaQuery.of(context).size.height * 0.1,
               child: Container(
                 alignment: Alignment.bottomCenter,
                 child: Text("Profile", style: headFont1),
@@ -41,8 +41,8 @@ class _AccountScreenState extends State<AccountScreen> {
             ),
             Container(
               height: MediaQuery.of(context).size.height * 0.3,
-              padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height * 0.08),
+              // padding: EdgeInsets.only(
+              //     top: MediaQuery.of(context).size.height * 0.08),
               child: Row(
                 children: [
                   Flexible(
@@ -51,38 +51,39 @@ class _AccountScreenState extends State<AccountScreen> {
                       backgroundColor: Colors.transparent,
                       child: Image.network(image.toString()),
                     ),
-                    // flex: 2,
+                    flex: 1,
                   ),
                   Flexible(
+                      flex: 3,
                       child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                            child: Text(
-                          'Name : ' + firstName + ' ' + lastName,
-                          style: defaultFont1,
-                          textAlign: TextAlign.left,
-                        )),
-                        Container(
-                          child: Text(
-                            "Email : " + email,
-                            style: defaultFont1,
-                            textAlign: TextAlign.left,
-                          ),
+                        padding: const EdgeInsets.all(10.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                                child: Text(
+                              'Name : ' + firstName + ' ' + lastName,
+                              style: defaultFont1,
+                              textAlign: TextAlign.left,
+                            )),
+                            Container(
+                              child: Text(
+                                "Email : " + email,
+                                style: defaultFont1,
+                                textAlign: TextAlign.left,
+                              ),
+                            ),
+                            Container(
+                              child: Text(
+                                "Phone : " + phoneNumber,
+                                style: defaultFont1,
+                                textAlign: TextAlign.left,
+                              ),
+                            ),
+                          ],
                         ),
-                        Container(
-                          child: Text(
-                            "Phone : " + phoneNumber,
-                            style: defaultFont1,
-                            textAlign: TextAlign.left,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ))
+                      ))
                 ],
               ),
             ),

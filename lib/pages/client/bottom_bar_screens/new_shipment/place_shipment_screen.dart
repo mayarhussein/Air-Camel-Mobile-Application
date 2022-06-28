@@ -8,6 +8,7 @@ import 'package:air_camel/pages/client/client_navigation_screen.dart';
 import 'package:air_camel/providers/accounts_provider.dart';
 import 'package:air_camel/providers/address_provider.dart';
 import 'package:air_camel/resources/app_theme.dart';
+import 'package:air_camel/widgets/address_bottom_sheet.dart';
 import 'package:air_camel/widgets/detection_image_picker.dart';
 import 'package:air_camel/widgets/user_image_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -82,14 +83,13 @@ class _PlaceShipmentScreenState extends State<PlaceShipmentScreen> {
 
   @override
   void initState() {
-    myAddresses = Provider.of<AddressProvider>(context, listen: false).address;
     super.initState();
   }
 
   void _pickedImage(File image) async {
     _packageImageFile = image;
     final request = http.MultipartRequest(
-        "POST", Uri.parse("https://ad0e-102-45-11-103.eu.ngrok.io/detect"));
+        "POST", Uri.parse("https://473d-197-48-253-8.eu.ngrok.io/detect"));
 
     final headers = {"Content-type": "multipart/form-data"};
     request.files.add(http.MultipartFile(
@@ -108,11 +108,9 @@ class _PlaceShipmentScreenState extends State<PlaceShipmentScreen> {
       setState(() {
         typeController.text = label;
         _accuracy = (accuracy as double).toStringAsFixed(3);
-        print(accuracy);
       });
     } catch (e) {
       typeController.clear();
-      print(e);
     }
   }
 
@@ -128,12 +126,15 @@ class _PlaceShipmentScreenState extends State<PlaceShipmentScreen> {
 
   @override
   Widget build(BuildContext context) {
+    myAddresses = Provider.of<AddressProvider>(context).address;
+
     final routeArgs =
         ModalRoute.of(context)!.settings.arguments as Map<String, Object>;
     chosenCompany = routeArgs["account"] as Account;
     shipmentDate = routeArgs["date"] as DateTime;
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         backgroundColor: bgColor,
         title: Column(
           children: [
@@ -150,7 +151,8 @@ class _PlaceShipmentScreenState extends State<PlaceShipmentScreen> {
         centerTitle: true,
       ),
       body: SingleChildScrollView(
-        child: Padding(
+        child: Container(
+          color: bgColor,
           padding: mainPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -251,74 +253,112 @@ class _PlaceShipmentScreenState extends State<PlaceShipmentScreen> {
                         color: Colors.black38,
                       ),
                       Text("Pickup address", style: headFont1Small),
-                      DropdownButtonFormField(
-                          hint: Text("Select address *"),
-                          value: _pickupAddress,
-                          isExpanded: true,
-                          items: myAddresses!.map((item) {
-                            return DropdownMenuItem(
-                              value: item,
-                              child: Text(item.building +
-                                  ", " +
-                                  item.street +
-                                  ", " +
-                                  item.city),
-                            );
-                          }).toList(),
-                          onChanged: (value) {
-                            setState(() {
-                              _pickupAddress = value as AddressModel;
-                            });
-                          },
-                          onSaved: (value) {
-                            setState(() {
-                              _pickupAddress = value as AddressModel;
-                            });
-                          },
-                          validator: (value) {
-                            if (value == null) {
-                              return "Please fill pickup address";
-                            } else {
-                              return null;
-                            }
-                          }),
+                      SizedBox(
+                        width: double.infinity,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              flex: 3,
+                              child: DropdownButtonFormField(
+                                  hint: Text("Select address *"),
+                                  value: _pickupAddress,
+                                  isExpanded: true,
+                                  items: myAddresses!.map((item) {
+                                    return DropdownMenuItem(
+                                      value: item,
+                                      child: Text(item.building +
+                                          ", " +
+                                          item.street +
+                                          ", " +
+                                          item.city),
+                                    );
+                                  }).toList(),
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _pickupAddress = value as AddressModel;
+                                    });
+                                  },
+                                  onSaved: (value) {
+                                    setState(() {
+                                      _pickupAddress = value as AddressModel;
+                                    });
+                                  },
+                                  validator: (value) {
+                                    if (value == null) {
+                                      return "Please fill pickup address";
+                                    } else {
+                                      return null;
+                                    }
+                                  }),
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: IconButton(
+                                  onPressed: () {
+                                    AddressBottomSheet.showAddressBottomSheet(
+                                        context, false, '');
+                                  },
+                                  icon: const Icon(Icons.add)),
+                            )
+                          ],
+                        ),
+                      ),
                       const Divider(
                         color: Colors.black38,
                       ),
                       Text("Drop address", style: headFont1Small),
-                      DropdownButtonFormField(
-                        hint: Text("Select address *"),
-                        value: _dropAddress,
-                        isExpanded: true,
-                        items: myAddresses!.map((item) {
-                          return DropdownMenuItem(
-                            value: item,
-                            child: Text(item.building +
-                                ", " +
-                                item.street +
-                                ", " +
-                                item.city),
-                          );
-                        }).toList(),
-                        onChanged: (value) {
-                          setState(() {
-                            _dropAddress = value as AddressModel;
-                          });
-                        },
-                        onSaved: (value) {
-                          setState(() {
-                            _dropAddress = value as AddressModel;
-                          });
-                        },
-                        validator: (value) {
-                          if (value == null) {
-                            return "Please fill drop address";
-                          } else if (_dropAddress == _pickupAddress) {
-                            return "Drop and pickup addresses can't be the same";
-                          } else {
-                            return null;
-                          }
-                        },
+                      SizedBox(
+                        width: double.infinity,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              flex: 3,
+                              child: DropdownButtonFormField(
+                                hint: Text("Select address *"),
+                                value: _dropAddress,
+                                isExpanded: true,
+                                items: myAddresses!.map((item) {
+                                  return DropdownMenuItem(
+                                    value: item,
+                                    child: Text(item.building +
+                                        ", " +
+                                        item.street +
+                                        ", " +
+                                        item.city),
+                                  );
+                                }).toList(),
+                                onChanged: (value) {
+                                  setState(() {
+                                    _dropAddress = value as AddressModel;
+                                  });
+                                },
+                                onSaved: (value) {
+                                  setState(() {
+                                    _dropAddress = value as AddressModel;
+                                  });
+                                },
+                                validator: (value) {
+                                  if (value == null) {
+                                    return "Please fill drop address";
+                                  } else if (_dropAddress == _pickupAddress) {
+                                    return "Drop and pickup addresses can't be the same";
+                                  } else {
+                                    return null;
+                                  }
+                                },
+                              ),
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: IconButton(
+                                  onPressed: () {
+                                    AddressBottomSheet.showAddressBottomSheet(
+                                        context, false, '');
+                                  },
+                                  icon: const Icon(Icons.add)),
+                            )
+                          ],
+                        ),
                       ),
                       const Divider(
                         color: Colors.black38,
@@ -398,24 +438,26 @@ class _PlaceShipmentScreenState extends State<PlaceShipmentScreen> {
                         child: Text("400.99"),
                       ),
                       Container(
+                          color: Colors.amber,
                           width: double.infinity,
-                          child: RoundedButton(
-                            splashColor: bgColor,
-                            onPressed: () {
-                              if (_formKey.currentState!.validate()) {
-                                _AddShipment(
-                                    _pickupAddress!,
-                                    _dropAddress!,
-                                    shipmentDate!,
-                                    typeController.text.trim(),
-                                    _packageImageFile!,
-                                    weightController.text.trim(),
-                                    dimensionsController.text.trim(),
-                                    "");
-                              }
-                            },
-                            title: "Place Shipment",
-                            buttonColor: Colors.amber,
+                          child: Center(
+                            child: RoundedButton(
+                              onPressed: () {
+                                if (_formKey.currentState!.validate()) {
+                                  _AddShipment(
+                                      _pickupAddress!,
+                                      _dropAddress!,
+                                      shipmentDate!,
+                                      typeController.text.trim(),
+                                      _packageImageFile!,
+                                      weightController.text.trim(),
+                                      dimensionsController.text.trim(),
+                                      "");
+                                }
+                              },
+                              buttonColor: Colors.black,
+                              title: "Place Shipment",
+                            ),
                           ))
                     ],
                   ),

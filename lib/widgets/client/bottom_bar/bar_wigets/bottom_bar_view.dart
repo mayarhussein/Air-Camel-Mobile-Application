@@ -1,3 +1,4 @@
+import 'package:air_camel/constants.dart';
 import 'package:air_camel/others/tab_clipper.dart';
 import 'package:air_camel/resources/app_theme.dart';
 import 'package:air_camel/widgets/client/bottom_bar/bar_wigets/tab_icons.dart';
@@ -45,7 +46,7 @@ class _BottomBarViewState extends State<BottomBarView>
           animation: animationController!,
           builder: (BuildContext context, Widget? child) {
             return PhysicalShape(
-              color: AppTheme.white,
+              color: bgColor,
               elevation: 16.0,
               clipper: TabClipper(
                   radius: Tween<double>(begin: 0.0, end: 1.0)

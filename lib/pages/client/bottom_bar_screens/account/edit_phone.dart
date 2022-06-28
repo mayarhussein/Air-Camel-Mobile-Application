@@ -34,7 +34,6 @@ class EditPhoneScreenState extends State<EditPhoneScreen> {
     await userData.doc(user.id).update({
       'phoneNumber': phoneNumber,
     }).then((value) {
-      print("User Updated");
       Provider.of<AccountsProvider>(context, listen: false)
           .editPhoneNumber(phoneNumber);
       Navigator.pop(context);

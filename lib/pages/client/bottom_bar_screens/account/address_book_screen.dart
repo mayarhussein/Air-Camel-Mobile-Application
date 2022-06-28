@@ -61,7 +61,8 @@ class _AddressBookState extends State<AddressBook> {
               icon: const Icon(Icons.add))
         ],
       ),
-      body: Padding(
+      body: Container(
+        color: bgColor,
         padding: const EdgeInsets.all(8),
         child: ListView.builder(
             itemCount: addressData!.length,

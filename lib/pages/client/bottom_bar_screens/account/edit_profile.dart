@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:air_camel/constants.dart';
 import 'package:air_camel/models/account.dart';
 import 'package:air_camel/models/address.dart';
 import 'package:air_camel/pages/client/bottom_bar_screens/account/edit_email.dart';
@@ -28,14 +29,13 @@ class EditProfileScreen extends StatefulWidget {
 class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   Widget build(BuildContext context) {
-    Account? account = Provider.of<AccountsProvider>(context, listen: false).account;
+    Account? account =
+        Provider.of<AccountsProvider>(context, listen: false).account;
 
     String firstName = account!.firstName;
     String lastName = account.lastName;
     String email = account.email;
     String phoneNumber = account.phoneNumber;
-    
-
 
     String image = account.image;
     String formattedPhoneNumber = "(+" +
@@ -47,41 +47,37 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
     return Scaffold(
       appBar: AppBar(
+          backgroundColor: bgColor,
+          elevation: 0,
+          centerTitle: true,
+          title: Text(
+            'Edit Profile',
+            style: headFont1,
+          ),
           automaticallyImplyLeading: false,
           leading: IconButton(
               icon: const Icon(Icons.arrow_back_ios_new),
               onPressed: () {
                 Navigator.of(context).pop();
               })),
-      body: Column(
-        children: [
-          AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            toolbarHeight: 10,
-          ),
-          const Center(
-              child: Padding(
-                  padding: EdgeInsets.only(bottom: 20),
-                  child: Text(
-                    'Edit Profile',
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.amber,
-                    ),
-                  ))),
-          InkWell(
-              child: DisplayImage(
-            imagePath: image,
-            onPressed: _pickImage,
-          )),
-          buildUserInfoDisplay(
-              firstName + ' ' + lastName, ' Name', EditNameScreen()),
-          buildUserInfoDisplay(email, 'Email', EditEmailScreen()),
-          buildUserInfoDisplay('', 'Password', EditPasswordScreen()),
-          buildUserInfoDisplay(formattedPhoneNumber, 'Phone Number', EditPhoneScreen()),
-        ],
+      body: Container(
+        color: bgColor,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            InkWell(
+                child: DisplayImage(
+              imagePath: image,
+              onPressed: _pickImage,
+            )),
+            buildUserInfoDisplay(
+                firstName + ' ' + lastName, ' Name', EditNameScreen()),
+            buildUserInfoDisplay(email, 'Email', EditEmailScreen()),
+            buildUserInfoDisplay('', 'Password', EditPasswordScreen()),
+            buildUserInfoDisplay(
+                formattedPhoneNumber, 'Phone Number', EditPhoneScreen()),
+          ],
+        ),
       ),
     );
   }
@@ -97,7 +93,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 style: const TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w500,
-                  color: Colors.grey,
+                  color: Colors.black,
                 ),
               ),
               const SizedBox(
@@ -120,11 +116,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             },
                             child: Text(
                               getValue,
-                              style: const TextStyle(fontSize: 16, height: 1.4),
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  height: 1.4,
+                                  color: Colors.grey[700]),
                             ))),
-                    const Icon(
+                    Icon(
                       Icons.keyboard_arrow_right,
-                      color: Colors.grey,
+                      color: Colors.grey[700],
                       size: 40.0,
                     )
                   ]))

@@ -64,11 +64,6 @@ class FilterBar extends StatelessWidget {
                             builder: (BuildContext context) => FiltersScreen(),
                             fullscreenDialog: true),
                       );
-                      print('--------------');
-                      print(result.length);
-                      result.forEach((element) => {print(element.titleTxt)});
-                      result.forEach((element) => {print(element.isSelected)});
-                      print('*********');
                     },
                     child: Padding(
                       padding: const EdgeInsets.only(left: 8),

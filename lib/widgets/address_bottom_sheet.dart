@@ -62,7 +62,8 @@ class AddressBottomSheet {
         String floor, String apt, String other) async {
       FocusScope.of(context).unfocus();
 
-      final user = Provider.of<AccountsProvider>(context, listen: false).account!;
+      final user =
+          Provider.of<AccountsProvider>(context, listen: false).account!;
       final addressData = FirebaseFirestore.instance
           .collection('users')
           .doc(user.id)
@@ -83,7 +84,6 @@ class AddressBottomSheet {
         // TO CHECK STH HERE: Provider Fn
         clearTexts();
         Navigator.pop(context);
-        print("Add success");
       }).catchError((error) => print("Failed to add address: $error"));
     }
 
@@ -91,7 +91,8 @@ class AddressBottomSheet {
         String apt, String other) async {
       FocusScope.of(context).unfocus();
 
-      final user = Provider.of<AccountsProvider>(context, listen: false).account!;
+      final user =
+          Provider.of<AccountsProvider>(context, listen: false).account!;
       final addressData = FirebaseFirestore.instance
           .collection('users')
           .doc(user.id)
@@ -109,7 +110,6 @@ class AddressBottomSheet {
         clearTexts();
 
         Navigator.pop(context);
-        print("Address Updated");
       }).catchError((error) => print("Failed to update user: $error"));
     }
 

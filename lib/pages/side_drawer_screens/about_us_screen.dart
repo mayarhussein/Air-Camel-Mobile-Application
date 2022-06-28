@@ -69,7 +69,6 @@ class AboutUsScreen extends StatelessWidget {
                           child: InkWell(
                             onTap: () {
                               //method here for functionality
-                              print('Share Action.');
                             },
                             child: Center(
                               child: Row(

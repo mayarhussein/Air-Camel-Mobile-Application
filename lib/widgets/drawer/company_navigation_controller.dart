@@ -176,7 +176,6 @@ class _CompanyNavigationControllerState
                                         progress: iconAnimationController!),
                               ),
                               onTap: () {
-                                print(scrolloffset);
                                 FocusScope.of(context)
                                     .requestFocus(FocusNode());
                                 onDrawerClick();

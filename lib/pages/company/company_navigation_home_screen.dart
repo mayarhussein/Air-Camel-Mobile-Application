@@ -1,7 +1,7 @@
 import 'package:air_camel/models/drawer/drawer_list.dart';
+import 'package:air_camel/pages/client/bottom_bar_screens/credit/credit_screen.dart';
 import 'package:air_camel/pages/company/company_home_dashboard.dart';
 import 'package:air_camel/pages/side_drawer_screens/about_us_screen.dart';
-import 'package:air_camel/pages/side_drawer_screens/credit_screen.dart';
 import 'package:air_camel/pages/side_drawer_screens/help_screen.dart';
 import 'package:air_camel/pages/side_drawer_screens/invite_screen.dart';
 import 'package:air_camel/pages/side_drawer_screens/offers_screen.dart';
@@ -56,11 +56,6 @@ class _CompanyNavigationScreenState extends State<CompanyNavigationScreen> {
       if (drawerIndex == DrawerIndex.Help) {
         setState(() {
           Navigator.of(context).pushNamed(HelpScreen.routeName);
-          drawerIndex = DrawerIndex.HOME;
-        });
-      } else if (drawerIndex == DrawerIndex.Credit) {
-        setState(() {
-          Navigator.of(context).pushNamed(CreditScreen.routeName);
           drawerIndex = DrawerIndex.HOME;
         });
       } else if (drawerIndex == DrawerIndex.Offers) {

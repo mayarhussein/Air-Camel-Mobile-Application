@@ -35,7 +35,6 @@ class _NewOfferScreenState extends State<NewOfferScreen> {
       'offerMsg': description,
       'isFeatured': _featuredOffer
     }).then((value) {
-      print("Success");
       descriptionController.clear();
       Scaffold.of(context).showSnackBar(SnackBar(
         content: const Text('offer added'),
@@ -62,6 +61,7 @@ class _NewOfferScreenState extends State<NewOfferScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          elevation: 0,
           title: const Text(
             "New Offer",
             style: TextStyle(
@@ -71,87 +71,81 @@ class _NewOfferScreenState extends State<NewOfferScreen> {
           ),
           backgroundColor: bgColor,
         ),
-        body: SingleChildScrollView(
-            child: Card(
-                margin: const EdgeInsets.all(20),
-                child: SingleChildScrollView(
-                    child: Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: Form(
-                            key: _formKey,
-                            child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: <Widget>[
-                                      ElevatedButton(
-                                        onPressed: () {
-                                          _selectDate(context);
-                                        },
-                                        child: const Text("Pick Expire Date"),
-                                      ),
-                                      const Icon(Icons.date_range),
-                                      Text(
-                                          "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}"),
-                                    ],
-                                  ),
-                                  TextFormField(
-                                    key: const ValueKey('Description'),
-                                    keyboardType: TextInputType.multiline,
-                                    minLines: 3,
-                                    maxLines: 3,
-                                    decoration: const InputDecoration(
-                                        labelText: 'Description'),
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'Please enter the offer description';
-                                      }
-                                      return null;
-                                    },
-                                    controller: descriptionController,
-                                    onFieldSubmitted: (_) {
-                                      if (_formKey.currentState!.validate()) {
-                                        _submit(descriptionController.text);
-                                      }
-                                    },
-                                  ),
-                                  const SizedBox(height: 20),
-                                  SwitchListTile(
-                                      value: _featuredOffer,
-                                      title: Text(
-                                        "Featured offer",
-                                        style: defaultFont1,
-                                      ),
-                                      subtitle: Text("Extra price: \$20\n"),
-                                      onChanged: (newValue) {
-                                        setState(
-                                          () {
-                                            _featuredOffer = newValue;
-                                          },
-                                        );
-                                      }),
-                                  const SizedBox(height: 20),
-                                  ElevatedButton(
-                                      child: const Text('Submit',
-                                          style:
-                                              TextStyle(color: Colors.white)),
-                                      onPressed: () {
-                                        if (_formKey.currentState!.validate()) {
-                                          _submit(descriptionController.text);
-                                        }
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                          side: const BorderSide(
-                                              width: 3, color: Colors.amber),
-                                          elevation: 3,
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(50)),
-                                          padding: const EdgeInsets.all(
-                                              20) //content padding inside button
-                                          )),
-                                ])))))));
+        body: Container(
+            color: bgColor,
+            padding: const EdgeInsets.all(16),
+            child: Form(
+                key: _formKey,
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          ElevatedButton(
+                            onPressed: () {
+                              _selectDate(context);
+                            },
+                            child: const Text("Pick Expire Date"),
+                          ),
+                          const Icon(Icons.date_range),
+                          Text(
+                              "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}"),
+                        ],
+                      ),
+                      TextFormField(
+                        key: const ValueKey('Description'),
+                        keyboardType: TextInputType.multiline,
+                        minLines: 3,
+                        maxLines: 3,
+                        decoration:
+                            const InputDecoration(labelText: 'Description'),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter the offer description';
+                          }
+                          return null;
+                        },
+                        controller: descriptionController,
+                        onFieldSubmitted: (_) {
+                          if (_formKey.currentState!.validate()) {
+                            _submit(descriptionController.text);
+                          }
+                        },
+                      ),
+                      const SizedBox(height: 20),
+                      SwitchListTile(
+                          value: _featuredOffer,
+                          title: Text(
+                            "Featured offer",
+                            style: defaultFont1,
+                          ),
+                          subtitle: Text("Extra price: \$20\n"),
+                          onChanged: (newValue) {
+                            setState(
+                              () {
+                                _featuredOffer = newValue;
+                              },
+                            );
+                          }),
+                      const SizedBox(height: 20),
+                      ElevatedButton(
+                          child: const Text('Submit',
+                              style: TextStyle(color: Colors.white)),
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              _submit(descriptionController.text);
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                              side: const BorderSide(
+                                  width: 3, color: Colors.amber),
+                              elevation: 3,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(50)),
+                              padding: const EdgeInsets.all(
+                                  20) //content padding inside button
+                              )),
+                    ]))));
   }
 }

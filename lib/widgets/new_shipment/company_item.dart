@@ -82,9 +82,7 @@ class CompanyLabelItem extends StatelessWidget {
                                 ),
                               ),
                               itemPadding: EdgeInsets.zero,
-                              onRatingUpdate: (rating) {
-                                print(rating);
-                              },
+                              onRatingUpdate: (rating) {},
                             ),
                             Text(
                               '',

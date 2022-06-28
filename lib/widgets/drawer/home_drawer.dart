@@ -33,12 +33,6 @@ class _HomeDrawerState extends State<HomeDrawer> {
 
   void setDrawerListArray() {
     drawerList = <DrawerList>[
-    
-      DrawerList(
-        index: DrawerIndex.Credit,
-        labelName: 'Credit & Payments',
-        icon: const Icon(Icons.credit_card_rounded),
-      ),
       DrawerList(
         index: DrawerIndex.Offers,
         labelName: 'Offers',
@@ -64,8 +58,6 @@ class _HomeDrawerState extends State<HomeDrawer> {
 
   @override
   Widget build(BuildContext context) {
-
-
     Account? account = Provider.of<AccountsProvider>(context).account;
 
     String firstName = account!.firstName;

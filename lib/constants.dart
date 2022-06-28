@@ -21,6 +21,6 @@ final defaultFont1 = GoogleFonts.openSans(
 final btnFont1 = GoogleFonts.racingSansOne(fontSize: 16, color: Colors.white);
 final btnFont2 = GoogleFonts.roboto(fontSize: 16, fontWeight: FontWeight.w800);
 
-final hintFont = TextStyle(color: Colors.grey, fontSize: 12);
+final hintFont = TextStyle(color: Colors.grey.shade700, fontSize: 12);
 final listFont = GoogleFonts.fredokaOne(fontSize: 15);
 const mainPadding = EdgeInsets.all(15);

@@ -9,12 +9,6 @@ class CompaniesProvider with ChangeNotifier {
   List<CategoriesModel>? _categoriesList;
 
   List<Account> setFilter(List<FilterListData> list) {
-    print('--------------');
-    print(list.length);
-    list.forEach((element) => {print(element.titleTxt)});
-    list.forEach((element) => {print(element.isSelected)});
-    print('*********');
-
     var listID = _categoriesList!
         .where((element) =>
             element.isFragile ==
@@ -46,7 +40,6 @@ class CompaniesProvider with ChangeNotifier {
       return item.id;
     });
 
-    print(listID);
     _filteredCompaniesList =
         companiesList.where((element) => listID.contains(element.id)).toList();
     notifyListeners();

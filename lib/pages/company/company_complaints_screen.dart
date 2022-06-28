@@ -11,6 +11,7 @@ class CompanyComplaintsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          elevation: 0,
           title: const Text(
             "Complaints",
             style: TextStyle(
@@ -21,6 +22,7 @@ class CompanyComplaintsScreen extends StatelessWidget {
           backgroundColor: bgColor,
         ),
         body: Container(
+          padding: EdgeInsets.only(top: 10),
           color: bgColor,
           child: ListView.builder(
             itemCount: ComplaintsModel.dummy_complaints.length,

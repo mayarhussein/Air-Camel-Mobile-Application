@@ -23,7 +23,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
     return Container(
       width: double.infinity,
       padding: mainPadding,
-      color: bgColor,
+      // color: bgColor,
       // decoration: BoxDecoration(color: bgColor),
       child: Column(
         children: [

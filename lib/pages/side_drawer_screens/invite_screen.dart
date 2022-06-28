@@ -71,7 +71,6 @@ class InviteScreen extends StatelessWidget {
                           color: Colors.blue,
                           child: InkWell(
                             onTap: () {
-
                               Share.share(
                                 'check out this great app for shipping any package anywhere https://aircamel.com',
                                 subject: 'Download right now ',

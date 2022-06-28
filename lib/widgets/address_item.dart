@@ -23,7 +23,10 @@ class AddressItem extends StatelessWidget {
         child: Row(children: <Widget>[
           const Spacer(),
           IconButton(
-              icon: const Icon(Icons.edit),
+              icon: Icon(
+                Icons.edit,
+                color: Colors.grey.shade700,
+              ),
               onPressed: () {
                 AddressBottomSheet.showAddressBottomSheet(context, true, id);
               },

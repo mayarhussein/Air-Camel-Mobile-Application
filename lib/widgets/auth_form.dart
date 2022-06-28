@@ -96,195 +96,191 @@ class _AuthFormState extends State<AuthForm> {
   @override
   Widget build(BuildContext context) {
     return Center(
-        child: SingleChildScrollView(
-      child: Card(
-        margin: const EdgeInsets.all(20),
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    if (!_isLogin) UserImagePicker(_pickedImage),
-                    if (!_isLogin)
-                      Column(
-                        children: <Widget>[
-                          ListTile(
-                            title: const Text('Client'),
-                            leading: Radio<Role>(
-                              value: Role.client,
-                              groupValue: _role,
-                              onChanged: (Role? value) {
-                                setState(() {
-                                  _role = value;
-                                });
-                              },
-                            ),
+        child: Card(
+      margin: const EdgeInsets.all(20),
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  if (!_isLogin)
+                    Column(
+                      children: <Widget>[
+                        ListTile(
+                          title: const Text('Client'),
+                          leading: Radio<Role>(
+                            value: Role.client,
+                            groupValue: _role,
+                            onChanged: (Role? value) {
+                              setState(() {
+                                _role = value;
+                              });
+                            },
                           ),
-                          ListTile(
-                            title: const Text('Company'),
-                            leading: Radio<Role>(
-                              value: Role.company,
-                              groupValue: _role,
-                              onChanged: (Role? value) {
-                                setState(() {
-                                  _role = value;
-                                });
-                              },
-                            ),
+                        ),
+                        ListTile(
+                          title: const Text('Company'),
+                          leading: Radio<Role>(
+                            value: Role.company,
+                            groupValue: _role,
+                            onChanged: (Role? value) {
+                              setState(() {
+                                _role = value;
+                              });
+                            },
                           ),
-                        ],
-                      ),
-                    if (!_isLogin)
-                      TextFormField(
-                        key: const ValueKey('firstName'),
-                        decoration: InputDecoration(
-                            labelText:
-                                _role == Role.client ? 'First Name' : 'Name'),
-                        focusNode: _firstNameFocusNode,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your first name';
-                          } else if (!isAlpha(value)) {
-                            return 'Only Letters Please';
-                          }
-                          return null;
-                        },
-                        onSaved: (value) {
-                          _userFirstName = value.toString();
-                        },
-                        onFieldSubmitted: (_) {
-                          FocusScope.of(context)
-                              .requestFocus(_lastNameFocusNode);
-                        },
-                      ),
-                    if (!_isLogin && _role == Role.client)
-                      TextFormField(
-                        key: const ValueKey('lastName'),
-                        decoration:
-                            const InputDecoration(labelText: 'Last Name'),
-                        focusNode: _lastNameFocusNode,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your last name';
-                          } else if (!isAlpha(value)) {
-                            return 'Only Letters Please';
-                          }
-                          return null;
-                        },
-                        onSaved: (value) {
-                          _userLastName = value.toString();
-                        },
-                        onFieldSubmitted: (_) {
-                          FocusScope.of(context).requestFocus(_emailFocusNode);
-                        },
-                      ),
+                        ),
+                      ],
+                    ),
+                  if (!_isLogin) UserImagePicker(_pickedImage),
+                  if (!_isLogin)
                     TextFormField(
-                      key: const ValueKey('email'),
-                      keyboardType: TextInputType.emailAddress,
+                      key: const ValueKey('firstName'),
+                      decoration: InputDecoration(
+                          labelText:
+                              _role == Role.client ? 'First Name' : 'Name'),
+                      focusNode: _firstNameFocusNode,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your first name';
+                        } else if (!isAlpha(value)) {
+                          return 'Only Letters Please';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        _userFirstName = value.toString();
+                      },
+                      onFieldSubmitted: (_) {
+                        FocusScope.of(context).requestFocus(_lastNameFocusNode);
+                      },
+                    ),
+                  if (!_isLogin && _role == Role.client)
+                    TextFormField(
+                      key: const ValueKey('lastName'),
+                      decoration: const InputDecoration(labelText: 'Last Name'),
+                      focusNode: _lastNameFocusNode,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your last name';
+                        } else if (!isAlpha(value)) {
+                          return 'Only Letters Please';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        _userLastName = value.toString();
+                      },
+                      onFieldSubmitted: (_) {
+                        FocusScope.of(context).requestFocus(_emailFocusNode);
+                      },
+                    ),
+                  TextFormField(
+                    key: const ValueKey('email'),
+                    keyboardType: TextInputType.emailAddress,
+                    decoration:
+                        const InputDecoration(labelText: 'Email Address'),
+                    focusNode: _emailFocusNode,
+                    validator: (value) {
+                      if (value.toString().isEmpty ||
+                          !EmailValidator.validate(value.toString())) {
+                        return 'Please enter a valid email address';
+                      }
+                      return null;
+                    },
+                    onFieldSubmitted: (_) {
+                      FocusScope.of(context).requestFocus(_passwordFocusNode);
+                    },
+                    onSaved: (value) {
+                      _userEmail = value.toString();
+                    },
+                  ),
+                  TextFormField(
+                    key: const ValueKey('password'),
+                    decoration: const InputDecoration(labelText: 'Password'),
+                    obscureText: true,
+                    focusNode: _passwordFocusNode,
+                    validator: (value) {
+                      if (value.toString().isEmpty ||
+                          value.toString().length < 7) {
+                        return 'Password must be at least 7 characters long';
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {
+                      _userPassword = value.toString();
+                    },
+                    onFieldSubmitted: (_) {
+                      if (_isLogin) {
+                        _trySubmit();
+                      } else {
+                        FocusScope.of(context)
+                            .requestFocus(_phoneNumberFocusNode);
+                      }
+                    },
+                  ),
+                  Row(
+                    children: <Widget>[],
+                  ),
+                  if (!_isLogin)
+                    TextFormField(
+                      key: const ValueKey('phoneNumber'),
                       decoration:
-                          const InputDecoration(labelText: 'Email Address'),
-                      focusNode: _emailFocusNode,
+                          const InputDecoration(labelText: 'Phone Number'),
+                      focusNode: _phoneNumberFocusNode,
+                      keyboardType: TextInputType.number,
                       validator: (value) {
-                        if (value.toString().isEmpty ||
-                            !EmailValidator.validate(value.toString())) {
-                          return 'Please enter a valid email address';
-                        }
-                        return null;
-                      },
-                      onFieldSubmitted: (_) {
-                        FocusScope.of(context).requestFocus(_passwordFocusNode);
-                      },
-                      onSaved: (value) {
-                        _userEmail = value.toString();
-                      },
-                    ),
-                    TextFormField(
-                      key: const ValueKey('password'),
-                      decoration: const InputDecoration(labelText: 'Password'),
-                      obscureText: true,
-                      focusNode: _passwordFocusNode,
-                      validator: (value) {
-                        if (value.toString().isEmpty ||
-                            value.toString().length < 7) {
-                          return 'Password must be at least 7 characters long';
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your phone number';
+                        } else if (isAlpha(value)) {
+                          return 'Only Numbers Please';
+                        } else if (value.length < 10) {
+                          return 'Please enter a VALID phone number';
                         }
                         return null;
                       },
                       onSaved: (value) {
-                        _userPassword = value.toString();
+                        _userPhoneNumber = value.toString();
                       },
                       onFieldSubmitted: (_) {
-                        if (_isLogin) {
-                          _trySubmit();
-                        } else {
-                          FocusScope.of(context)
-                              .requestFocus(_phoneNumberFocusNode);
-                        }
+                        _trySubmit();
                       },
                     ),
-                    Row(
-                      children: <Widget>[],
-                    ),
-                    if (!_isLogin)
-                      TextFormField(
-                        key: const ValueKey('phoneNumber'),
-                        decoration:
-                            const InputDecoration(labelText: 'Phone Number'),
-                        focusNode: _phoneNumberFocusNode,
-                        keyboardType: TextInputType.number,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your phone number';
-                          } else if (isAlpha(value)) {
-                            return 'Only Numbers Please';
-                          } else if (value.length < 10) {
-                            return 'Please enter a VALID phone number';
-                          }
-                          return null;
-                        },
-                        onSaved: (value) {
-                          _userPhoneNumber = value.toString();
-                        },
-                        onFieldSubmitted: (_) {
-                          _trySubmit();
-                        },
-                      ),
-                    const SizedBox(height: 12),
-                    if (widget.isLoading) CircularProgressIndicator(),
-                    if (!widget.isLoading)
-                      ElevatedButton(
-                          child: Text(_isLogin ? 'Login' : 'Sign Up',
-                              style: const TextStyle(color: Colors.white)),
-                          onPressed: _trySubmit,
-                          style: ElevatedButton.styleFrom(
-                              side: const BorderSide(
-                                  width: 3, color: Colors.amber),
-                              elevation: 3,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50)),
-                              padding: const EdgeInsets.all(
-                                  20) //content padding inside button
-                              )),
-                    if (!widget.isLoading)
-                      TextButton(
-                        child: Text(
-                            _isLogin
-                                ? 'Create New Account'
-                                : 'I already have an account',
-                            style: const TextStyle(
-                                decoration: TextDecoration.underline)),
-                        onPressed: () {
-                          setState(() {
-                            _isLogin = !_isLogin;
-                          });
-                        },
-                      )
-                  ],
-                )),
-          ),
+                  const SizedBox(height: 12),
+                  if (widget.isLoading) CircularProgressIndicator(),
+                  if (!widget.isLoading)
+                    ElevatedButton(
+                        child: Text(_isLogin ? 'Login' : 'Sign Up',
+                            style: const TextStyle(color: Colors.white)),
+                        onPressed: _trySubmit,
+                        style: ElevatedButton.styleFrom(
+                            side:
+                                const BorderSide(width: 3, color: Colors.amber),
+                            elevation: 3,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(50)),
+                            padding: const EdgeInsets.all(
+                                20) //content padding inside button
+                            )),
+                  if (!widget.isLoading)
+                    TextButton(
+                      child: Text(
+                          _isLogin
+                              ? 'Create New Account'
+                              : 'I already have an account',
+                          style: const TextStyle(
+                              decoration: TextDecoration.underline)),
+                      onPressed: () {
+                        setState(() {
+                          _isLogin = !_isLogin;
+                        });
+                      },
+                    )
+                ],
+              )),
         ),
       ),
     ));

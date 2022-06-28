@@ -44,7 +44,6 @@ class EditEmailScreenState extends State<EditEmailScreen> {
           .collection('users')
           .doc(authResult.user!.uid)
           .update({'email': newEmail}).then((value) {
-        print("User Updated");
         Provider.of<AccountsProvider>(context, listen: false)
             .editEmail(newEmail);
         Navigator.pop(context);

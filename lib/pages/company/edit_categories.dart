@@ -82,6 +82,7 @@ class _EditCategoriesState extends State<EditCategories> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          elevation: 0,
           title: const Text(
             "Edit Categories",
             style: TextStyle(
@@ -102,82 +103,85 @@ class _EditCategoriesState extends State<EditCategories> {
           ],
           backgroundColor: bgColor,
         ),
-        body: Column(
-          children: <Widget>[
-            Container(
-              padding: const EdgeInsets.all(20),
-              child: Text(
-                'Adjust the company preferences according to the accepted packages:',
-                style: headFont1,
+        body: Container(
+          color: bgColor,
+          child: Column(
+            children: <Widget>[
+              Container(
+                padding: const EdgeInsets.all(20),
+                child: Text(
+                  'Adjust the company preferences according to the accepted packages:',
+                  style: headFont1,
+                ),
               ),
-            ),
-            Expanded(
-              child: ListView(
-                children: <Widget>[
-                  _buildSwitchListTile(
-                    'Regular',
-                    'Accepts regular packages.',
-                    isRegular,
-                    (newValue) {
-                      setState(
-                        () {
-                          isRegular = newValue;
-                        },
-                      );
-                    },
-                  ),
-                  _buildSwitchListTile(
-                    'Fragile',
-                    'Accepts fragile packages.',
-                    isFragile,
-                    (newValue) {
-                      setState(
-                        () {
-                          isFragile = newValue;
-                        },
-                      );
-                    },
-                  ),
-                  _buildSwitchListTile(
-                    'Large',
-                    'Accepts large packages.',
-                    isLarge,
-                    (newValue) {
-                      setState(
-                        () {
-                          isLarge = newValue;
-                        },
-                      );
-                    },
-                  ),
-                  _buildSwitchListTile(
-                    'Medicine',
-                    'Accepts medicine.',
-                    isMedicine,
-                    (newValue) {
-                      setState(
-                        () {
-                          isMedicine = newValue;
-                        },
-                      );
-                    },
-                  ),
-                  _buildSwitchListTile(
-                    'Food',
-                    'Accepts Food.',
-                    isFood,
-                    (newValue) {
-                      setState(
-                        () {
-                          isFood = newValue;
-                        },
-                      );
-                    },
-                  ),
-                ],
+              Expanded(
+                child: ListView(
+                  children: <Widget>[
+                    _buildSwitchListTile(
+                      'Regular',
+                      'Accepts regular packages.',
+                      isRegular,
+                      (newValue) {
+                        setState(
+                          () {
+                            isRegular = newValue;
+                          },
+                        );
+                      },
+                    ),
+                    _buildSwitchListTile(
+                      'Fragile',
+                      'Accepts fragile packages.',
+                      isFragile,
+                      (newValue) {
+                        setState(
+                          () {
+                            isFragile = newValue;
+                          },
+                        );
+                      },
+                    ),
+                    _buildSwitchListTile(
+                      'Large',
+                      'Accepts large packages.',
+                      isLarge,
+                      (newValue) {
+                        setState(
+                          () {
+                            isLarge = newValue;
+                          },
+                        );
+                      },
+                    ),
+                    _buildSwitchListTile(
+                      'Medicine',
+                      'Accepts medicine.',
+                      isMedicine,
+                      (newValue) {
+                        setState(
+                          () {
+                            isMedicine = newValue;
+                          },
+                        );
+                      },
+                    ),
+                    _buildSwitchListTile(
+                      'Food',
+                      'Accepts Food.',
+                      isFood,
+                      (newValue) {
+                        setState(
+                          () {
+                            isFood = newValue;
+                          },
+                        );
+                      },
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ));
   }
 }

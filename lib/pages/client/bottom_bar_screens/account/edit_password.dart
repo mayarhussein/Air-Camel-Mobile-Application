@@ -42,7 +42,6 @@ class EditPasswordScreenState extends State<EditPasswordScreen> {
           .collection('users')
           .doc(authResult.user!.uid)
           .update({'password': newPassword}).then((value) {
-        print("User Updated");
         Provider.of<AccountsProvider>(context, listen: false)
             .editPassword(newPassword);
         Navigator.pop(context);

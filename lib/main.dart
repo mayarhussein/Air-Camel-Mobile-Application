@@ -2,9 +2,10 @@
 // ignore_for_file: missing_return
 
 import 'dart:io';
+import 'package:air_camel/constants.dart';
 import 'package:air_camel/main_controller.dart';
 import 'package:air_camel/pages/client/bottom_bar_screens/account/address_book_screen.dart';
-import 'package:air_camel/pages/client/bottom_bar_screens/complaint/client_complaint_screen.dart';
+import 'package:air_camel/pages/client/bottom_bar_screens/credit/credit_screen.dart';
 import 'package:air_camel/pages/company/new_offer_screen.dart';
 import 'package:air_camel/pages/side_drawer_screens/chat_bot_screen.dart';
 import 'package:air_camel/providers/address_provider.dart';
@@ -21,7 +22,6 @@ import 'package:air_camel/pages/company/company_complaints_screen.dart';
 import 'package:air_camel/pages/company/edit_categories.dart';
 import 'package:air_camel/pages/company/payment_history.dart';
 import 'package:air_camel/pages/side_drawer_screens/about_us_screen.dart';
-import 'package:air_camel/pages/side_drawer_screens/credit_screen.dart';
 import 'package:air_camel/pages/side_drawer_screens/help_screen.dart';
 import 'package:air_camel/pages/side_drawer_screens/invite_screen.dart';
 import 'package:air_camel/pages/side_drawer_screens/offers_screen.dart';
@@ -71,7 +71,7 @@ class MyApp extends StatelessWidget {
           title: 'AirCamel',
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
-            primaryColor: Colors.amber.shade600,
+            primaryColor: bgColor,
             primarySwatch: Colors.amber,
           ),
           home: GestureDetector(
@@ -86,7 +86,6 @@ class MyApp extends StatelessWidget {
                 CompanyNavigationScreen(),
             HelpScreen.routeName: (ctx) => HelpScreen(),
             AboutUsScreen.routeName: (ctx) => AboutUsScreen(),
-            CreditScreen.routeName: (ctx) => CreditScreen(),
             OffersScreen.routeName: (ctx) => OffersScreen(),
             InviteScreen.routeName: (ctx) => InviteScreen(),
             EditCategories.routeName: (ctx) => EditCategories(),

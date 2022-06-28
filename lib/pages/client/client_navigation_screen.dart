@@ -1,8 +1,8 @@
+import 'package:air_camel/constants.dart';
 import 'package:air_camel/pages/client/bottom_bar_screens/account/account_screen.dart';
-import 'package:air_camel/pages/client/bottom_bar_screens/complaint/client_complaint_screen.dart';
+import 'package:air_camel/pages/client/bottom_bar_screens/credit/credit_screen.dart';
 import 'package:air_camel/pages/client/bottom_bar_screens/notification/notification_screen.dart';
 import 'package:air_camel/pages/side_drawer_screens/about_us_screen.dart';
-import 'package:air_camel/pages/side_drawer_screens/credit_screen.dart';
 import 'package:air_camel/pages/side_drawer_screens/help_screen.dart';
 import 'package:air_camel/pages/side_drawer_screens/invite_screen.dart';
 import 'package:air_camel/pages/side_drawer_screens/offers_screen.dart';
@@ -12,6 +12,7 @@ import 'package:air_camel/pages/client/bottom_bar_screens/home/client_home_scree
 import 'package:air_camel/widgets/drawer/client_navigation_controller.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class ClientNavigationScreen extends StatefulWidget {
@@ -29,14 +30,24 @@ class _ClientNavigationScreenState extends State<ClientNavigationScreen> {
   void initState() {
     drawerIndex = DrawerIndex.HOME;
     screenView = ClientHomeScreen();
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      SystemChrome.setSystemUIOverlayStyle(overlayStyle);
+    });
     super.initState();
   }
 
+  static SystemUiOverlayStyle overlayStyle = SystemUiOverlayStyle(
+    systemNavigationBarColor: bgColor,
+    // systemNavigationBarIconBrightness: Brightness.light,
+    // systemNavigationBarDividerColor: Colors.white,
+  );
+
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(overlayStyle);
+
     // LISTENER : Listening to any change in Accounts Provider
     final accountsData = Provider.of<AccountsProvider>(context);
-
     return Container(
       color: Colors.white,
       child: SafeArea(
@@ -75,7 +86,7 @@ class _ClientNavigationScreenState extends State<ClientNavigationScreen> {
         break;
       case 2:
         setState(() {
-          screenView = ClientComplaintScreen();
+          screenView = CreditScreen();
         });
         break;
       case 3:
@@ -93,11 +104,6 @@ class _ClientNavigationScreenState extends State<ClientNavigationScreen> {
       if (drawerIndex == DrawerIndex.Help) {
         setState(() {
           Navigator.of(context).pushNamed(HelpScreen.routeName);
-          drawerIndex = DrawerIndex.HOME;
-        });
-      } else if (drawerIndex == DrawerIndex.Credit) {
-        setState(() {
-          Navigator.of(context).pushNamed(CreditScreen.routeName);
           drawerIndex = DrawerIndex.HOME;
         });
       } else if (drawerIndex == DrawerIndex.Offers) {
